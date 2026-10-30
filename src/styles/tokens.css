@@ -33,7 +33,7 @@
   /* Status */
   --done: #3f7a52;
   --done-bg: #e3f3e8;
-  --done-strong: #4d9463;
+  --done-strong: #3d7a50;
   --danger: #b3261e;
   --danger-soft: #fde4e1;
 
@@ -47,7 +47,7 @@
   --shadow-lg: 0 12px 32px rgb(90 50 60 / 0.16);
 
   /* Type */
-  --font: ui-rounded, 'SF Pro Rounded', 'Segoe UI Variable Text', 'Segoe UI', system-ui, -apple-system, Roboto,
+  --font: system-ui, -apple-system, 'Segoe UI', Roboto,
     'Helvetica Neue', Arial, sans-serif;
   --font-mono: ui-monospace, 'Cascadia Mono', Menlo, Consolas, monospace;
 

@@ -19,7 +19,9 @@
 .header-inner { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 64px; }
 .logo { display: flex; align-items: center; gap: 10px; color: var(--text); font-weight: 800; font-size: 1.15rem; text-decoration: none; }
 .logo:hover { color: var(--text); }
-.header-cta { min-height: 44px; padding: 0.5em 1.1em; font-size: 0.95rem; }
+.logo span { white-space: nowrap; }
+.header-cta { min-height: 44px; padding: 0.5em 1em; font-size: 0.9rem; white-space: nowrap; }
+@media (max-width: 359px) { .logo { font-size: 1rem; gap: 6px; } .logo svg { width: 28px; height: 28px; } }
 .site-nav ul {
   display: flex;
   gap: 4px;
@@ -96,12 +98,12 @@
 .phone-screen { height: 470px; overflow: hidden; border-radius: 26px; background: #fff8f1; color: #3a2a30; font-size: 12px; }
 .m-top { display: flex; justify-content: space-between; align-items: center; padding: 14px 14px 8px; font-weight: 800; font-size: 13px; }
 .m-progress { margin: 0 14px 10px; height: 7px; border-radius: 9px; background: #f1e3d8; overflow: hidden; }
-.m-progress span { display: block; height: 100%; width: 42%; background: #4d9463; }
+.m-progress span { display: block; height: 100%; width: 42%; background: #3d7a50; }
 .m-list { display: grid; gap: 7px; padding: 0 12px; }
 .m-round { padding: 8px 10px; border-radius: 12px; border: 1px dashed #ddcabd; color: #6e5961; }
 .m-round b { color: #3a2a30; }
-.m-done { background: #e3f3e8; border: 0; opacity: 0.75; }
-.m-done b::before { content: '✓'; display: inline-grid; place-items: center; width: 15px; height: 15px; margin-right: 5px; border-radius: 50%; background: #4d9463; color: #fff; font-size: 9px; }
+.m-done { background: #e3f3e8; border: 0; color: #4f3f45; }
+.m-done b::before { content: '✓'; display: inline-grid; place-items: center; width: 15px; height: 15px; margin-right: 5px; border-radius: 50%; background: #3d7a50; color: #fff; font-size: 9px; }
 .m-current { border: 2px solid #b4436c; background: #fff; color: #3a2a30; box-shadow: 0 6px 18px rgb(180 67 108 / 0.2); }
 .m-current b { color: #b4436c; }
 .m-current p { margin: 6px 0 8px; font-size: 16px; font-weight: 800; line-height: 1.35; }
@@ -109,7 +111,7 @@
 .m-counter span { display: grid; place-items: center; height: 32px; border-radius: 8px; background: #fff; font-weight: 800; font-size: 16px; }
 .m-counter span:last-child { background: #b4436c; color: #fff; }
 .m-counter strong { font-size: 18px; }
-.m-done-btn { margin: 12px; padding: 12px; border-radius: 999px; background: #4d9463; color: #fff; font-weight: 800; text-align: center; font-size: 14px; }
+.m-done-btn { margin: 12px; padding: 12px; border-radius: 999px; background: #3d7a50; color: #fff; font-weight: 800; text-align: center; font-size: 14px; }
 .m-field { margin: 0 12px 8px; padding: 8px 10px; border-radius: 9px; border: 1.5px solid #ecdcd0; background: #fff; }
 .m-field small { display: block; color: #6e5961; font-weight: 700; }
 .m-chips { display: flex; flex-wrap: wrap; gap: 5px; margin: 6px 12px; }

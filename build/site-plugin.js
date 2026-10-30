@@ -222,6 +222,16 @@ export default function sitePlugin() {
       const out = path.resolve(outDir);
       const today = new Date().toISOString().slice(0, 10);
 
+      // Inline the (small) stylesheet into every page so CSS never blocks first paint.
+      for (const file of listFiles(out).filter((f) => f.endsWith('.html'))) {
+        const full = path.join(out, file);
+        const html = fs.readFileSync(full, 'utf8').replace(
+          /<link rel="stylesheet"[^>]*href="(\/assets\/[^"]+\.css)"[^>]*>/g,
+          (_, href) => `<style>${fs.readFileSync(path.join(out, href), 'utf8')}</style>`,
+        );
+        fs.writeFileSync(full, html);
+      }
+
       // sitemap.xml – every indexable page
       const urls = [...pages.entries()]
         .filter(([, p]) => !p.noindex)
