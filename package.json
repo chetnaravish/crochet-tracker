@@ -1,0 +1,19 @@
+{
+  "name": "crochet-tracker",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Free mobile-first crochet pattern tracker and row counter (PWA).",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "node --test tests/",
+    "icons": "node scripts/make-icons.mjs"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "sharp": "^0.35.5",
+    "vite": "^8.3.5"
+  }
+}

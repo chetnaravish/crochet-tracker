@@ -1,0 +1,23 @@
+{
+  "name": "Crochet Tracker",
+  "short_name": "Crochet",
+  "description": "Write crochet patterns round by round and tick them off as you crochet. Works offline.",
+  "id": "/app/",
+  "start_url": "/app/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#fff8f1",
+  "theme_color": "#b4436c",
+  "lang": "en",
+  "categories": ["lifestyle", "productivity", "utilities"],
+  "icons": [
+    { "src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/icons/maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    { "name": "New pattern", "url": "/app/#/create", "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192" }] },
+    { "name": "Saved patterns", "url": "/app/#/saved", "icons": [{ "src": "/icons/icon-192.png", "sizes": "192x192" }] }
+  ]
+}

@@ -1,0 +1,98 @@
+/* Design tokens – warm, yarn-inspired pastels. Dark mode follows the OS setting. */
+:root {
+  color-scheme: light dark;
+
+  /* Surfaces */
+  --bg: #fff8f1;
+  --bg-soft: #fdeee4;
+  --surface: #ffffff;
+  --surface-2: #fbf3ec;
+  --border: #ecdcd0;
+  --border-strong: #d8c2b2;
+
+  /* Text */
+  --text: #3a2a30;
+  --text-muted: #6e5961;
+  --text-faint: #7a6670;
+
+  /* Brand */
+  --primary: #b4436c;          /* berry yarn */
+  --primary-hover: #9c3459;
+  --primary-soft: #fbe3ec;
+  --on-primary: #ffffff;
+  --accent: #e88b5a;           /* peach */
+
+  /* Pastel yarn swatches */
+  --yarn-rose: #f8d4df;
+  --yarn-peach: #ffe1cf;
+  --yarn-butter: #fff0c4;
+  --yarn-mint: #d9f0e1;
+  --yarn-sky: #d8e9f8;
+  --yarn-lavender: #e7def6;
+
+  /* Status */
+  --done: #3f7a52;
+  --done-bg: #e3f3e8;
+  --done-strong: #4d9463;
+  --danger: #b3261e;
+  --danger-soft: #fde4e1;
+
+  /* Shape & depth */
+  --radius-sm: 10px;
+  --radius: 16px;
+  --radius-lg: 24px;
+  --radius-pill: 999px;
+  --shadow-sm: 0 1px 2px rgb(90 50 60 / 0.08);
+  --shadow: 0 4px 16px rgb(90 50 60 / 0.10);
+  --shadow-lg: 0 12px 32px rgb(90 50 60 / 0.16);
+
+  /* Type */
+  --font: ui-rounded, 'SF Pro Rounded', 'Segoe UI Variable Text', 'Segoe UI', system-ui, -apple-system, Roboto,
+    'Helvetica Neue', Arial, sans-serif;
+  --font-mono: ui-monospace, 'Cascadia Mono', Menlo, Consolas, monospace;
+
+  /* Layout */
+  --tap: 48px;
+  --gutter: 16px;
+  --content: 72rem;
+  --reading: 44rem;
+  --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #1f1a1d;
+    --bg-soft: #271f23;
+    --surface: #2b2327;
+    --surface-2: #33292e;
+    --border: #44383e;
+    --border-strong: #5a4a52;
+
+    --text: #f6ecef;
+    --text-muted: #cdbbc2;
+    --text-faint: #a8949c;
+
+    --primary: #f19bbb;
+    --primary-hover: #f7b6ce;
+    --primary-soft: #4a2a37;
+    --on-primary: #2a1019;
+    --accent: #f3a77e;
+
+    --yarn-rose: #4b2d38;
+    --yarn-peach: #4a3226;
+    --yarn-butter: #463d22;
+    --yarn-mint: #24402f;
+    --yarn-sky: #23364a;
+    --yarn-lavender: #372d4c;
+
+    --done: #8fd3a3;
+    --done-bg: #213a2a;
+    --done-strong: #6fbf86;
+    --danger: #ffb4ab;
+    --danger-soft: #4a201c;
+
+    --shadow-sm: 0 1px 2px rgb(0 0 0 / 0.4);
+    --shadow: 0 4px 16px rgb(0 0 0 / 0.35);
+    --shadow-lg: 0 12px 32px rgb(0 0 0 / 0.5);
+  }
+}

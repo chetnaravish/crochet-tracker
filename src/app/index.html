@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!--@meta {"title":"Crochet Tracker – My Patterns","description":"Write, save and follow your crochet patterns round by round.","path":"/app/","noindex":true}-->
+    <script>
+      // Apply text size before first paint to avoid a flash of the wrong size.
+      try {
+        document.documentElement.dataset.textSize = JSON.parse(localStorage.getItem('ct-settings') || '{}').textSize || 'normal';
+      } catch (e) {}
+    </script>
+    <link rel="stylesheet" href="/styles/app.css">
+  </head>
+  <body class="app">
+    <a class="skip-link" href="#view">Skip to content</a>
+    <div class="app-shell">
+      <main id="view" class="view" tabindex="-1">
+        <div class="loading" role="status">Loading your patterns…</div>
+      </main>
+    </div>
+
+    <nav class="bottom-nav" aria-label="App">
+      <a href="#/" data-tab="home" class="tab">
+        <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V20h14V9.5"/><path d="M10 20v-5h4v5"/></svg>
+        <span>Home</span>
+      </a>
+      <a href="#/create" data-tab="create" class="tab tab-create" aria-label="Create a new pattern">
+        <span class="tab-create-circle">
+          <svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+        </span>
+      </a>
+      <a href="#/saved" data-tab="saved" class="tab">
+        <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h12v18l-6-4-6 4z"/></svg>
+        <span>Saved</span>
+      </a>
+    </nav>
+
+    <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+    <noscript><p class="noscript">Crochet Tracker needs JavaScript to save and track your patterns.</p></noscript>
+    <script type="module" src="/js/app/main.js"></script>
+  </body>
+</html>
