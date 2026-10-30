@@ -17,7 +17,10 @@ The public pages (homepage, abbreviations glossary, stitch guides, long-form gui
   - A big Done button, Undo, and a stitch counter inside the current round.
   - Focus Mode, Screen Wake Lock, Reset progress, and a celebration screen when you finish.
   - Keyboard shortcuts on desktop: D (done), U (undo), + and − (counter).
-- Settings: text size (normal, large, extra large), JSON export, and import/restore.
+- Saved filters: All / In progress / Completed.
+- Work Mode extras: tap a done round to re-read it, and a "Last round!" hint.
+- Backup reminder on Home when patterns have changed and haven't been backed up recently.
+- Settings: text size (normal, large, extra large), JSON export, import/restore, and links to the website and help pages.
 
 **Website**
 - `/` homepage with FAQ
@@ -26,6 +29,9 @@ The public pages (homepage, abbreviations glossary, stitch guides, long-form gui
 - `/guides/` hub plus 2 guides
 - `/free-patterns/` with 3 patterns, each with an "Open in Tracker" button
 - `/about/`, `/privacy/` and a custom 404 page
+- `/search/`: site search over pages, abbreviations and free patterns. It uses `search-index.json`, which is generated at build time and also works offline.
+- Every inner page has a sticky Back button with breadcrumbs. A "Back to Tracker" button appears when the visitor came from the app.
+- A ☰ menu on mobile, and previous/next lesson links on stitch pages.
 
 ## Getting started
 
