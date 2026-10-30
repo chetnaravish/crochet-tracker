@@ -120,6 +120,17 @@ export async function renderWork(view, id) {
       li.classList.toggle('is-current', i === done);
       li.classList.toggle('is-upcoming', i > done);
       li.querySelector('.wr-state').textContent = i < done ? ' (done)' : i === done ? ' (current)' : '';
+      // Done rounds can be tapped open to re-read the full instructions.
+      if (i < done) {
+        li.tabIndex = 0;
+        li.setAttribute('role', 'button');
+        li.setAttribute('aria-expanded', String(li.classList.contains('peek')));
+      } else {
+        li.classList.remove('peek');
+        li.removeAttribute('tabindex');
+        li.removeAttribute('role');
+        li.removeAttribute('aria-expanded');
+      }
       if (i === done) li.setAttribute('aria-current', 'step');
       else li.removeAttribute('aria-current');
     });
@@ -220,6 +231,22 @@ export async function renderWork(view, id) {
     if (choice === 'saved') navigate('/saved');
     if (choice === 'again') restart();
   }
+
+  function togglePeek(li) {
+    const open = li.classList.toggle('peek');
+    li.setAttribute('aria-expanded', String(open));
+  }
+  list.addEventListener('click', (e) => {
+    const li = e.target.closest('.work-round.is-done');
+    if (li) togglePeek(li);
+  });
+  list.addEventListener('keydown', (e) => {
+    const li = e.target.closest('.work-round.is-done');
+    if (li && (e.key === 'Enter' || e.key === ' ')) {
+      e.preventDefault();
+      togglePeek(li);
+    }
+  });
 
   view.addEventListener('click', (e) => {
     const act = e.target.closest('[data-act]')?.dataset.act;

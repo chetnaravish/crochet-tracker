@@ -1,7 +1,8 @@
 // Home: continue the last pattern, quick actions, install hint.
 import { getAllPatterns } from '../../lib/db.js';
 import { progressOf } from '../../lib/patterns.js';
-import { esc, icons, formatDate } from '../ui.js';
+import { esc, icons, formatDate, toast, plural } from '../ui.js';
+import { exportBackup, shouldRemind, snoozeReminder } from '../backup.js';
 
 const isIos = () => /iphone|ipad|ipod/i.test(navigator.userAgent) && !window.MSStream;
 const isStandalone = () => matchMedia('(display-mode: standalone)').matches || navigator.standalone === true;
@@ -14,12 +15,28 @@ export async function renderHome(view) {
 
   view.innerHTML = `
     <header class="topbar">
-      <div class="brand"><span class="brand-mark">${icons.yarn}</span><span>Crochet Tracker</span></div>
+      <a class="brand" href="/" aria-label="Crochet Tracker website"><span class="brand-mark">${icons.yarn}</span><span>Crochet Tracker</span></a>
       <a class="icon-btn" href="#/settings" aria-label="Settings">${icons.settings}</a>
     </header>
     <div class="page">
       <h1 class="page-title">Hello, crocheter!</h1>
       <p class="lead">Write a pattern once, then tick off each round as you go.</p>
+
+      ${
+        shouldRemind(patterns)
+          ? `<section class="card backup-card" id="backup-reminder" aria-labelledby="backup-h">
+          <div class="backup-icon" aria-hidden="true">${icons.shield}</div>
+          <div>
+            <h2 id="backup-h">Keep your patterns safe</h2>
+            <p>Your patterns are saved only on this device. If the browser data is cleared, they're gone. Download a backup file, it takes one tap.</p>
+            <div class="backup-actions">
+              <button type="button" class="btn btn-primary" data-act="backup">${icons.download} Back up now</button>
+              <button type="button" class="btn btn-ghost" data-act="later">Later</button>
+            </div>
+          </div>
+        </section>`
+          : ''
+      }
 
       ${
         recent
@@ -47,13 +64,31 @@ export async function renderHome(view) {
 
       <div id="install" class="card install-card" hidden></div>
 
-      <p class="home-links">
-        <a href="/crochet-abbreviations/">Abbreviations</a> ·
-        <a href="/stitches/">Stitch guides</a> ·
-        <a href="/guides/how-to-read-a-crochet-pattern/">How to read a pattern</a>
-      </p>
+      <section class="card learn-card" aria-labelledby="learn-h">
+        <h2 id="learn-h">Learn &amp; explore</h2>
+        <ul class="link-list" role="list">
+          <li><a href="/crochet-abbreviations/"><span>Crochet abbreviations</span>${icons.forward}</a></li>
+          <li><a href="/stitches/"><span>Stitch guides</span>${icons.forward}</a></li>
+          <li><a href="/guides/how-to-read-a-crochet-pattern/"><span>How to read a pattern</span>${icons.forward}</a></li>
+          <li><a href="/"><span>Crochet Tracker website</span>${icons.forward}</a></li>
+        </ul>
+      </section>
       ${patterns.length ? `<p class="fine-print">Last change ${formatDate(Math.max(...patterns.map((p) => p.updatedAt))).toLowerCase()}. Your patterns are stored only on this device.</p>` : '<p class="fine-print">Your patterns are stored only on this device – no account needed.</p>'}
     </div>`;
+
+  const reminder = view.querySelector('#backup-reminder');
+  reminder?.addEventListener('click', async (e) => {
+    const act = e.target.closest('[data-act]')?.dataset.act;
+    if (act === 'backup') {
+      const count = await exportBackup();
+      toast(`Backup saved: ${plural(count, 'pattern')}. Keep the file somewhere safe.`);
+      reminder.remove();
+    } else if (act === 'later') {
+      snoozeReminder();
+      reminder.remove();
+      toast('OK, we will remind you next week');
+    }
+  });
 
   setupInstall(view.querySelector('#install'));
   const onInstallable = () => setupInstall(view.querySelector('#install'));

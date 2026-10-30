@@ -4,9 +4,15 @@
       <svg viewBox="0 0 64 64" width="34" height="34" aria-hidden="true" focusable="false"><circle cx="32" cy="32" r="28" fill="#b4436c"/><g fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" opacity=".9"><path d="M12 18c10 2 23 12 27 40"/><path d="M22 6c5 8 17 17 37 18"/><path d="M5 36c11-1 22 6 26 22"/><path d="M44 7c-4 9-3 21 13 33"/></g></svg>
       <span>Crochet Tracker</span>
     </a>
-    <a class="btn btn-primary header-cta" href="/app/">Open Tracker</a>
+    <div class="header-actions">
+      <a class="btn btn-primary header-cta" href="/app/">Open Tracker</a>
+      <button type="button" class="menu-toggle" aria-expanded="false" aria-controls="site-nav">
+        <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" aria-hidden="true" focusable="false"><path class="m-open" d="M4 7h16M4 12h16M4 17h16"/><path class="m-close" d="M6 6l12 12M18 6 6 18"/></svg>
+        <span class="visually-hidden">Menu</span>
+      </button>
+    </div>
   </div>
-  <nav class="site-nav" aria-label="Main">
+  <nav class="site-nav" id="site-nav" aria-label="Main">
     <ul class="container">
       <li><a href="/app/" data-nav="tracker">Tracker</a></li>
       <li><a href="/crochet-abbreviations/" data-nav="abbreviations">Abbreviations</a></li>

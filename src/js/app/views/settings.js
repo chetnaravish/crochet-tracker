@@ -1,14 +1,28 @@
-// Settings: text size and JSON backup / restore.
+// Settings: text size, JSON backup / restore, and links to the website.
 import { getAllPatterns, savePatterns } from '../../lib/db.js';
-import { makeBackup, readBackup } from '../../lib/patterns.js';
+import { readBackup } from '../../lib/patterns.js';
 import { getSettings, setSetting } from '../../lib/settings.js';
-import { icons, toast, confirmDialog, plural } from '../ui.js';
+import { exportBackup } from '../backup.js';
+import { icons, toast, confirmDialog, plural, formatDate } from '../ui.js';
 
 const SIZES = [
   ['normal', 'Normal'],
   ['large', 'Large'],
   ['xlarge', 'Extra large'],
 ];
+
+const HELP_LINKS = [
+  ['/', 'Crochet Tracker website'],
+  ['/free-patterns/', 'Free beginner patterns'],
+  ['/crochet-abbreviations/', 'Crochet abbreviations'],
+  ['/stitches/', 'Stitch guides'],
+  ['/guides/how-to-read-a-crochet-pattern/', 'How to read a pattern'],
+];
+
+const lastBackupText = () => {
+  const at = getSettings().lastBackupAt;
+  return at ? `Last backup: ${formatDate(at).toLowerCase()}.` : 'You have not made a backup yet.';
+};
 
 export function renderSettings(view) {
   const current = getSettings().textSize;
@@ -31,6 +45,7 @@ export function renderSettings(view) {
       <section class="card settings-card" aria-labelledby="bk-h">
         <h2 id="bk-h">Backup</h2>
         <p class="field-hint">Your patterns are saved only in this browser. Download a backup file to keep them safe or move them to another device.</p>
+        <p class="backup-status" id="backup-status">${lastBackupText()}</p>
         <div class="settings-actions">
           <button type="button" class="btn btn-primary" data-act="export">${icons.download} Export all patterns</button>
           <label class="btn btn-outline file-btn">
@@ -41,10 +56,17 @@ export function renderSettings(view) {
         <p class="field-hint">Importing adds the patterns from the file. Patterns that already exist on this device are updated.</p>
       </section>
 
+      <section class="card settings-card" aria-labelledby="help-h">
+        <h2 id="help-h">Website &amp; help</h2>
+        <ul class="link-list" role="list">
+          ${HELP_LINKS.map(([href, label]) => `<li><a href="${href}"><span>${label}</span>${icons.forward}</a></li>`).join('')}
+        </ul>
+      </section>
+
       <section class="card settings-card" aria-labelledby="ab-h">
         <h2 id="ab-h">About</h2>
         <p>Crochet Tracker is free and works offline. No account, no tracking – your data never leaves your device.</p>
-        <p class="settings-links"><a href="/">Website</a> · <a href="/about/">About</a> · <a href="/privacy/">Privacy</a> · <a href="/crochet-abbreviations/">Abbreviations</a></p>
+        <p class="settings-links"><a href="/about/">About</a> · <a href="/privacy/">Privacy</a></p>
       </section>
     </div>`;
 
@@ -56,18 +78,10 @@ export function renderSettings(view) {
   });
 
   view.querySelector('[data-act="export"]').addEventListener('click', async () => {
-    const patterns = await getAllPatterns();
-    if (!patterns.length) return toast('No patterns to export yet');
-    const blob = new Blob([JSON.stringify(makeBackup(patterns), null, 2)], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = `crochet-tracker-backup-${new Date().toISOString().slice(0, 10)}.json`;
-    document.body.append(a);
-    a.click();
-    a.remove();
-    setTimeout(() => URL.revokeObjectURL(url), 1000);
-    toast(`Exported ${plural(patterns.length, 'pattern')}`);
+    const count = await exportBackup();
+    if (!count) return toast('No patterns to export yet');
+    view.querySelector('#backup-status').textContent = lastBackupText();
+    toast(`Exported ${plural(count, 'pattern')}`);
   });
 
   view.querySelector('#import-file').addEventListener('change', async (e) => {

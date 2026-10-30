@@ -146,6 +146,8 @@ function renderMeta(meta, html) {
   const tags = [
     '<meta charset="utf-8">',
     '<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">',
+    // Tiny inline flag so CSS can collapse the mobile menu only when JS can open it again.
+    "<script>document.documentElement.classList.add('js')</script>",
     `<title>${escAttr(meta.title)}</title>`,
     `<meta name="description" content="${escAttr(meta.description)}">`,
     `<meta name="robots" content="${meta.noindex ? 'noindex, nofollow' : 'index, follow, max-image-preview:large'}">`,

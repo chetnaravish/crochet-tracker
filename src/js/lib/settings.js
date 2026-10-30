@@ -2,7 +2,7 @@
 // applied synchronously before the first paint. Pattern data itself lives in IndexedDB.
 
 const KEY = 'ct-settings';
-const DEFAULTS = { textSize: 'normal', focusMode: false };
+const DEFAULTS = { textSize: 'normal', focusMode: false, lastBackupAt: null, backupSnoozedAt: null };
 export const TEXT_SIZES = ['normal', 'large', 'xlarge'];
 
 export function getSettings() {

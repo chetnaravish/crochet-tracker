@@ -11,6 +11,8 @@ export const icons = {
   plus: svg('<path d="M12 5v14M5 12h14"/>'),
   saved: svg('<path d="M6 3h12v18l-6-4-6 4z"/>'),
   back: svg('<path d="m15 18-6-6 6-6"/>'),
+  forward: svg('<path d="m9 18 6-6-6-6"/>'),
+  shield: svg('<path d="M12 3 4 6v6c0 5 3.5 8 8 9 4.5-1 8-4 8-9V6z"/><path d="m9 12 2 2 4-4"/>'),
   edit: svg('<path d="M4 20h4L19 9l-4-4L4 16z"/><path d="m13.5 6.5 4 4"/>'),
   reset: svg('<path d="M3 12a9 9 0 1 0 3-6.7"/><path d="M3 4v5h5"/>'),
   focus: svg('<circle cx="12" cy="12" r="3"/><path d="M3 8V5a2 2 0 0 1 2-2h3M16 3h3a2 2 0 0 1 2 2v3M21 16v3a2 2 0 0 1-2 2h-3M8 21H5a2 2 0 0 1-2-2v-3"/>'),

@@ -4,6 +4,29 @@ import { registerServiceWorker } from './lib/sw-register.js';
 
 registerServiceWorker();
 
+// Mobile menu (☰): opens the main nav as a list; closes on Escape, outside tap or link tap.
+const menuBtn = document.querySelector('.menu-toggle');
+const siteNav = document.getElementById('site-nav');
+if (menuBtn && siteNav) {
+  const setOpen = (open) => {
+    menuBtn.setAttribute('aria-expanded', String(open));
+    siteNav.classList.toggle('open', open);
+  };
+  menuBtn.addEventListener('click', () => setOpen(menuBtn.getAttribute('aria-expanded') !== 'true'));
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && siteNav.classList.contains('open')) {
+      setOpen(false);
+      menuBtn.focus();
+    }
+  });
+  document.addEventListener('click', (e) => {
+    if (siteNav.classList.contains('open') && !e.target.closest('.site-header')) setOpen(false);
+  });
+  siteNav.addEventListener('click', (e) => {
+    if (e.target.closest('a')) setOpen(false);
+  });
+}
+
 // Back button: return to the exact previous page (including an app screen) when the
 // visitor came from this site; otherwise the link's href goes to the parent page.
 const back = document.querySelector('[data-back]');

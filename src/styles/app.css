@@ -548,6 +548,59 @@ body.no-nav .toast { bottom: calc(104px + env(safe-area-inset-bottom)); }
 .size-preview span { color: var(--text-muted); font-weight: 600; }
 .settings-links { font-weight: 600; margin: 0; }
 
+/* ---------- Backup reminder & link lists ---------- */
+.backup-card {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 14px;
+  margin-top: 16px;
+  padding: 16px;
+  background: var(--yarn-butter);
+  border-color: transparent;
+  animation: pop-in 0.3s var(--ease);
+}
+.backup-card h2 { font-size: 1.1rem; margin-bottom: 4px; }
+.backup-card p { margin: 0 0 12px; color: var(--text-muted); font-size: 0.95rem; }
+.backup-icon { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%; background: var(--surface); color: var(--done); }
+.backup-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.backup-status { font-weight: 700; margin: 8px 0 0; }
+.learn-card { margin-top: 24px; padding: 8px 16px 12px; }
+.learn-card h2 { font-size: 1.05rem; margin: 10px 0 4px; }
+.link-list { list-style: none; margin: 0; padding: 0; }
+.link-list li + li { border-top: 1px solid var(--border); }
+.link-list a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  min-height: var(--tap);
+  color: var(--text);
+  font-weight: 700;
+  text-decoration: none;
+}
+.link-list a:hover { color: var(--primary); }
+.link-list svg { width: 20px; height: 20px; flex: none; color: var(--text-faint); }
+a.brand { color: var(--text); text-decoration: none; min-height: var(--tap); }
+a.brand:hover { color: var(--primary); }
+
+/* Done rounds: tap to re-read */
+.work-round.is-done { cursor: pointer; }
+.work-round.is-done .wr-head::after {
+  content: '';
+  width: 8px;
+  height: 8px;
+  margin: 0 4px 0 auto;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: rotate(45deg);
+  transition: transform 0.2s;
+  flex: none;
+}
+.work-round.is-done .wr-head:has(.wr-sts)::after { margin-left: 8px; }
+.work-round.is-done.peek .wr-head::after { transform: rotate(-135deg); }
+.work-round.is-done.peek .wr-text { display: block; -webkit-line-clamp: unset; overflow: visible; font-size: 1rem; color: var(--text); }
+.work-round.is-done:hover { filter: brightness(0.98); }
+
 /* ---------- Animations ---------- */
 @keyframes pop-in { from { opacity: 0; transform: scale(0.97); } }
 @keyframes slide-up { from { transform: translateY(100%); } }
