@@ -337,3 +337,26 @@ td:first-child, th[scope='row'] { font-family: var(--font-mono); font-weight: 70
   .js .header-cta { display: none; }
 }
 @keyframes menu-in { from { opacity: 0; transform: translateY(-6px); } }
+
+/* ---------- Stitch lesson pager ---------- */
+.pager { max-width: var(--reading); margin-top: 40px; }
+.pager-step { margin: 0 0 8px; font-size: 0.85rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted); }
+.pager-links { display: grid; gap: 12px; }
+@media (min-width: 560px) { .pager-links { grid-template-columns: 1fr 1fr; } }
+.pager-link {
+  display: grid;
+  gap: 2px;
+  padding: 14px 18px;
+  border-radius: var(--radius);
+  border: 2px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  text-decoration: none;
+}
+.pager-link small { color: var(--text-muted); font-weight: 700; }
+.pager-link span { font-weight: 800; font-size: 1.1rem; }
+.pager-link:hover { border-color: var(--primary); color: var(--text); }
+.pager-link.next { text-align: right; background: var(--primary-soft); border-color: transparent; }
+.pager-link.next:hover { border-color: var(--primary); }
+.lesson-no { margin: 12px 0 0 !important; font-size: 0.8rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; color: var(--primary) !important; }
+.lesson-no + h3 { margin-top: 2px; }
