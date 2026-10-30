@@ -250,3 +250,4 @@ td:first-child, th[scope='row'] { font-family: var(--font-mono); font-weight: 70
 .notfound { padding-block: 64px; text-align: center; }
 .notfound .big { font-size: 5rem; line-height: 1; }
 .notfound .hero-actions { justify-content: center; }
+.h3 { font-size: 1.15rem; margin-top: 12px; }
