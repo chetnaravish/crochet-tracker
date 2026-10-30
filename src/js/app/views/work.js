@@ -69,6 +69,7 @@ export async function renderWork(view, id) {
             <div class="wr-head">
               <span class="wr-check" aria-hidden="true">${icons.check}</span>
               <span class="wr-label">Round ${i + 1}<span class="visually-hidden wr-state"></span></span>
+              ${i === p.rounds.length - 1 && i > 0 ? '<span class="wr-last">🎉 Last round!</span>' : ''}
               ${r.stitches ? `<span class="wr-sts">${esc(r.stitches)}</span>` : ''}
             </div>
             <p class="wr-text">${esc(r.text) || '<em>No instructions</em>'}</p>
@@ -115,7 +116,9 @@ export async function renderWork(view, id) {
 
   function update() {
     const { done, total, complete, pct } = progressOf(p);
+    const isLast = !complete && total > 1 && done === total - 1;
     items.forEach((li, i) => {
+      li.classList.toggle('is-last', i === total - 1);
       li.classList.toggle('is-done', i < done);
       li.classList.toggle('is-current', i === done);
       li.classList.toggle('is-upcoming', i > done);
@@ -147,7 +150,9 @@ export async function renderWork(view, id) {
 
     doneBtn.innerHTML = complete
       ? `🎉 <span>Pattern complete!</span>`
-      : `${icons.check}<span>Done · Round ${done + 1}</span>`;
+      : isLast
+        ? `${icons.check}<span>Finish · Round ${done + 1}</span>`
+        : `${icons.check}<span>Done · Round ${done + 1}</span>`;
     doneBtn.classList.toggle('is-complete', complete);
     undoBtn.disabled = done === 0;
   }

@@ -5,18 +5,31 @@ import { navigate } from '../router.js';
 import { esc, icons, formatDate, actionSheet, confirmDialog, toast } from '../ui.js';
 
 const SORT_KEY = 'ct-sort';
+const FILTER_KEY = 'ct-filter';
+const FILTERS = [
+  ['all', 'All'],
+  ['progress', 'In progress'],
+  ['done', 'Completed'],
+];
+const readPref = (key, fallback) => {
+  try {
+    return localStorage.getItem(key) || fallback;
+  } catch {
+    return fallback;
+  }
+};
+const writePref = (key, value) => {
+  try {
+    localStorage.setItem(key, value);
+  } catch {}
+};
 const LONG_PRESS_MS = 500;
 
 export async function renderSaved(view) {
   let patterns = await getAllPatterns();
   let query = '';
-  let sort = (() => {
-    try {
-      return localStorage.getItem(SORT_KEY) || 'recent';
-    } catch {
-      return 'recent';
-    }
-  })();
+  let sort = readPref(SORT_KEY, 'recent');
+  let filter = readPref(FILTER_KEY, 'all');
 
   view.innerHTML = `
     <header class="topbar">
@@ -27,9 +40,15 @@ export async function renderSaved(view) {
       <div class="saved-tools" ${patterns.length ? '' : 'hidden'}>
         <label class="visually-hidden" for="search">Search patterns</label>
         <input id="search" type="search" placeholder="Search patterns" autocomplete="off" enterkeyhint="search">
-        <div class="segmented" role="radiogroup" aria-label="Sort by">
-          <button type="button" role="radio" data-sort="recent">Recent</button>
-          <button type="button" role="radio" data-sort="name">Name</button>
+        <div class="segmented filter-tabs" role="radiogroup" aria-label="Show">
+          ${FILTERS.map(([v, l]) => `<button type="button" role="radio" data-filter="${v}">${l} <span class="tab-count" data-count="${v}"></span></button>`).join('')}
+        </div>
+        <div class="sort-row">
+          <span class="sort-label" id="sort-label">Sort:</span>
+          <div class="segmented sort-tabs" role="radiogroup" aria-labelledby="sort-label">
+            <button type="button" role="radio" data-sort="recent">Recent</button>
+            <button type="button" role="radio" data-sort="name">Name</button>
+          </div>
         </div>
       </div>
       <div id="list" class="pattern-list"></div>
@@ -40,6 +59,10 @@ export async function renderSaved(view) {
 
   function draw() {
     for (const b of view.querySelectorAll('[data-sort]')) b.setAttribute('aria-checked', String(b.dataset.sort === sort));
+    for (const b of view.querySelectorAll('[data-filter]')) b.setAttribute('aria-checked', String(b.dataset.filter === filter));
+    const doneCount = patterns.filter((p) => progressOf(p).complete).length;
+    const counts = { all: patterns.length, progress: patterns.length - doneCount, done: doneCount };
+    for (const el of view.querySelectorAll('[data-count]')) el.textContent = counts[el.dataset.count];
     view.querySelector('.saved-tools').hidden = !patterns.length;
 
     if (!patterns.length) {
@@ -57,6 +80,7 @@ export async function renderSaved(view) {
     const q = query.trim().toLowerCase();
     const shown = patterns
       .filter((p) => !q || p.title.toLowerCase().includes(q))
+      .filter((p) => filter === 'all' || progressOf(p).complete === (filter === 'done'))
       .sort((a, b) =>
         sort === 'name'
           ? a.title.localeCompare(b.title, undefined, { sensitivity: 'base' })
@@ -64,7 +88,12 @@ export async function renderSaved(view) {
       );
 
     if (!shown.length) {
-      list.innerHTML = `<p class="empty-search" role="status">No patterns match “${esc(query)}”.</p>`;
+      const why = q
+        ? `No patterns match “${esc(query)}”${filter === 'all' ? '' : ' here'}.`
+        : filter === 'done'
+          ? "No completed patterns yet. Keep going, you're doing great!"
+          : 'Nothing in progress. Every pattern is finished! 🎉';
+      list.innerHTML = `<p class="empty-search" role="status">${why}</p>`;
       return;
     }
 
@@ -125,13 +154,11 @@ export async function renderSaved(view) {
     draw();
   });
 
-  view.querySelector('.segmented').addEventListener('click', (e) => {
-    const b = e.target.closest('[data-sort]');
+  view.querySelector('.saved-tools').addEventListener('click', (e) => {
+    const b = e.target.closest('[data-sort], [data-filter]');
     if (!b) return;
-    sort = b.dataset.sort;
-    try {
-      localStorage.setItem(SORT_KEY, sort);
-    } catch {}
+    if (b.dataset.sort) writePref(SORT_KEY, (sort = b.dataset.sort));
+    if (b.dataset.filter) writePref(FILTER_KEY, (filter = b.dataset.filter));
     draw();
   });
 

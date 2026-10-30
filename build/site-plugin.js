@@ -200,6 +200,53 @@ function listFiles(dir, base = dir) {
   });
 }
 
+// ---------- Site search index ----------
+// Built from the source pages: one entry per indexable page, plus one per glossary
+// abbreviation and per free pattern, so a search for "FLO" lands on the exact row.
+function pageType(p) {
+  if (p.startsWith('/stitches/') && p !== '/stitches/') return 'Stitch';
+  if (p.startsWith('/guides/') && p !== '/guides/') return 'Guide';
+  if (p === '/crochet-abbreviations/') return 'Glossary';
+  if (p === '/free-patterns/') return 'Patterns';
+  return 'Page';
+}
+
+function buildSearchIndex() {
+  const srcRoot = path.resolve('src');
+  const entries = [];
+  const files = listFiles(srcRoot).filter((f) => f.endsWith('.html') && !f.startsWith('partials/'));
+  for (const f of files) {
+    const html = fs.readFileSync(path.join(srcRoot, f), 'utf8');
+    const m = html.match(/<!--@meta\s+([\s\S]*?)-->/);
+    if (!m) continue;
+    const meta = JSON.parse(m[1]);
+    if (meta.noindex) continue;
+    const main = (html.match(/<main[^>]*>([\s\S]*?)<\/main>/) || [, ''])[1].replace(/<(script|style)[\s\S]*?<\/\1>/g, '');
+    entries.push({
+      u: meta.path,
+      t: h1Text(html) || meta.title,
+      d: meta.description,
+      k: pageType(meta.path),
+      h: [...main.matchAll(/<h[23][^>]*>([\s\S]*?)<\/h[23]>/g)].map((x) => toText(x[1])).join(' · '),
+      x: toText(main).slice(0, 4000),
+    });
+
+    if (meta.path === '/crochet-abbreviations/') {
+      const tbody = (html.match(/<table data-filter-rows>[\s\S]*?<tbody>([\s\S]*?)<\/tbody>/) || [, ''])[1];
+      for (const row of tbody.matchAll(/<tr>([\s\S]*?)<\/tr>/g)) {
+        const [abbr, us, uk, meaning] = [...row[1].matchAll(/<td>([\s\S]*?)<\/td>/g)].map((c) => toText(c[1]));
+        entries.push({ u: `/crochet-abbreviations/?q=${encodeURIComponent(abbr)}`, t: `${abbr} – ${us}`, d: `UK: ${uk}. ${meaning}`, k: 'Abbreviation', a: abbr });
+      }
+    }
+    if (meta.path === '/free-patterns/') {
+      for (const art of html.matchAll(/<article class="pattern" id="([\w-]+)"[^>]*data-title="([^"]+)"[\s\S]*?<\/ul>\s*<p>([\s\S]*?)<\/p>/g)) {
+        entries.push({ u: `/free-patterns/#${art[1]}`, t: art[2], d: toText(art[3]), k: 'Free pattern' });
+      }
+    }
+  }
+  return entries;
+}
+
 export default function sitePlugin() {
   let isBuild = false;
   let outDir = 'dist';
@@ -207,6 +254,14 @@ export default function sitePlugin() {
 
   return {
     name: 'crochet-site',
+    // Dev server: serve a fresh search index on every request.
+    configureServer(server) {
+      server.middlewares.use('/search-index.json', (_req, res) => {
+        res.setHeader('Content-Type', 'application/json');
+        res.end(JSON.stringify(buildSearchIndex()));
+      });
+    },
+
     configResolved(config) {
       isBuild = config.command === 'build';
       outDir = config.build.outDir;
@@ -274,6 +329,9 @@ export default function sitePlugin() {
         path.join(out, 'robots.txt'),
         `User-agent: *\nAllow: /\n\nSitemap: ${abs('/sitemap.xml')}\n`,
       );
+
+      // search-index.json – used by /search/ (and precached below, so search works offline)
+      fs.writeFileSync(path.join(out, 'search-index.json'), JSON.stringify(buildSearchIndex()));
 
       // sw.js – precache every built file so the whole site works offline
       const skip = /(^|\/)(sw\.js|sitemap\.xml|robots\.txt|og-image\.png)$|\.map$/;

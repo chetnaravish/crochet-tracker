@@ -74,7 +74,11 @@ for (const btn of document.querySelectorAll('[data-open-pattern]')) {
   });
 }
 
-// Abbreviation glossary: live filter.
+// Site search page.
+const searchForm = document.getElementById('site-search');
+if (searchForm) import('./lib/search.js').then(({ initSearch }) => initSearch(searchForm));
+
+// Abbreviation glossary: live filter (pre-filled from ?q= when coming from search).
 const filter = document.getElementById('abbr-filter');
 if (filter) {
   const rows = [...document.querySelectorAll('[data-filter-rows] tbody tr')];
@@ -89,4 +93,10 @@ if (filter) {
     }
     count.textContent = q ? `${shown} of ${rows.length} abbreviations match` : '';
   });
+  const q = new URLSearchParams(location.search).get('q');
+  if (q) {
+    filter.value = q;
+    filter.dispatchEvent(new Event('input'));
+    filter.scrollIntoView({ block: 'start' });
+  }
 }

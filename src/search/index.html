@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!--@meta {"title":"Search | Crochet Tracker","description":"Search crochet abbreviations, stitch guides, free patterns and how-to guides on Crochet Tracker.","path":"/search/","noindex":true,"crumbs":[["Search"]]}-->
+    <link rel="stylesheet" href="/styles/site.css">
+    <script type="module" src="/js/site.js"></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <!--@include header-->
+    <main id="main" class="container article">
+      <div class="prose">
+        <h1>Search</h1>
+        <p class="lead">Find abbreviations, stitches, guides and free patterns.</p>
+      </div>
+      <form class="search-form" action="/search/" method="get" role="search" id="site-search">
+        <label class="visually-hidden" for="q">Search the site</label>
+        <input id="q" name="q" type="search" placeholder="Try “FLO”, “magic ring” or “coaster”" autocomplete="off" enterkeyhint="search">
+        <button class="btn btn-primary" type="submit">Search</button>
+      </form>
+      <p class="search-status" id="search-status" role="status" aria-live="polite"></p>
+      <ol class="search-results" id="search-results" role="list"></ol>
+      <div class="search-suggest" id="search-suggest">
+        <h2 class="h3">Popular searches</h2>
+        <ul class="related">
+          <li><a href="/search/?q=magic+ring">magic ring</a></li>
+          <li><a href="/search/?q=sc">sc</a></li>
+          <li><a href="/search/?q=increase">increase</a></li>
+          <li><a href="/search/?q=BLO">BLO</a></li>
+          <li><a href="/search/?q=UK+terms">UK terms</a></li>
+          <li><a href="/search/?q=amigurumi">amigurumi</a></li>
+        </ul>
+      </div>
+    </main>
+    <!--@include footer-->
+  </body>
+</html>
