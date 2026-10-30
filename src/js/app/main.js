@@ -26,6 +26,10 @@ function screen(tab, { hideNav = false } = {}) {
     else a.removeAttribute('aria-current');
   }
   window.scrollTo(0, 0);
+  // Lets the website's "Back to Tracker" button return to this exact screen.
+  try {
+    sessionStorage.setItem('ct-app-url', location.pathname + location.hash);
+  } catch {}
   return el;
 }
 

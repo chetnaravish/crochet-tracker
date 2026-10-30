@@ -120,6 +120,26 @@ function webAppSchema(meta) {
   };
 }
 
+// Bar under the header: a Back link (to the parent page; site.js upgrades it to
+// history.back() when the visitor came from another page of this site) + breadcrumbs.
+function crumbBar(crumbs) {
+  const items = [['Home', '/'], ...crumbs];
+  const parent = items.length > 1 ? items[items.length - 2][1] : '/';
+  const lis = items
+    .map(([name, p], i) =>
+      i === items.length - 1
+        ? `<li aria-current="page">${escAttr(name)}</li>`
+        : `<li><a href="${p}">${escAttr(name)}</a></li>`,
+    )
+    .join('');
+  return `<div class="crumbbar">
+      <div class="container crumbbar-inner">
+        <a class="back-link" href="${parent}" data-back><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="m15 18-6-6 6-6"/></svg><span>Back</span></a>
+        <nav class="breadcrumbs" aria-label="Breadcrumb"><ol>${lis}</ol></nav>
+      </div>
+    </div>`;
+}
+
 function renderMeta(meta, html) {
   const url = abs(meta.path);
   const ogImage = abs(OG_IMAGE);
@@ -207,6 +227,8 @@ export default function sitePlugin() {
           if (meta.nav) {
             html = html.replace(`data-nav="${meta.nav}"`, `data-nav="${meta.nav}" aria-current="page"`);
           }
+          // Back button + visible breadcrumbs, built from the same crumbs as the JSON-LD.
+          if (meta.crumbs) html = html.replace('<main id="main"', () => `${crumbBar(meta.crumbs)}\n    <main id="main"`);
         }
 
         // 3. Constants
