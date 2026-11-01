@@ -120,6 +120,29 @@ function chartSymbols(p) {
   return [...used];
 }
 
+// Stitch abbreviations inside a pattern line get a soft highlight so they are easy to spot.
+const ABBR_RE = /\b(sl st|MR|sc|hdc|dc|tr|inc|dec|ch|BLO|FLO)\b/g;
+const markAbbr = (text) => esc(text).replace(ABBR_RE, '<b class="ab">$1</b>');
+
+function countBadge(count) {
+  if (!count) return '';
+  const label = /^\d+$/.test(count) ? `${count} sts` : count;
+  return `<span class="pp-count" title="Stitch count at the end of this step">${esc(label)}</span>`;
+}
+
+function roundRow(r) {
+  const isNote = !r.r || !/^R\d/.test(r.r);
+  const steps = r.steps?.length
+    ? `<ol class="pp-substeps">${r.steps.map((s) => `<li><span>${markAbbr(s)}</span></li>`).join('')}</ol>`
+    : '';
+  return `<li class="pp-row${isNote ? ' pp-note' : ''}">
+              <span class="tick" aria-hidden="true"></span>
+              ${r.r ? `<span class="pp-label">${esc(r.r)}</span>` : '<span class="pp-label pp-label-empty" aria-hidden="true">•</span>'}
+              <div class="pp-body"><p>${markAbbr(r.text)}</p>${steps}</div>
+              ${countBadge(r.count)}
+            </li>`;
+}
+
 export function renderPattern(p) {
   const meta = {
     title: p.seoTitle || `${p.title} – Free Crochet Pattern | Crochet Tracker`,
@@ -135,22 +158,33 @@ export function renderPattern(p) {
   const chartRounds = p.sections.flatMap((s) => s.rounds.filter((r) => r.chart).map((r) => ({ ...r, colour: s.colour })));
   const notes = (p.notes || []).join(' ');
   const steps = trackerSteps(p);
-  const art = p.image?.type === 'photo'
+  const isPhoto = p.image?.type === 'photo';
+  const art = isPhoto
     ? `<img src="${esc(p.image.src)}" alt="${esc(p.image.alt)}" width="1200" height="1200" loading="eager">`
     : p.image?.art === 'sunflower' ? sunflowerArt() : '';
+
+  const facts = [
+    ['Level', esc(p.level)],
+    ['Time', esc(p.time)],
+    ['Hook', esc(p.hook)],
+    ['Size', esc(p.size)],
+    ['Yarn', esc(p.yarn)],
+    ['Terms', `<a href="/guides/us-vs-uk-crochet-terms/">${esc(p.terms)} terms</a>`],
+  ];
 
   const sections = p.sections
     .map(
       (s) => `
-          <h3 class="pattern-section">${esc(s.title)}${s.make > 1 ? ` <span class="make">make ${s.make}</span>` : ''}${s.colourName ? ` <span class="swatch swatch-${esc(s.colour)}">${esc(s.colourName)}</span>` : ''}</h3>
-          <ol class="pattern-rounds" role="list">
-            ${s.rounds
-              .map(
-                (r) =>
-                  `<li><span class="tick" aria-hidden="true"></span><span class="r">${esc(r.r)}</span><span class="t">${esc(r.text)}</span><span class="s">${r.count ? `(${esc(r.count)})` : ''}</span></li>`,
-              )
-              .join('\n            ')}
-          </ol>`,
+          <div class="pp-section">
+            <div class="pp-section-head">
+              <h3>${esc(s.title)}</h3>
+              ${s.colourName ? `<span class="swatch swatch-${esc(s.colour)}">${esc(s.colourName)}</span>` : ''}
+              ${s.make > 1 ? `<span class="pp-make">Make ${s.make}</span>` : ''}
+            </div>
+            <ol class="pp-rounds" role="list">
+            ${s.rounds.map(roundRow).join('\n            ')}
+            </ol>
+          </div>`,
     )
     .join('');
 
@@ -166,81 +200,85 @@ export function renderPattern(p) {
     <a class="skip-link" href="#main">Skip to content</a>
     <!--@include header-->
     <main id="main">
-      <article class="container article pattern-page" data-pattern="${esc(p.slug)}" data-title="${esc(p.title)}" data-hook="${esc(p.hook)}" data-yarn="${esc(p.yarn)}" data-notes="${esc(notes)}">
-        <div class="prose">
-          <h1>${esc(p.title)}</h1>
-          <p class="lead">${esc(p.lead)}</p>
-          <div class="pattern-actions no-print">
-            <a class="btn btn-primary btn-lg" href="#pattern">Jump to Pattern</a>
-            <button type="button" class="btn btn-outline btn-lg" data-open-pattern>Open in Tracker</button>
+      <article class="container pp" data-pattern="${esc(p.slug)}" data-title="${esc(p.title)}" data-hook="${esc(p.hook)}" data-yarn="${esc(p.yarn)}" data-notes="${esc(notes)}">
+
+        <header class="pp-hero">
+          <figure class="pp-photo">
+            ${art}
+            ${isPhoto ? '' : '<figcaption class="no-print"><span class="badge">Illustration</span> Real photo coming soon</figcaption>'}
+          </figure>
+          <div class="pp-intro">
+            <p class="pp-kicker">Free crochet pattern · ${esc(p.level)}</p>
+            <h1>${esc(p.title)}</h1>
+            <p class="pp-lead">${esc(p.lead)}</p>
+            <div class="pp-actions no-print">
+              <a class="btn btn-primary btn-lg" href="#pattern">Jump to Pattern</a>
+              <button type="button" class="btn btn-outline btn-lg" data-open-pattern>Open in Tracker</button>
+              <button type="button" class="btn btn-ghost btn-lg" data-print>
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9V3h12v6"/><rect x="3" y="9" width="18" height="8" rx="2"/><path d="M6 14h12v7H6z"/></svg>
+                Print / PDF
+              </button>
+            </div>
+            <p class="open-status" aria-live="polite"></p>
           </div>
-          <p class="field-hint no-print">Open in Tracker saves the pattern on your phone, so you can tick off each round as you go.</p>
-          <p class="open-status" aria-live="polite"></p>
+        </header>
+
+        <dl class="pp-facts">
+          ${facts.map(([k, v]) => `<div><dt>${k}</dt><dd>${v}</dd></div>`).join('\n          ')}
+        </dl>
+
+        <div class="pp-two">
+          <div class="pp-col">
+            <section class="pp-card">
+              <h2>Materials</h2>
+              <ul class="pp-list">${(p.materials || []).map((m) => `<li>${esc(m)}</li>`).join('')}</ul>
+            </section>
+            ${p.notes?.length ? `<aside class="pp-callout"><h2>Before you start</h2><ul class="pp-list">${p.notes.map((n) => `<li>${esc(n)}</li>`).join('')}</ul></aside>` : ''}
+          </div>
+          <section class="pp-card">
+            <h2>Abbreviations</h2>
+            <ul class="abbr-list">${abbrList(p.abbreviations || [])}</ul>
+            <p class="pp-small no-print">All terms: <a href="/crochet-abbreviations/">crochet abbreviations chart</a></p>
+          </section>
         </div>
 
-        <figure class="pattern-photo">
-          ${art}
-          ${p.image?.type === 'photo' ? '' : '<figcaption><span class="badge">Illustration</span> The real photo is coming soon.</figcaption>'}
-        </figure>
-
-        <div class="prose">
-          <dl class="facts pattern-info">
-            <div><dt>Level</dt><dd>${esc(p.level)}</dd></div>
-            <div><dt>Time</dt><dd>${esc(p.time)}</dd></div>
-            <div><dt>Hook</dt><dd>${esc(p.hook)}</dd></div>
-            <div><dt>Yarn</dt><dd>${esc(p.yarn)}</dd></div>
-            <div><dt>Finished size</dt><dd>${esc(p.size)}</dd></div>
-            <div><dt>Terms</dt><dd><a href="/guides/us-vs-uk-crochet-terms/">${esc(p.terms)} terms</a></dd></div>
-          </dl>
-
-          <h2>Materials</h2>
-          <ul>${(p.materials || []).map((m) => `<li>${esc(m)}</li>`).join('')}</ul>
-
-          <h2>Abbreviations</h2>
-          <ul class="abbr-list">${abbrList(p.abbreviations || [])}</ul>
-          <p class="no-print">Need more? See the full <a href="/crochet-abbreviations/">crochet abbreviations chart</a>.</p>
-
-          ${p.notes?.length ? `<h2>Before you start</h2><ul>${p.notes.map((n) => `<li>${esc(n)}</li>`).join('')}</ul>` : ''}
-
-          <h2 id="pattern">Pattern</h2>
+        <section class="pp-card pp-pattern" aria-labelledby="pattern">
+          <div class="pp-pattern-head">
+            <h2 id="pattern">Pattern</h2>
+            <button type="button" class="btn btn-outline btn-sm no-print" data-print>Print / Save as PDF</button>
+          </div>
+          <p class="pp-small no-print">Numbers on the right are your stitch count at the end of each step. Printing? Choose “Save as PDF” as the printer to get a PDF.</p>
           ${sections}
+        </section>
 
-          <div class="print-box no-print">
-            <button type="button" class="btn btn-outline" data-print>
-              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9V3h12v6"/><rect x="3" y="9" width="18" height="8" rx="2"/><path d="M6 14h12v7H6z"/></svg>
-              Print / Save as PDF
-            </button>
-            <p class="field-hint">For a PDF, choose “Save as PDF” as the printer.</p>
-          </div>
-
-          ${chartRounds.length ? `<h2 id="chart">Round chart</h2>
-          <p class="no-print">The chart shows one centre from the middle out, then the petal round. Read it anticlockwise from the magic ring.</p>
-          <figure class="chart-box">${roundChart(chartRounds, `Round chart for the ${p.title}`)}${legend(chartSymbols(p))}</figure>` : ''}
-        </div>
-
-        <section class="tracker-cards no-print" aria-labelledby="tracker-h">
+        <section class="pp-card pp-tracker no-print" aria-labelledby="tracker-h">
           <h2 id="tracker-h">Follow it round by round in the tracker</h2>
-          <div class="grid grid-3">
-            <div class="tile"><div class="tile-icon bg-rose" aria-hidden="true">1</div><h3>Open it</h3><p>Tap Open in Tracker. The pattern is saved on your device.</p></div>
-            <div class="tile"><div class="tile-icon bg-mint" aria-hidden="true">2</div><h3>Tap Done</h3><p>Finish a round, tap Done, and the next round moves up.</p></div>
-            <div class="tile"><div class="tile-icon bg-sky" aria-hidden="true">3</div><h3>Pick up later</h3><p>Close the app any time. Your progress is saved.</p></div>
-          </div>
+          <ol class="pp-how" role="list">
+            <li><span>1</span><div><b>Open it</b><p>Tap Open in Tracker. The pattern is saved on your phone.</p></div></li>
+            <li><span>2</span><div><b>Tap Done</b><p>Finish a round, tap Done, and the next one moves up.</p></div></li>
+            <li><span>3</span><div><b>Pick up later</b><p>Close it any time. Your place is saved.</p></div></li>
+          </ol>
           <button type="button" class="btn btn-primary btn-lg" data-open-pattern>Open in Tracker</button>
           <p class="open-status" aria-live="polite"></p>
         </section>
 
-        <div class="prose">
-          ${p.tested ? `<p class="tested">${esc(p.tested)}</p>` : ''}
-          ${p.tips?.length ? `<h2>Tips</h2><ul>${p.tips.map((t) => `<li>${esc(t)}</li>`).join('')}</ul>` : ''}
-        </div>
+        ${chartRounds.length ? `<section class="pp-card pp-chart" aria-labelledby="chart-h">
+          <h2 id="chart-h">Round chart</h2>
+          <p class="pp-small">One centre from the middle out, then the petal round.</p>
+          <div class="pp-chart-body">${roundChart(chartRounds, `Round chart for the ${p.title}`)}${legend(chartSymbols(p))}</div>
+        </section>` : ''}
 
-        ${p.faq?.length ? `<section class="no-print" aria-labelledby="faq-h"><h2 id="faq-h">Questions</h2><div class="faq">${p.faq
+        ${p.tested ? `<p class="tested">${esc(p.tested)}</p>` : ''}
+
+        ${p.tips?.length ? `<section class="pp-card no-print"><h2>Tips</h2><ul class="pp-list">${p.tips.map((t) => `<li>${esc(t)}</li>`).join('')}</ul></section>` : ''}
+
+        ${p.faq?.length ? `<section class="pp-faq no-print" aria-labelledby="faq-h"><h2 id="faq-h">Questions</h2><div class="faq">${p.faq
           .map((q) => `<details class="faq-item"><summary>${esc(q.q)}</summary><p>${esc(q.a)}</p></details>`)
           .join('')}</div></section>` : ''}
 
-        ${p.related?.length ? `<div class="prose no-print"><h2>You might also like</h2><ul class="related">${p.related
+        ${p.related?.length ? `<section class="pp-related no-print"><h2>You might also like</h2><ul class="related">${p.related
           .map((r) => `<li><a href="${esc(r.url)}">${esc(r.title)}</a></li>`)
-          .join('')}</ul></div>` : ''}
+          .join('')}</ul></section>` : ''}
 
         <script type="application/json" data-tracker>${JSON.stringify(steps).replace(/</g, '\\u003c')}</script>
       </article>
