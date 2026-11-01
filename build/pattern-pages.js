@@ -89,19 +89,6 @@ export function trackerSteps(p) {
   return steps;
 }
 
-function abbrList(keys) {
-  return keys
-    .map((k) => {
-      const a = ABBR[k];
-      if (!a) return `<li><b>${esc(k)}</b></li>`;
-      const [short, long, page] = a;
-      const hasPage = page && fs.existsSync(path.join(STITCH_DIR, page, 'index.html'));
-      const inner = `<b>${esc(short)}</b><span>${esc(long)}</span>`;
-      return hasPage ? `<li><a href="/stitches/${page}/">${inner}</a></li>` : `<li><span class="abbr-plain">${inner}</span></li>`;
-    })
-    .join('');
-}
-
 function chartSymbols(p) {
   const used = new Set();
   for (const s of p.sections) {
@@ -123,24 +110,41 @@ function chartSymbols(p) {
 // Stitch abbreviations inside a pattern line get a soft highlight so they are easy to spot.
 const ABBR_RE = /\b(sl st|MR|sc|hdc|dc|tr|inc|dec|ch|BLO|FLO)\b/g;
 const markAbbr = (text) => esc(text).replace(ABBR_RE, '<b class="ab">$1</b>');
+// Paragraph text: **bold** is allowed (e.g. "**Join:** Hold the two…").
+const para = (text) => esc(text).replace(/\*\*(.+?)\*\*/g, '<b>$1</b>');
 
-function countBadge(count) {
-  if (!count) return '';
-  const label = /^\d+$/.test(count) ? `${count} sts` : count;
-  return `<span class="pp-count" title="Stitch count at the end of this step">${esc(label)}</span>`;
+function abbrTable(keys) {
+  const cells = keys.map((k) => {
+    const a = ABBR[k];
+    if (!a) return `<td class="pp-ab">${esc(k)}</td><td></td>`;
+    const [short, long, page] = a;
+    const hasPage = page && fs.existsSync(path.join(STITCH_DIR, page, 'index.html'));
+    const name = hasPage ? `<a href="/stitches/${page}/">${esc(long)}</a>` : esc(long);
+    return `<td class="pp-ab">${esc(short)}</td><td>${name}</td>`;
+  });
+  const rows = [];
+  for (let i = 0; i < cells.length; i += 2) rows.push(`<tr>${cells[i]}${cells[i + 1] || '<td></td><td></td>'}</tr>`);
+  return `<table class="pp-abbr"><tbody>${rows.join('')}</tbody></table>`;
 }
 
-function roundRow(r) {
-  const isNote = !r.r || !/^R\d/.test(r.r);
-  const steps = r.steps?.length
-    ? `<ol class="pp-substeps">${r.steps.map((s) => `<li><span>${markAbbr(s)}</span></li>`).join('')}</ol>`
-    : '';
-  return `<li class="pp-row${isNote ? ' pp-note' : ''}">
-              <span class="tick" aria-hidden="true"></span>
-              ${r.r ? `<span class="pp-label">${esc(r.r)}</span>` : '<span class="pp-label pp-label-empty" aria-hidden="true">•</span>'}
-              <div class="pp-body"><p>${markAbbr(r.text)}</p>${steps}</div>
-              ${countBadge(r.count)}
-            </li>`;
+function sectionHtml(s) {
+  const rounds = s.rounds.filter((r) => !r.hidden);
+  return `
+          <section class="pp-part">
+            <h3>${esc(s.title)}${s.colourName ? ` <span class="pp-part-colour">(${esc(s.colourName)})</span>` : ''}${s.make > 1 ? ` <span class="pp-make">Make ${s.make}</span>` : ''}</h3>
+            ${s.note ? `<p class="pp-note">${para(s.note)}</p>` : ''}
+            ${(s.intro || []).map((t) => `<p>${para(t)}</p>`).join('')}
+            ${rounds.length ? `<div class="pp-table-wrap"><table class="pp-rounds">
+              <thead><tr><th scope="col" class="tick-col"><span class="visually-hidden">Done</span></th><th scope="col">Round</th><th scope="col">Instructions</th><th scope="col" class="num">Sts</th></tr></thead>
+              <tbody>
+                ${rounds.map((r) => `<tr><td class="tick-col"><span class="tick" aria-hidden="true"></span></td><th scope="row">${esc(r.r)}</th><td>${markAbbr(r.text)}</td><td class="num">${esc(r.count)}</td></tr>`).join('\n                ')}
+              </tbody>
+            </table></div>` : ''}
+            ${s.steps?.length ? `<p class="pp-steps-title"><b>${esc(s.stepsTitle || 'Steps:')}</b></p>
+            <ol class="pp-steps" role="list">${s.steps.map((t, i) => `<li><span class="pp-step-no">${i + 1}</span><span>${markAbbr(t)}</span></li>`).join('')}</ol>` : ''}
+            ${(s.after || []).map((t) => `<p>${para(t)}</p>`).join('')}
+            ${s.short ? `<p class="pp-short">${para(s.short)}</p>` : ''}
+          </section>`;
 }
 
 export function renderPattern(p) {
@@ -162,31 +166,9 @@ export function renderPattern(p) {
   const art = isPhoto
     ? `<img src="${esc(p.image.src)}" alt="${esc(p.image.alt)}" width="1200" height="1200" loading="eager">`
     : p.image?.art === 'sunflower' ? sunflowerArt() : '';
-
-  const facts = [
-    ['Level', esc(p.level)],
-    ['Time', esc(p.time)],
-    ['Hook', esc(p.hook)],
-    ['Size', esc(p.size)],
-    ['Yarn', esc(p.yarn)],
-    ['Terms', `<a href="/guides/us-vs-uk-crochet-terms/">${esc(p.terms)} terms</a>`],
-  ];
-
-  const sections = p.sections
-    .map(
-      (s) => `
-          <div class="pp-section">
-            <div class="pp-section-head">
-              <h3>${esc(s.title)}</h3>
-              ${s.colourName ? `<span class="swatch swatch-${esc(s.colour)}">${esc(s.colourName)}</span>` : ''}
-              ${s.make > 1 ? `<span class="pp-make">Make ${s.make}</span>` : ''}
-            </div>
-            <ol class="pp-rounds" role="list">
-            ${s.rounds.map(roundRow).join('\n            ')}
-            </ol>
-          </div>`,
-    )
-    .join('');
+  const t = p.theme || {};
+  const themeStyle = [t.accent && `--pp-accent:${t.accent}`, t.dark && `--pp-dark:${t.dark}`, t.cream && `--pp-cream:${t.cream}`].filter(Boolean).join(';');
+  const materials = p.materialsTable || (p.materials || []).map((m) => ['', m]);
 
   return `<!doctype html>
 <!-- GENERATED from content/patterns/${p.file} by build/pattern-pages.js. Edit the JSON file, not this page. -->
@@ -200,19 +182,25 @@ export function renderPattern(p) {
     <a class="skip-link" href="#main">Skip to content</a>
     <!--@include header-->
     <main id="main">
-      <article class="container pp" data-pattern="${esc(p.slug)}" data-title="${esc(p.title)}" data-hook="${esc(p.hook)}" data-yarn="${esc(p.yarn)}" data-notes="${esc(notes)}">
+      <article class="container pp" style="${themeStyle}" data-pattern="${esc(p.slug)}" data-title="${esc(p.title)}" data-hook="${esc(p.hook)}" data-yarn="${esc(p.yarn)}" data-notes="${esc(notes)}">
 
-        <header class="pp-hero">
-          <figure class="pp-photo">
-            ${art}
-            ${isPhoto ? '' : '<figcaption class="no-print"><span class="badge">Illustration</span> Real photo coming soon</figcaption>'}
-          </figure>
-          <div class="pp-intro">
-            <p class="pp-kicker">Free crochet pattern · ${esc(p.level)}</p>
-            <h1>${esc(p.title)}</h1>
+        <div class="pp-paper">
+          <header class="pp-cover">
+            <h1><span class="pp-name">${esc(p.name || p.title)}</span>${p.subtitle ? `<span class="pp-sub">${esc(p.subtitle)}</span>` : ''}</h1>
+            ${p.tagline ? `<p class="pp-tagline">${esc(p.tagline)}</p>` : ''}
+            <figure class="pp-photo">
+              ${art}
+              ${isPhoto ? '' : '<figcaption class="no-print"><span class="badge">Illustration</span> Real photo coming soon</figcaption>'}
+            </figure>
+            <dl class="pp-bar">
+              <div><dt>Skill level</dt><dd>${esc(p.level)}</dd></div>
+              <div><dt>Time</dt><dd>${esc(p.time)}</dd></div>
+              <div><dt>Size</dt><dd>${esc(p.size)}</dd></div>
+              <div><dt>Hook</dt><dd>${esc(p.hook)}</dd></div>
+            </dl>
             <p class="pp-lead">${esc(p.lead)}</p>
             <div class="pp-actions no-print">
-              <a class="btn btn-primary btn-lg" href="#pattern">Jump to Pattern</a>
+              <a class="btn btn-lg pp-btn-main" href="#pattern">Jump to Pattern</a>
               <button type="button" class="btn btn-outline btn-lg" data-open-pattern>Open in Tracker</button>
               <button type="button" class="btn btn-ghost btn-lg" data-print>
                 <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9V3h12v6"/><rect x="3" y="9" width="18" height="8" rx="2"/><path d="M6 14h12v7H6z"/></svg>
@@ -220,38 +208,38 @@ export function renderPattern(p) {
               </button>
             </div>
             <p class="open-status" aria-live="polite"></p>
-          </div>
-        </header>
+          </header>
 
-        <dl class="pp-facts">
-          ${facts.map(([k, v]) => `<div><dt>${k}</dt><dd>${v}</dd></div>`).join('\n          ')}
-        </dl>
-
-        <div class="pp-two">
-          <div class="pp-col">
-            <section class="pp-card">
-              <h2>Materials</h2>
-              <ul class="pp-list">${(p.materials || []).map((m) => `<li>${esc(m)}</li>`).join('')}</ul>
-            </section>
-            ${p.notes?.length ? `<aside class="pp-callout"><h2>Before you start</h2><ul class="pp-list">${p.notes.map((n) => `<li>${esc(n)}</li>`).join('')}</ul></aside>` : ''}
-          </div>
-          <section class="pp-card">
-            <h2>Abbreviations</h2>
-            <ul class="abbr-list">${abbrList(p.abbreviations || [])}</ul>
-            <p class="pp-small no-print">All terms: <a href="/crochet-abbreviations/">crochet abbreviations chart</a></p>
+          <section class="pp-block" aria-labelledby="begin-h">
+            <h2 id="begin-h">Before You Begin</h2>
+            <h3>Materials</h3>
+            <table class="pp-materials"><tbody>${materials.map(([k, v]) => `<tr>${k ? `<th scope="row">${esc(k)}</th>` : ''}<td${k ? '' : ' colspan="2"'}>${esc(v)}</td></tr>`).join('')}</tbody></table>
+            <h3>Abbreviations <span class="pp-muted">(<a href="/guides/us-vs-uk-crochet-terms/">${esc(p.terms)} terms</a>)</span></h3>
+            ${abbrTable(p.abbreviations || [])}
+            <p class="pp-small no-print">Tap a stitch name to learn it. All terms: <a href="/crochet-abbreviations/">crochet abbreviations chart</a>.</p>
+            ${p.notes?.length ? `<h3>Good to Know</h3><ul class="pp-list">${p.notes.map((n) => `<li>${para(n)}</li>`).join('')}</ul>` : ''}
           </section>
+
+          <section class="pp-block" aria-labelledby="pattern">
+            <h2 id="pattern">The Pattern</h2>
+            ${p.sections.map(sectionHtml).join('')}
+          </section>
+
+          ${p.finishing?.length || p.variations ? `<section class="pp-block" aria-labelledby="finish-h">
+            ${p.finishing?.length ? `<h3 id="finish-h">Finishing</h3><ol class="pp-numbered">${p.finishing.map((f) => `<li>${para(f)}</li>`).join('')}</ol>` : ''}
+            ${p.variations ? `<h3>Variations</h3><p>${para(p.variations)}</p>` : ''}
+          </section>` : ''}
+
+          ${chartRounds.length ? `<section class="pp-block pp-chart" aria-labelledby="chart-h">
+            <h3 id="chart-h">Round chart</h3>
+            <p class="pp-note">One centre from the middle out, then the petal round.</p>
+            <div class="pp-chart-body">${roundChart(chartRounds, `Round chart for the ${p.title}`)}${legend(chartSymbols(p))}</div>
+          </section>` : ''}
+
+          ${p.tested ? `<p class="tested">${esc(p.tested)}</p>` : ''}
         </div>
 
-        <section class="pp-card pp-pattern" aria-labelledby="pattern">
-          <div class="pp-pattern-head">
-            <h2 id="pattern">Pattern</h2>
-            <button type="button" class="btn btn-outline btn-sm no-print" data-print>Print / Save as PDF</button>
-          </div>
-          <p class="pp-small no-print">Numbers on the right are your stitch count at the end of each step. Printing? Choose “Save as PDF” as the printer to get a PDF.</p>
-          ${sections}
-        </section>
-
-        <section class="pp-card pp-tracker no-print" aria-labelledby="tracker-h">
+        <section class="pp-tracker no-print" aria-labelledby="tracker-h">
           <h2 id="tracker-h">Follow it round by round in the tracker</h2>
           <ol class="pp-how" role="list">
             <li><span>1</span><div><b>Open it</b><p>Tap Open in Tracker. The pattern is saved on your phone.</p></div></li>
@@ -261,16 +249,6 @@ export function renderPattern(p) {
           <button type="button" class="btn btn-primary btn-lg" data-open-pattern>Open in Tracker</button>
           <p class="open-status" aria-live="polite"></p>
         </section>
-
-        ${chartRounds.length ? `<section class="pp-card pp-chart" aria-labelledby="chart-h">
-          <h2 id="chart-h">Round chart</h2>
-          <p class="pp-small">One centre from the middle out, then the petal round.</p>
-          <div class="pp-chart-body">${roundChart(chartRounds, `Round chart for the ${p.title}`)}${legend(chartSymbols(p))}</div>
-        </section>` : ''}
-
-        ${p.tested ? `<p class="tested">${esc(p.tested)}</p>` : ''}
-
-        ${p.tips?.length ? `<section class="pp-card no-print"><h2>Tips</h2><ul class="pp-list">${p.tips.map((t) => `<li>${esc(t)}</li>`).join('')}</ul></section>` : ''}
 
         ${p.faq?.length ? `<section class="pp-faq no-print" aria-labelledby="faq-h"><h2 id="faq-h">Questions</h2><div class="faq">${p.faq
           .map((q) => `<details class="faq-item"><summary>${esc(q.q)}</summary><p>${esc(q.a)}</p></details>`)

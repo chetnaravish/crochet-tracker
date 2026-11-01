@@ -2,53 +2,83 @@
   "slug": "mini-sunflower",
   "draft": false,
   "title": "Mini Crochet Sunflower",
+  "name": "Mini Sunflower",
+  "subtitle": "No-Sew Crochet Pattern",
+  "tagline": "Free crochet pattern | Beginner friendly | No sew | Printable",
   "seoTitle": "Easy Crochet Sunflower Pattern for Beginners (Free, No Sew) | Crochet Tracker",
   "description": "A free, easy mini crochet sunflower pattern for beginners. Two small brown centres are joined with yellow petals, so there is no sewing. Printable, with a round chart.",
   "date": "2026-11-01",
-  "lead": "A small, puffy sunflower made from two brown centres joined by six yellow petals. The petals join the pieces as you go, so there's nothing to sew.",
-  "level": "Easy",
+  "lead": "A small, puffy sunflower made from two brown centres and six pointed yellow petals. The petal round joins both centres as you go, so there's nothing to sew. Use it as a bag charm, a brooch or a little gift.",
+  "theme": {
+    "accent": "#e8890c",
+    "dark": "#4a2511",
+    "cream": "#fff5e1"
+  },
+  "level": "Beginner",
   "time": "About 30 minutes",
   "hook": "3 mm",
-  "yarn": "Cotton DK, brown and yellow, a few grams each",
-  "size": "About 7 cm across",
+  "yarn": "Cotton DK, brown and yellow",
+  "size": "About 7 cm",
   "terms": "US",
   "image": {
     "type": "illustration",
     "art": "sunflower"
   },
+  "materialsTable": [
+    [
+      "Yarn",
+      "Cotton DK in brown (centre) and yellow (petals). A few grams of each, so leftovers are perfect."
+    ],
+    [
+      "Hook",
+      "3 mm crochet hook"
+    ],
+    [
+      "Stuffing",
+      "A small pinch of cotton or toy stuffing"
+    ],
+    [
+      "Tools",
+      "Yarn needle, scissors, stitch marker"
+    ],
+    [
+      "Optional",
+      "Keyring or brooch pin for the back"
+    ]
+  ],
   "materials": [
-    "Cotton DK yarn in brown (centre) and yellow (petals), a few grams of each",
+    "Cotton DK yarn in brown and yellow, a few grams of each",
     "3 mm crochet hook",
-    "A little cotton or toy stuffing for the centre",
-    "Yarn needle and scissors",
-    "Stitch marker (optional)"
+    "A little cotton or toy stuffing",
+    "Yarn needle, scissors, stitch marker"
   ],
   "abbreviations": [
-    "mr",
-    "sc",
-    "inc",
     "ch",
-    "dc",
     "tr",
     "sl st",
+    "inc",
+    "sc",
     "st",
-    "fo"
+    "dc",
+    "mr"
   ],
   "notes": [
-    "Written in US terms. tr is the US treble crochet (UK double treble).",
-    "The centres are worked in a continuous spiral. Don't join the rounds.",
-    "Every stitch of the petal round goes through both centres at the same time. That is what joins them."
+    "The centres are worked in a continuous spiral. Don't join the rounds. A stitch marker in the first stitch helps you count.",
+    "You make two centres. The yellow petal round goes through both of them at once, and that is what joins them.",
+    "tr here is the US treble crochet (UK double treble): yarn over twice before you insert the hook.",
+    "Crochet a little tightly so the stuffing doesn't show and the petals stand up."
   ],
   "sections": [
     {
-      "title": "Centre",
-      "make": 2,
+      "title": "Part 1: Centre",
       "colour": "brown",
       "colourName": "brown",
+      "make": 2,
+      "note": "Make 2 the same. Work in a continuous spiral, don't join the rounds.",
       "rounds": [
         {
-          "r": "R1",
-          "text": "6 sc in MR",
+          "r": "Rnd 1",
+          "text": "6 sc in a magic ring.",
           "count": "6",
           "chart": {
             "type": "ring",
@@ -57,8 +87,8 @@
           }
         },
         {
-          "r": "R2",
-          "text": "inc x6",
+          "r": "Rnd 2",
+          "text": "inc in each st around.",
           "count": "12",
           "chart": {
             "type": "inc",
@@ -67,26 +97,43 @@
           }
         },
         {
-          "r": "",
-          "text": "Fasten off and tuck the tails to the back. Make a second centre the same way.",
-          "count": ""
+          "r": "Finish",
+          "text": "sl st in the next st and fasten off. Tuck the tail to the back. Make a second centre the same way.",
+          "count": "12"
         }
       ]
     },
     {
-      "title": "Petals",
+      "title": "Part 2: Petals",
       "colour": "yellow",
       "colourName": "yellow",
+      "note": "The petals are worked through both centres at the same time. You will make 6 petals.",
+      "intro": [
+        "**Join:** Hold the two centres together, back sides facing each other and the stitches lined up. Insert your hook through one stitch of both centres and attach yellow with a sl st."
+      ],
+      "stepsTitle": "One petal:",
+      "steps": [
+        "ch 2",
+        "dc in the next st",
+        "tr in the same st",
+        "ch 1, sl st into the top of the tr (petal tip)",
+        "tr in the same st",
+        "dc in the same st",
+        "ch 2",
+        "sl st in the next st"
+      ],
+      "after": [
+        "Make 5 petals this way. Each petal uses 2 stitches of the centre (12 sts = 6 petals).",
+        "**Stuff:** Before the last petal, push a little cotton between the two centres through the open gap. Don't overfill.",
+        "**Last petal:** Make the 6th petal the same way and end with a sl st into the first sl st. Fasten off and weave in the ends."
+      ],
+      "short": "Short version: ch 2, dc, tr, ch 1, sl st in tip, tr, dc (all in one st), ch 2, sl st in next st.",
       "rounds": [
         {
-          "r": "Join",
-          "text": "Hold the two centres together, back sides facing each other and stitches lined up. Insert the hook through a stitch of both centres and join yellow with a sl st.",
-          "count": ""
-        },
-        {
-          "r": "R3",
-          "text": "Make 5 petals. Work every stitch through both centres. One petal:",
-          "count": "5 petals",
+          "r": "Rnd 3",
+          "text": "petals",
+          "count": "6 petals",
+          "hidden": true,
           "chart": {
             "type": "petals",
             "count": 6,
@@ -97,43 +144,31 @@
               "dc"
             ],
             "picot": true
-          },
-          "steps": [
-            "ch 2",
-            "(dc, tr) in the next st",
-            "ch 1, sl st in the top of the tr (the petal tip)",
-            "(tr, dc) in the same st",
-            "ch 2, sl st in the next st"
-          ]
-        },
-        {
-          "r": "Stuff",
-          "text": "Push a little cotton or stuffing between the two centres through the open gap. Don't overfill, or the petals will pull.",
-          "count": ""
-        },
-        {
-          "r": "Last",
-          "text": "Make the 6th petal the same way, but end with a sl st in the first sl st. Fasten off and weave in the ends.",
-          "count": "6 petals"
+          }
         }
       ]
     }
   ],
+  "finishing": [
+    "Weave in any ends you can still see, hiding them between the two centres.",
+    "Optional: thread a jump ring through the tip of one petal and add a keyring, or sew a brooch pin to the back."
+  ],
+  "variations": "Use white petals and a yellow centre for a daisy, or pink petals for a cosmos. For a bigger flower, add Rnd 3 to both centres, (sc, inc) x6 for 18 sts, and make 9 petals.",
   "tracker": [
     {
-      "text": "Centre 1 (brown), R1: 6 sc in MR",
+      "text": "Centre 1 (brown), Rnd 1: 6 sc in a magic ring",
       "stitches": "6 sts"
     },
     {
-      "text": "Centre 1, R2: inc x6. Fasten off.",
+      "text": "Centre 1, Rnd 2: inc in each st around. sl st, fasten off.",
       "stitches": "12 sts"
     },
     {
-      "text": "Centre 2 (brown), R1: 6 sc in MR",
+      "text": "Centre 2 (brown), Rnd 1: 6 sc in a magic ring",
       "stitches": "6 sts"
     },
     {
-      "text": "Centre 2, R2: inc x6. Fasten off.",
+      "text": "Centre 2, Rnd 2: inc in each st around. sl st, fasten off.",
       "stitches": "12 sts"
     },
     {
@@ -141,7 +176,7 @@
       "stitches": ""
     },
     {
-      "text": "R3, petals 1–5: (ch 2, (dc, tr) in next st, ch 1, sl st in top of tr, (tr, dc) in same st, ch 2, sl st in next st) x5",
+      "text": "Petals 1–5: ch 2, dc in next st, tr in same st, ch 1, sl st in tip, tr, dc in same st, ch 2, sl st in next st",
       "stitches": "5 petals"
     },
     {
@@ -152,11 +187,6 @@
       "text": "Petal 6, same as before, sl st in the first sl st. Fasten off and weave in ends.",
       "stitches": "6 petals"
     }
-  ],
-  "tips": [
-    "Pull the magic ring really tight so no stuffing shows in the middle.",
-    "If the petals look floppy, try a hook half a size smaller.",
-    "Add a keyring to the tip of one petal, or a pin on the back, to make a keychain or brooch."
   ],
   "faq": [
     {
@@ -173,7 +203,7 @@
     },
     {
       "q": "Can I print this pattern?",
-      "a": "Yes. Tap Print / Save as PDF. The printout has only the pattern, the info box and a tick box for every round."
+      "a": "Yes. Tap Print / PDF. The printout has only the pattern and a tick box for every round."
     }
   ],
   "tested": "Tested by me ✓ I made this sunflower myself before writing the pattern.",

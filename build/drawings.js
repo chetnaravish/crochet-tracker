@@ -335,19 +335,15 @@ export function legend(names) {
 
 // ---------- Illustration (until the real photo arrives) ----------
 export function sunflowerArt() {
-  let petals = '';
+  // Six pointed petals (orange outline layer under a yellow layer) round a dark centre with rings.
+  const petal = 'M150 112C124 96 122 58 150 26C178 58 176 96 150 112Z';
+  let back = '';
+  let front = '';
   for (let i = 0; i < 6; i++) {
-    const deg = i * 60 + 30;
-    petals += `<path transform="rotate(${deg} 150 150)" d="M150 104C120 90 118 50 150 22C182 50 180 90 150 104Z" class="art-petal"/>`;
-    petals += `<path transform="rotate(${deg} 150 150)" d="M150 98V44" class="art-petal-line"/>`;
+    const deg = i * 60;
+    back += `<path transform="rotate(${deg} 150 150) translate(150 150) scale(1.12) translate(-150 -150)" d="${petal}" class="art-petal-back"/>`;
+    front += `<path transform="rotate(${deg} 150 150)" d="${petal}" class="art-petal"/><path transform="rotate(${deg} 150 150)" d="M150 104V48" class="art-petal-line"/>`;
   }
-  let dots = '';
-  for (let ring = 1; ring <= 3; ring++) {
-    const n = ring * 6;
-    for (let i = 0; i < n; i++) {
-      const a = (i / n) * Math.PI * 2 + ring;
-      dots += `<circle cx="${f(150 + Math.sin(a) * ring * 13)}" cy="${f(150 - Math.cos(a) * ring * 13)}" r="3.2" class="art-dot"/>`;
-    }
-  }
-  return `<svg class="art" viewBox="0 0 300 300" role="img" aria-label="Illustration of the mini crochet sunflower: a round brown centre with six pointed yellow petals" focusable="false"><rect width="300" height="300" rx="24" class="art-bg"/>${petals}<circle cx="150" cy="150" r="50" class="art-centre"/>${dots}</svg>`;
+  const rings = [36, 25, 14].map((r) => `<circle cx="150" cy="150" r="${r}" class="art-ring"/>`).join('');
+  return `<svg class="art" viewBox="0 0 300 300" role="img" aria-label="Illustration of the mini crochet sunflower: a round dark brown centre with six pointed yellow petals" focusable="false">${back}${front}<circle cx="150" cy="150" r="48" class="art-centre"/>${rings}</svg>`;
 }
