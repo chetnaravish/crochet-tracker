@@ -2,8 +2,12 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { defineConfig } from 'vite';
 import sitePlugin from './build/site-plugin.js';
+import { generatePatternPages } from './build/pattern-pages.js';
 
 const root = path.resolve('src');
+
+// Pattern pages are generated from content/patterns/*.json before Vite looks for pages.
+generatePatternPages();
 
 // Every .html file under src/ (except partials) is its own page.
 function findPages(dir) {

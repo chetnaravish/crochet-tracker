@@ -74,6 +74,41 @@ for (const btn of document.querySelectorAll('[data-open-pattern]')) {
   });
 }
 
+// Pattern pages: Print / Save as PDF (print styles hide everything but the pattern).
+for (const btn of document.querySelectorAll('[data-print]')) btn.addEventListener('click', () => window.print());
+
+// Stitch pages: "Play steps" shows the step drawings one after another.
+for (const player of document.querySelectorAll('[data-player]')) {
+  const frames = [...player.querySelectorAll('.fig-frame')];
+  const btn = player.querySelector('[data-player-toggle]');
+  const count = player.querySelector('.fig-count');
+  let i = 0;
+  let timer = null;
+  const show = (n) => {
+    i = (n + frames.length) % frames.length;
+    frames.forEach((f, k) => (f.hidden = k !== i));
+    count.textContent = `Picture ${i + 1} of ${frames.length}`;
+  };
+  const stop = () => {
+    clearInterval(timer);
+    timer = null;
+    btn.textContent = 'Play steps';
+    btn.setAttribute('aria-pressed', 'false');
+  };
+  btn.addEventListener('click', () => {
+    if (timer) return stop();
+    btn.textContent = 'Pause';
+    btn.setAttribute('aria-pressed', 'true');
+    show(i + 1);
+    timer = setInterval(() => show(i + 1), 2200);
+  });
+  // Tap the picture to step through it by hand.
+  player.querySelector('.fig-frames').addEventListener('click', () => {
+    stop();
+    show(i + 1);
+  });
+}
+
 // Site search page.
 const searchForm = document.getElementById('site-search');
 if (searchForm) import('./lib/search.js').then(({ initSearch }) => initSearch(searchForm));

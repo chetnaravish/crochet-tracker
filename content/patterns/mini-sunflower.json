@@ -1,0 +1,81 @@
+{
+  "slug": "mini-sunflower",
+  "draft": false,
+  "title": "Mini Crochet Sunflower",
+  "seoTitle": "Easy Crochet Sunflower Pattern for Beginners (Free, No Sew) | Crochet Tracker",
+  "description": "A free, easy mini crochet sunflower pattern for beginners. Two small brown centres are joined with yellow petals, so there is no sewing. Printable, with a round chart.",
+  "date": "2026-11-01",
+  "lead": "A small, puffy sunflower made from two brown centres joined by six yellow petals. The petals join the pieces as you go, so there's nothing to sew.",
+  "level": "Easy",
+  "time": "About 30 minutes",
+  "hook": "3 mm",
+  "yarn": "Cotton DK, brown and yellow, a few grams each",
+  "size": "About 7 cm across",
+  "terms": "US",
+  "image": { "type": "illustration", "art": "sunflower" },
+  "materials": [
+    "Cotton DK yarn in brown (centre) and yellow (petals), a few grams of each",
+    "3 mm crochet hook",
+    "A little cotton or toy stuffing for the centre",
+    "Yarn needle and scissors",
+    "Stitch marker (optional)"
+  ],
+  "abbreviations": ["mr", "sc", "inc", "ch", "dc", "tr", "sl st", "st", "fo"],
+  "notes": [
+    "Written in US terms. tr is the US treble crochet (UK double treble).",
+    "The centres are worked in a continuous spiral. Don't join the rounds.",
+    "Every stitch of the petal round goes through both centres at the same time. That is what joins them."
+  ],
+  "sections": [
+    {
+      "title": "Centre",
+      "make": 2,
+      "colour": "brown",
+      "colourName": "brown",
+      "rounds": [
+        { "r": "R1", "text": "6 sc in MR", "count": "6", "chart": { "type": "ring", "sym": "sc", "count": 6 } },
+        { "r": "R2", "text": "inc x6", "count": "12", "chart": { "type": "inc", "sym": "sc", "count": 12 } },
+        { "r": "", "text": "Fasten off and tuck the tails to the back. Make a second centre the same way.", "count": "" }
+      ]
+    },
+    {
+      "title": "Petals",
+      "colour": "yellow",
+      "colourName": "yellow",
+      "rounds": [
+        { "r": "Join", "text": "Hold the two centres together, back sides facing each other and stitches lined up. Insert the hook through a stitch of both centres and join yellow with a sl st.", "count": "" },
+        { "r": "R3", "text": "(ch 2, (dc, tr) in next st, ch 1, sl st in top of the tr, (tr, dc) in the same st, ch 2, sl st in next st) x5. Work every stitch through both centres.", "count": "5 petals", "chart": { "type": "petals", "count": 6, "fan": ["dc", "tr", "tr", "dc"], "picot": true } },
+        { "r": "Stuff", "text": "Push a little cotton or stuffing between the two centres through the open gap. Don't overfill, or the petals will pull.", "count": "" },
+        { "r": "Last", "text": "Make the 6th petal the same way, ending with a sl st in the first sl st. Fasten off and weave in the ends.", "count": "6 petals" }
+      ]
+    }
+  ],
+  "tracker": [
+    { "text": "Centre 1 (brown), R1: 6 sc in MR", "stitches": "6 sts" },
+    { "text": "Centre 1, R2: inc x6. Fasten off.", "stitches": "12 sts" },
+    { "text": "Centre 2 (brown), R1: 6 sc in MR", "stitches": "6 sts" },
+    { "text": "Centre 2, R2: inc x6. Fasten off.", "stitches": "12 sts" },
+    { "text": "Hold both centres together, back sides facing. Join yellow with a sl st through both.", "stitches": "" },
+    { "text": "R3, petals 1–5: (ch 2, (dc, tr) in next st, ch 1, sl st in top of tr, (tr, dc) in same st, ch 2, sl st in next st) x5", "stitches": "5 petals" },
+    { "text": "Stuff the centre lightly through the gap.", "stitches": "" },
+    { "text": "Petal 6, same as before, sl st in the first sl st. Fasten off and weave in ends.", "stitches": "6 petals" }
+  ],
+  "tips": [
+    "Pull the magic ring really tight so no stuffing shows in the middle.",
+    "If the petals look floppy, try a hook half a size smaller.",
+    "Add a keyring to the tip of one petal, or a pin on the back, to make a keychain or brooch."
+  ],
+  "faq": [
+    { "q": "Do I need to sew anything?", "a": "No. The yellow petal round goes through both brown centres at once, so it joins them while you make the petals." },
+    { "q": "What is tr in this pattern?", "a": "tr is the US treble crochet: yarn over twice, then pull through two loops three times. In UK terms it is called a double treble (dtr)." },
+    { "q": "Can I make it bigger?", "a": "Yes. Add a third round to each centre, (sc, inc) x6 for 18 stitches, then make 9 petals instead of 6. You can also use thicker yarn and a bigger hook." },
+    { "q": "Can I print this pattern?", "a": "Yes. Tap Print / Save as PDF. The printout has only the pattern, the info box and a tick box for every round." }
+  ],
+  "tested": "Tested by me ✓ I made this sunflower myself before writing the pattern.",
+  "related": [
+    { "title": "Mini Flower Keychain", "url": "/free-patterns/#flower-keychain" },
+    { "title": "Simple Round Coaster", "url": "/free-patterns/#round-coaster" },
+    { "title": "Treble Crochet (tr)", "url": "/stitches/treble-crochet/" },
+    { "title": "Magic Ring", "url": "/stitches/magic-ring/" }
+  ]
+}

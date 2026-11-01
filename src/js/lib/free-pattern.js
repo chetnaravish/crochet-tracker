@@ -7,9 +7,14 @@ export async function openFreePattern(article) {
   const id = `free-${article.dataset.pattern}`;
   // Re-opening keeps the user's existing progress.
   if (!(await getPattern(id))) {
-    const rounds = [...article.querySelectorAll('[data-round]')].map((li) =>
-      newRound(li.querySelector('.t').textContent.trim(), li.dataset.stitches || ''),
-    );
+    // Pattern pages built from data files carry their tracker steps as JSON;
+    // the older inline patterns are read from their [data-round] list items.
+    const data = article.querySelector('script[data-tracker]');
+    const rounds = data
+      ? JSON.parse(data.textContent).map((s) => newRound(s.text, s.stitches || ''))
+      : [...article.querySelectorAll('[data-round]')].map((li) =>
+          newRound(li.querySelector('.t').textContent.trim(), li.dataset.stitches || ''),
+        );
     const pattern = createPattern({
       id,
       title: article.dataset.title,

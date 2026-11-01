@@ -14,6 +14,8 @@ import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
 import { SITE_URL, SITE_NAME, THEME_COLOR, OG_IMAGE } from '../site.config.js';
+import { hookFigure, miniChart, symbol } from './drawings.js';
+import { generatePatternPages, loadPatterns, patternCards } from './pattern-pages.js';
 
 const PARTIALS_DIR = path.resolve('src/partials');
 
@@ -193,6 +195,35 @@ function renderMeta(meta, html) {
   return tags.filter(Boolean).join('\n    ');
 }
 
+// Step drawings: <li data-fig='{"loops":2,"yo":true}'> gets an SVG drawing, and the
+// first <ol data-howto> that has drawings also gets a small "play the steps" animation.
+function figureFor(spec) {
+  return spec.chart ? miniChart(spec.chart) : hookFigure(spec);
+}
+
+function expandDrawings(html) {
+  html = html.replace(/<!--@symbol\s+([\w-]+)\s*-->/g, (_, name) => symbol(name));
+  html = html.replace(/<!--@chart\s+([\w-]+)\s*-->/g, (_, name) => `<figure class="mini-chart">${miniChart(name)}</figure>`);
+  return html.replace(/<ol([^>]*data-howto[^>]*)>([\s\S]*?)<\/ol>/, (whole, attrs, inner) => {
+    const frames = [];
+    let n = 0;
+    const items = inner.replace(/<li(?: data-fig='([^']+)')?>([\s\S]*?)<\/li>/g, (li, json, text) => {
+      n++;
+      if (!json) return li;
+      const fig = figureFor(JSON.parse(json));
+      frames.push({ fig, n, text: text.replace(/<[^>]+>/g, '') });
+      return `<li><span class="step-text">${text}</span><span class="step-fig">${fig}</span></li>`;
+    });
+    if (!frames.length) return whole;
+    const player = `<figure class="fig-player" data-player>
+            <div class="fig-frames">${frames.map((f, i) => `<div class="fig-frame"${i ? ' hidden' : ''}>${f.fig}<p><b>Step ${f.n}.</b> ${f.text}</p></div>`).join('')}</div>
+            <figcaption><button type="button" class="btn btn-outline btn-sm" data-player-toggle aria-pressed="false">Play steps</button><span class="fig-count" aria-live="polite">Picture 1 of ${frames.length}</span></figcaption>
+          </figure>`;
+    return `${player}
+          <ol${attrs}>${items}</ol>`;
+  });
+}
+
 function listFiles(dir, base = dir) {
   return fs.readdirSync(dir, { withFileTypes: true }).flatMap((d) => {
     const full = path.join(dir, d.name);
@@ -208,6 +239,7 @@ function pageType(p) {
   if (p.startsWith('/guides/') && p !== '/guides/') return 'Guide';
   if (p === '/crochet-abbreviations/') return 'Glossary';
   if (p === '/free-patterns/') return 'Patterns';
+  if (p.startsWith('/free-patterns/')) return 'Free pattern';
   return 'Page';
 }
 
@@ -256,6 +288,15 @@ export default function sitePlugin() {
     name: 'crochet-site',
     // Dev server: serve a fresh search index on every request.
     configureServer(server) {
+      // Rebuild pattern pages when a pattern data file changes.
+      const dir = path.resolve('content/patterns');
+      server.watcher.add(dir);
+      server.watcher.on('all', (_e, file) => {
+        if (file.startsWith(dir)) {
+          generatePatternPages();
+          server.ws.send({ type: 'full-reload' });
+        }
+      });
       server.middlewares.use('/search-index.json', (_req, res) => {
         res.setHeader('Content-Type', 'application/json');
         res.end(JSON.stringify(buildSearchIndex()));
@@ -288,7 +329,11 @@ export default function sitePlugin() {
           if (meta.crumbs) html = html.replace('<main id="main"', () => `${crumbBar(meta.crumbs)}\n    <main id="main"`);
         }
 
-        // 3. Constants
+        // 3. Drawings and the free-pattern cards
+        html = expandDrawings(html);
+        if (html.includes('<!--@pattern-cards-->')) html = html.replace('<!--@pattern-cards-->', () => patternCards(loadPatterns()));
+
+        // 4. Constants
         return html
           .replaceAll('{{SITE_URL}}', SITE_URL)
           .replaceAll('{{SITE_NAME}}', SITE_NAME)
