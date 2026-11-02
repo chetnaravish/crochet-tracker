@@ -8,29 +8,45 @@
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
     <!--@include header-->
-    <main id="main" class="container article">
-      <div class="prose">
-        <h1>Search</h1>
-        <p class="lead">Find abbreviations, stitches, guides and free patterns.</p>
-      </div>
-      <form class="search-form" action="/search/" method="get" role="search" id="site-search">
-        <label class="visually-hidden" for="q">Search the site</label>
-        <input id="q" name="q" type="search" placeholder="Try “FLO”, “magic ring” or “coaster”" autocomplete="off" enterkeyhint="search">
-        <button class="btn btn-primary" type="submit">Search</button>
-      </form>
-      <p class="search-status" id="search-status" role="status" aria-live="polite"></p>
-      <ol class="search-results" id="search-results" role="list"></ol>
-      <div class="search-suggest" id="search-suggest">
-        <h2 class="h3">Popular searches</h2>
-        <ul class="related">
-          <li><a href="/search/?q=magic+ring">magic ring</a></li>
-          <li><a href="/search/?q=sc">sc</a></li>
-          <li><a href="/search/?q=increase">increase</a></li>
-          <li><a href="/search/?q=BLO">BLO</a></li>
-          <li><a href="/search/?q=UK+terms">UK terms</a></li>
-          <li><a href="/search/?q=amigurumi">amigurumi</a></li>
-        </ul>
-      </div>
+    <main id="main" class="search-page">
+      <header class="page-hero search-hero">
+        <div class="container">
+          <span class="eyebrow eyebrow-sky">Search the whole site</span>
+          <h1>What are you <em>looking for?</em></h1>
+          <p class="lead">Type a stitch, an abbreviation or a project. Results show up as you type, from stitch lessons, the abbreviations chart, free patterns and guides.</p>
+          <form class="search-form" action="/search/" method="get" role="search" id="site-search">
+            <label class="visually-hidden" for="q">Search the site</label>
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+            <input id="q" name="q" type="search" placeholder="Try “FLO”, “magic ring” or “coaster”" autocomplete="off" enterkeyhint="search">
+            <button class="btn btn-primary" type="submit">Search</button>
+          </form>
+          <div class="search-popular" aria-label="Popular searches">
+            <span>Popular:</span>
+            <a href="/search/?q=magic+ring">magic ring</a>
+            <a href="/search/?q=sc">sc</a>
+            <a href="/search/?q=increase">increase</a>
+            <a href="/search/?q=BLO">BLO</a>
+            <a href="/search/?q=UK+terms">UK terms</a>
+            <a href="/search/?q=amigurumi">amigurumi</a>
+          </div>
+        </div>
+      </header>
+
+      <section class="container search-body" aria-label="Search results">
+        <p class="search-status" id="search-status" role="status" aria-live="polite"></p>
+        <div class="search-tabs" id="search-tabs" role="toolbar" aria-label="Filter results" hidden></div>
+        <ol class="search-results" id="search-results" role="list"></ol>
+
+        <div class="search-suggest" id="search-suggest">
+          <h2>Or start browsing</h2>
+          <ul class="browse-grid" role="list">
+            <li><a class="browse-card k-stitch" href="/stitches/"><span class="r-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 19 15 5"/><path d="M15 5c2-2 4 0 2 2"/><circle cx="8" cy="15" r="3"/></svg></span><strong>Stitch lessons</strong><span>14 step-by-step lessons, from magic ring to popcorn</span></a></li>
+            <li><a class="browse-card k-abbr" href="/crochet-abbreviations/"><span class="r-icon" aria-hidden="true"><b>Aa</b></span><strong>Abbreviations</strong><span>40 terms with US and UK names side by side</span></a></li>
+            <li><a class="browse-card k-pattern" href="/free-patterns/"><span class="r-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><circle cx="12" cy="5" r="2.6"/><circle cx="12" cy="19" r="2.6"/><circle cx="5" cy="12" r="2.6"/><circle cx="19" cy="12" r="2.6"/></svg></span><strong>Free patterns</strong><span>Small beginner projects you can open in the Tracker</span></a></li>
+            <li><a class="browse-card k-guide" href="/guides/"><span class="r-icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 5h6a2 2 0 0 1 2 2v12a2 2 0 0 0-2-2H4z"/><path d="M20 5h-6a2 2 0 0 0-2 2v12a2 2 0 0 1 2-2h6z"/></svg></span><strong>Guides</strong><span>How to read a pattern, US vs UK terms</span></a></li>
+          </ul>
+        </div>
+      </section>
     </main>
     <!--@include footer-->
   </body>

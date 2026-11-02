@@ -81,6 +81,25 @@ for (const btn of document.querySelectorAll('[data-print]')) btn.addEventListene
 const searchForm = document.getElementById('site-search');
 if (searchForm) import('./lib/search.js').then(({ initSearch }) => initSearch(searchForm));
 
+// Header search icon: opens a search box in place instead of loading a new page.
+// On the search page itself it just jumps to the big search box.
+const searchLink = document.querySelector('.search-link');
+if (searchLink) {
+  searchLink.setAttribute('aria-expanded', 'false');
+  searchLink.addEventListener('click', async (e) => {
+    e.preventDefault();
+    if (searchForm) {
+      const box = searchForm.querySelector('input');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      box.focus({ preventScroll: true });
+      box.select();
+      return;
+    }
+    const { toggleQuickSearch } = await import('./lib/quick-search.js');
+    toggleQuickSearch(searchLink);
+  });
+}
+
 // Abbreviation glossary: live filter (pre-filled from ?q= when coming from search).
 const filter = document.getElementById('abbr-filter');
 if (filter) {
