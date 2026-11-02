@@ -4,6 +4,7 @@
     <!--@meta {"title":"Free Crochet Pattern Tracker & Row Counter | Crochet Tracker","description":"Write your crochet pattern round by round, then tick off each round as you go. A free, offline crochet row counter and pattern tracker for your phone. No sign-up.","path":"/","schema":"webapp","priority":"1.0"}-->
     <link rel="stylesheet" href="/styles/site.css">
     <script type="module" src="/js/site.js"></script>
+    <script type="module" src="/js/hero-demo.js"></script>
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
@@ -11,50 +12,58 @@
     <main id="main">
       <section class="hero">
         <div class="container hero-grid">
-          <div>
-            <span class="eyebrow">100% free · works offline · no sign-up</span>
-            <h1>Free Crochet Pattern Tracker &amp; Row Counter</h1>
-            <p class="hero-lead">Write your pattern once, round by round. Then follow it while you crochet: tap <strong>Done</strong> after each round and never lose your place again.</p>
-            <div class="hero-actions">
-              <a class="btn btn-primary btn-lg" href="/app/">Start Tracking — Free</a>
+          <div class="hero-copy">
+            <span class="eyebrow hero-in">100% free · works offline · no sign-up</span>
+            <h1 class="hero-in">Free Crochet Pattern Tracker <em class="hero-accent">&amp; Row Counter<svg class="squiggle" viewBox="0 0 300 18" preserveAspectRatio="none" aria-hidden="true"><path d="M3 12 C 40 2, 70 18, 105 9 S 170 2, 205 10 S 265 17, 297 6" /></svg></em></h1>
+            <p class="hero-lead hero-in">Write your pattern once, round by round. Then follow it while you crochet: tap <strong>Done</strong> after each round and never lose your place again.</p>
+            <div class="hero-actions hero-in">
+              <a class="btn btn-primary btn-lg btn-shine" href="/app/">Start Tracking — Free</a>
               <a class="btn btn-outline btn-lg" href="/free-patterns/">Try a free pattern</a>
             </div>
-            <ul class="hero-points">
+            <ul class="hero-points hero-in">
               <li>Big, one-hand buttons</li>
               <li>Screen stays awake</li>
               <li>Data stays on your phone</li>
             </ul>
           </div>
 
-          <div class="mockups">
-            <div class="phone" role="img" aria-label="Work Mode screenshot: rounds 1 and 2 are ticked off, round 3 is highlighted with a stitch counter and a big Done button">
-              <div class="phone-screen" aria-hidden="true">
-                <div class="m-top"><span>‹ Amigurumi Ball</span><span>✎ ↺</span></div>
-                <div class="m-top" style="padding-top:0"><span>2 / 13 rounds</span><span>◎ Focus</span></div>
-                <div class="m-progress"><span style="width:13%"></span></div>
-                <div class="m-list">
-                  <div class="m-round m-done"><b>Round 1</b> · 6 sc in mr</div>
-                  <div class="m-round m-done"><b>Round 2</b> · inc x6</div>
-                  <div class="m-round m-current"><b>Round 3</b> <small>· 18 sts</small>
-                    <p>(sc, inc) x6</p>
-                    <div class="m-counter"><span>−</span><strong>7</strong><span>+</span></div>
-                  </div>
-                  <div class="m-round"><b>Round 4</b> · (2 sc, inc) x6</div>
-                  <div class="m-round"><b>Round 5</b> · sc in each st around</div>
+          <div class="stage">
+            <svg class="stage-blob" viewBox="0 0 400 400" aria-hidden="true"><path d="M318 72c46 40 62 110 44 170s-70 110-136 122S88 352 56 296 18 160 56 104 140 22 204 22s68 10 114 50Z" /></svg>
+            <svg class="stage-yarn" viewBox="0 0 120 120" aria-hidden="true">
+              <circle cx="60" cy="60" r="52" class="yb" />
+              <g class="yl">
+                <path d="M14 46c26-10 66-10 92 6" /><path d="M10 64c30-12 72-10 98 6" /><path d="M18 84c26-10 62-8 84 6" />
+                <path d="M40 12c-10 26-10 70 8 100" /><path d="M64 9c-14 30-12 72 6 102" /><path d="M88 16c-12 26-10 62 4 90" />
+              </g>
+            </svg>
+            <svg class="stage-thread" viewBox="0 0 220 120" aria-hidden="true"><path d="M8 108 C 60 120, 70 60, 120 70 S 190 40, 214 8" /></svg>
+
+            <p class="note note-done" aria-hidden="true">tap <b>Done</b> after<br>every round<svg viewBox="0 0 60 40"><path d="M4 6 C 24 6, 40 14, 52 32 M52 32 l-12 -2 M52 32 l1 -12" /></svg></p>
+            <p class="note note-count" aria-hidden="true">count stitches<br>as you go<svg viewBox="0 0 60 40"><path d="M56 8 C 36 6, 18 16, 8 32 M8 32 l12 -1 M8 32 l-1 -12" /></svg></p>
+
+            <div class="phone" role="img" aria-label="Animated demo: a pattern is pasted and split into rounds, then each round is ticked off with the Done button while the stitch counter goes up">
+              <div class="phone-notch" aria-hidden="true"></div>
+              <div class="phone-screen" aria-hidden="true" data-demo>
+                <div class="d-app">
+                  <div class="d-top"><span>‹ Amigurumi Ball</span><span class="d-pill">◎ Focus</span></div>
+                  <div class="d-meta"><span>2 / 6 rounds</span><span>33%</span></div>
+                  <div class="d-progress"><span style="width:33%"></span></div>
+                  <div class="d-view"><div class="d-list">
+                    <div class="d-round is-done"><div class="d-head"><b>Round 1</b><i>(6)</i></div><div class="d-ins">6 sc in MR</div></div>
+                    <div class="d-round is-done"><div class="d-head"><b>Round 2</b><i>(12)</i></div><div class="d-ins">inc x6</div></div>
+                    <div class="d-round is-current"><div class="d-head"><b>Round 3</b><i>(18)</i></div><div class="d-ins">(sc, inc) x6</div><div class="d-extra"><div><div class="d-counter"><span>−</span><strong>7</strong><span class="d-plus">+</span></div></div></div></div>
+                    <div class="d-round"><div class="d-head"><b>Round 4</b><i>(24)</i></div><div class="d-ins">(2 sc, inc) x6</div></div>
+                  </div></div>
+                  <div class="d-done">✓ Done · Round 3</div>
                 </div>
-                <div class="m-done-btn">✓ Done · Round 3</div>
               </div>
             </div>
-            <div class="phone" role="img" aria-label="Create screen screenshot: a round card with abbreviation chips like sc, inc and dec">
-              <div class="phone-screen" aria-hidden="true">
-                <div class="m-top"><span>‹ New pattern</span><span style="color:#b4436c">Save</span></div>
-                <div class="m-field"><small>Title</small>Strawberry coaster</div>
-                <div class="m-field"><small>Round 1</small>ch 3, 11 dc in mr</div>
-                <div class="m-field"><small>Round 2</small>ch 3, inc around</div>
-                <div class="m-field"><small>Round 3</small>(dc, inc) x12 |</div>
-                <div class="m-chips"><span>mr</span><span>ch</span><span>sl st</span><span>sc</span><span>hdc</span><span>dc</span><span>inc</span><span>dec</span><span>BLO</span><span>( ) x6</span></div>
-              </div>
-            </div>
+
+            <ol class="demo-steps" aria-hidden="true">
+              <li data-step="1"><span>1</span>Paste pattern</li>
+              <li data-step="2"><span>2</span>Tap Done</li>
+              <li data-step="3"><span>3</span>Never lose count</li>
+            </ol>
           </div>
         </div>
       </section>
