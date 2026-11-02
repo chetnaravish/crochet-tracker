@@ -232,60 +232,11 @@ body.has-to-tracker .site-footer { padding-bottom: 96px; }
   translate: -50% -54%;
   fill: var(--primary-soft);
 }
-.stage-yarn {
-  position: absolute;
-  z-index: -1;
-  left: calc(50% - 250px);
-  bottom: 96px;
-  width: 104px;
-  height: auto;
-}
-.stage-yarn .yb { fill: var(--primary); }
-.stage-yarn .yl { fill: none; stroke: rgb(255 255 255 / 0.35); stroke-width: 3; stroke-linecap: round; }
-.stage-thread {
-  position: absolute;
-  z-index: -1;
-  left: calc(50% - 175px);
-  bottom: 52px;
-  width: 190px;
-  overflow: visible;
-}
-.stage-thread path { fill: none; stroke: var(--primary); stroke-width: 3; stroke-linecap: round; stroke-dasharray: 300; }
-@media (max-width: 599px) {
-  .stage-yarn { left: 0; bottom: 70px; width: 76px; }
-  .stage-thread { display: none; }
-}
 @media (prefers-reduced-motion: no-preference) {
   .stage-blob { animation: blob 18s ease-in-out infinite alternate; }
-  .stage-yarn { animation: bob 5s ease-in-out infinite; }
-  .stage-thread path { stroke-dashoffset: 300; animation: draw 1.6s 0.9s var(--ease) forwards; }
 }
 @keyframes blob { to { rotate: 25deg; scale: 1.06; } }
-@keyframes bob { 50% { translate: 0 -10px; rotate: -8deg; } }
 
-.note {
-  display: none;
-  position: absolute;
-  z-index: 2;
-  margin: 0;
-  font-family: var(--font-hand);
-  font-size: 1.45rem;
-  line-height: 1.05;
-  color: var(--text);
-  rotate: -4deg;
-  white-space: nowrap;
-}
-.note b { color: var(--primary); }
-.note svg { display: block; width: 58px; height: 40px; margin-top: 4px; fill: none; stroke: var(--text-muted); stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
-.note-done { left: calc(50% + 160px); bottom: 150px; }
-.note-done svg { margin-left: -30px; scale: -1 1; }
-.note-count { right: calc(50% + 165px); top: 34%; text-align: right; rotate: 3deg; }
-.note-count svg { margin-left: auto; scale: -1 1; }
-@media (min-width: 1100px) { .note { display: block; } }
-@media (prefers-reduced-motion: no-preference) {
-  .note { animation: rise 0.8s 1.6s var(--ease) both; }
-  .note-count { animation-delay: 1.9s; }
-}
 
 .phone {
   --rx: 0deg;
