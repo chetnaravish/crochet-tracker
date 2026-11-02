@@ -1,65 +1,101 @@
 // Homepage motion:
-// 1. Feature cards slide in (from below and the side) one by one when scrolled into view.
-// 2. Crochet tools and yarn float in the empty side margins of wide screens and move
-//    with the scroll. They live only outside the content column, so they never cover text.
+// 1. Feature cards slide in from the sides and below, one by one, every time the
+//    section scrolls into view. Inside each card the icon pops and the text rises.
+// 2. Yarn skeins, yarn balls, buttons and loose thread peek in from the screen edges
+//    (one soft colour, like a printed craft background). They only use the empty
+//    space beside the content column, so they never cover text, and they drift,
+//    turn and pop in while you scroll.
 
 const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const canAnimate = !reduce && 'IntersectionObserver' in window && !!Element.prototype.animate;
 
-// ---------- 1. Cards slide in ----------
-for (const grid of document.querySelectorAll('[data-cards-motion]')) {
+// ---------- 1. Feature cards ----------
+const SPRING = 'cubic-bezier(0.2, 0.9, 0.25, 1.12)';
+for (const grid of canAnimate ? document.querySelectorAll('[data-cards-motion]') : []) {
   const cards = [...grid.children];
-  if (reduce || !('IntersectionObserver' in window) || !Element.prototype.animate) break;
+  let shown = false;
   grid.classList.add('is-waiting');
-  const io = new IntersectionObserver(
-    (entries) => {
-      if (!entries.some((e) => e.isIntersecting)) return;
-      io.disconnect();
-      const mid = grid.getBoundingClientRect().left + grid.offsetWidth / 2;
-      cards.forEach((card, i) => {
-        const r = card.getBoundingClientRect();
-        const side = Math.sign(Math.round((r.left + r.width / 2 - mid) / 40)); // -1 left, 0 middle, 1 right
-        card.animate(
-          [
-            { opacity: 0, transform: `translate(${side * 70}px, 70px) rotate(${side * 4}deg) scale(0.92)` },
-            { opacity: 1, transform: 'none' },
-          ],
-          { duration: 900, delay: i * 120, easing: 'cubic-bezier(0.2, 0.9, 0.25, 1.12)', fill: 'backwards' },
+
+  const play = () => {
+    shown = true;
+    grid.classList.remove('is-waiting');
+    const mid = grid.getBoundingClientRect().left + grid.offsetWidth / 2;
+    cards.forEach((card, i) => {
+      const r = card.getBoundingClientRect();
+      const side = Math.sign(Math.round((r.left + r.width / 2 - mid) / 60)); // -1 left, 0 middle, 1 right
+      const delay = i * 140;
+      card.animate(
+        [
+          { opacity: 0, transform: `translate(${side * 260}px, ${side ? 90 : 170}px) rotate(${side * 9}deg) scale(0.86)` },
+          { opacity: 1, offset: 0.6 },
+          { opacity: 1, transform: 'none' },
+        ],
+        { duration: 1100, delay, easing: SPRING, fill: 'backwards' },
+      );
+      const icon = card.querySelector('.tile-icon');
+      if (icon)
+        icon.animate(
+          [{ transform: 'scale(0) rotate(-120deg)' }, { transform: 'scale(1.25) rotate(10deg)', offset: 0.7 }, { transform: 'none' }],
+          { duration: 700, delay: delay + 550, easing: 'ease-out', fill: 'backwards' },
         );
-      });
-      grid.classList.remove('is-waiting');
+      [...card.querySelectorAll('h3, p')].forEach((el, k) =>
+        el.animate([{ opacity: 0, transform: 'translateY(18px)' }, { opacity: 1, transform: 'none' }], {
+          duration: 600, delay: delay + 650 + k * 120, easing: 'cubic-bezier(0.2, 0.8, 0.2, 1)', fill: 'backwards',
+        }),
+      );
+    });
+  };
+
+  new IntersectionObserver(
+    (entries) => {
+      for (const e of entries) {
+        if (e.isIntersecting && e.intersectionRatio >= 0.2 && !shown) play();
+        // Fully off screen again: get ready to play once more next time.
+        if (!e.isIntersecting && shown) {
+          shown = false;
+          grid.getAnimations({ subtree: true }).forEach((a) => a.cancel());
+          grid.classList.add('is-waiting');
+        }
+      }
     },
-    { rootMargin: '0px 0px -15% 0px' },
-  );
-  io.observe(grid);
+    { threshold: [0, 0.2] },
+  ).observe(grid);
 }
 
-// ---------- 2. Side decorations ----------
-const yarn = (c, d) => `<svg viewBox="0 0 64 64"><path d="M50 50c6 6 4 12-4 12" fill="none" stroke="${d}" stroke-width="2.5" stroke-linecap="round"/><circle cx="30" cy="30" r="26" fill="${c}"/><g fill="none" stroke="${d}" stroke-width="2.4" stroke-linecap="round" opacity=".55"><path d="M8 24c14-6 30-6 44 2"/><path d="M6 34c16-7 34-6 48 3"/><path d="M11 45c12-6 28-5 38 2"/><path d="M22 6c-6 14-6 32 4 50"/><path d="M36 5c-8 16-7 34 3 50"/></g><ellipse cx="20" cy="18" rx="6" ry="3.5" fill="#fff" opacity=".35"/></svg>`;
-const hook = (c) => `<svg viewBox="0 0 64 64"><g transform="rotate(-35 32 32)"><rect x="28" y="2" width="8" height="10" rx="3" fill="#b9b2b6"/><path d="M28 6c0-5 8-5 8 0v3h-3V6c0-1-2-1-2 0" fill="#9b9397"/><rect x="29" y="10" width="6" height="22" fill="#c9c2c6"/><rect x="26" y="30" width="12" height="32" rx="6" fill="${c}"/><rect x="28" y="36" width="3" height="20" rx="1.5" fill="#fff" opacity=".35"/></g></svg>`;
-const scissors = (c) => `<svg viewBox="0 0 64 64"><g transform="rotate(-20 32 32)"><path d="M32 30 22 4l4-1 10 26zM32 30 42 4l-4-1-10 26z" fill="#c9c2c6"/><circle cx="22" cy="46" r="10" fill="none" stroke="${c}" stroke-width="6"/><circle cx="42" cy="46" r="10" fill="none" stroke="${c}" stroke-width="6"/><circle cx="32" cy="31" r="3" fill="#8a8286"/></g></svg>`;
-const marker = (c) => `<svg viewBox="0 0 64 64"><path d="M32 6c12 0 18 10 14 22L34 58c-1 2-3 2-4 0L18 28C14 16 20 6 32 6z" fill="none" stroke="${c}" stroke-width="6" stroke-linejoin="round"/><circle cx="32" cy="20" r="4" fill="${c}"/></svg>`;
-const granny = (a, b, c) => `<svg viewBox="0 0 64 64"><g transform="rotate(8 32 32)"><rect x="6" y="6" width="52" height="52" rx="8" fill="${a}"/><rect x="15" y="15" width="34" height="34" rx="6" fill="${b}"/><rect x="24" y="24" width="16" height="16" rx="4" fill="${c}"/><rect x="6" y="6" width="52" height="52" rx="8" fill="none" stroke="#fff" stroke-width="2" stroke-dasharray="4 4" opacity=".7"/></g></svg>`;
-const button = (c) => `<svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="22" fill="${c}"/><circle cx="32" cy="32" r="16" fill="none" stroke="#fff" stroke-width="2" opacity=".45"/><g fill="#fff" opacity=".85"><circle cx="27" cy="27" r="3"/><circle cx="37" cy="27" r="3"/><circle cx="27" cy="37" r="3"/><circle cx="37" cy="37" r="3"/></g></svg>`;
-const flower = (c) => `<svg viewBox="0 0 64 64"><g transform="translate(32 32)" fill="${c}"><circle cy="-15" r="11"/><circle cy="-15" r="11" transform="rotate(72)"/><circle cy="-15" r="11" transform="rotate(144)"/><circle cy="-15" r="11" transform="rotate(216)"/><circle cy="-15" r="11" transform="rotate(288)"/></g><circle cx="32" cy="32" r="9" fill="#f5c84c"/></svg>`;
+// ---------- 2. Edge decorations ----------
+const LINE = 'var(--deco-line)';
+const skein = () => {
+  const strands = [-4, -3, -2, -1, 0, 1, 2, 3, 4]
+    .map((k) => `<path d="M80 10C${80 + k * 9} 80 ${80 + k * 13} 170 ${80 + k * 7} 236"/>`)
+    .join('');
+  return `<svg viewBox="0 0 160 250"><path d="M80 4C140 30 158 120 122 200 102 244 58 244 38 200 2 120 20 30 80 4Z" fill="var(--deco-1)"/><g fill="none" stroke="${LINE}" stroke-width="3.2" stroke-linecap="round">${strands}</g></svg>`;
+};
+const ball = () =>
+  `<svg viewBox="0 0 200 200"><circle cx="100" cy="100" r="94" fill="var(--deco-2)"/><g fill="none" stroke="${LINE}" stroke-width="3.2" stroke-linecap="round">
+    <path d="M14 80C60 50 140 50 190 92"/><path d="M8 104C60 72 146 74 194 118"/><path d="M14 130C64 100 140 102 186 144"/><path d="M30 156C70 132 130 134 166 166"/>
+    <path d="M70 10C46 60 50 140 84 194"/><path d="M98 6C76 60 80 140 112 194"/><path d="M128 12C108 62 110 136 138 186"/></g></svg>`;
+const button = () =>
+  `<svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="30" fill="var(--deco-1)"/><circle cx="32" cy="32" r="23" fill="none" stroke="${LINE}" stroke-width="2.5" opacity=".8"/><g fill="${LINE}"><circle cx="26" cy="26" r="3.6"/><circle cx="38" cy="26" r="3.6"/><circle cx="26" cy="38" r="3.6"/><circle cx="38" cy="38" r="3.6"/></g></svg>`;
+const curl = () =>
+  `<svg viewBox="0 0 140 220"><path d="M20 214C8 160 70 150 74 112 78 76 30 70 36 104 42 138 116 120 112 70 108 30 74 18 58 34" fill="none" stroke="var(--deco-1)" stroke-width="8" stroke-linecap="round"/></svg>`;
 
+// side: -1 left, 1 right. size in px. peek: share of the item allowed on screen.
 const ITEMS = [
-  yarn('#e47c9f', '#b4436c'),
-  hook('#8a6fd1'),
-  granny('#f5c84c', '#e47c9f', '#7fbf95'),
-  scissors('#e88b5a'),
-  yarn('#7fbf95', '#3d7a50'),
-  marker('#b4436c'),
-  flower('#a98ad8'),
-  button('#e88b5a'),
-  yarn('#a98ad8', '#6f52a8'),
-  hook('#e47c9f'),
-  granny('#d8e9f8', '#a98ad8', '#f5c84c'),
-  yarn('#f5c84c', '#c99a14'),
-  scissors('#8a6fd1'),
-  button('#7fbf95'),
+  { draw: skein, side: -1, size: 190, peek: 0.55 },
+  { draw: button, side: 1, size: 54, peek: 1 },
+  { draw: ball, side: 1, size: 220, peek: 0.42 },
+  { draw: curl, side: -1, size: 150, peek: 0.6 },
+  { draw: button, side: -1, size: 46, peek: 1 },
+  { draw: skein, side: 1, size: 200, peek: 0.5 },
+  { draw: ball, side: -1, size: 210, peek: 0.45 },
+  { draw: button, side: 1, size: 60, peek: 1 },
+  { draw: curl, side: 1, size: 140, peek: 0.6 },
+  { draw: skein, side: -1, size: 180, peek: 0.55 },
+  { draw: button, side: -1, size: 50, peek: 1 },
+  { draw: ball, side: 1, size: 200, peek: 0.45 },
 ];
 
-const MIN_BAND = 66; // px of free space beside the content column needed to show anything
+const MIN_BAND = 60; // px of free space beside the content needed to show anything
 
 function initDeco() {
   const container = document.querySelector('main .container');
@@ -69,44 +105,41 @@ function initDeco() {
   layer.setAttribute('aria-hidden', 'true');
   document.body.append(layer);
 
-  const items = ITEMS.map((svg, i) => {
+  const items = ITEMS.map((def, i) => {
     const el = document.createElement('div');
     el.className = 'deco-item';
-    el.innerHTML = `<div class="deco-float" style="animation-delay:${-(i * 0.7).toFixed(1)}s">${svg}</div>`;
+    el.innerHTML = `<div class="deco-float" style="animation-delay:${-(i * 0.9).toFixed(1)}s">${def.draw()}</div>`;
     layer.append(el);
     return {
+      ...def,
       el,
-      side: i % 2 ? 1 : -1,
-      speed: [0.12, -0.08, 0.18, -0.12, 0.06, 0.15, -0.05][i % 7], // parallax
-      spin: [0.06, -0.04, 0.03, -0.07, 0.05][i % 5], // degrees per px scrolled
-      tilt: [-12, 10, -6, 14, 8, -10][i % 6],
-      size: [86, 76, 68, 72, 82, 60, 70][i % 7],
+      speed: [0.1, -0.06, 0.14, -0.1, 0.05, 0.12][i % 6],
+      spin: [0.03, -0.025, 0.02, -0.035, 0.04][i % 5],
+      tilt: [-14, 10, -6, 16, 8, -10][i % 6],
       y: 0,
-      x: 0,
     };
   });
 
-  let band = 0;
   function layout() {
-    const cs = getComputedStyle(container);
-    const left = container.getBoundingClientRect().left + parseFloat(cs.paddingLeft);
-    band = left;
+    const band = container.getBoundingClientRect().left + parseFloat(getComputedStyle(container).paddingLeft);
     const show = band >= MIN_BAND;
     layer.hidden = !show;
     if (!show) return;
     const pageH = document.documentElement.scrollHeight;
-    layer.style.height = `${pageH}px`;
     const vw = document.documentElement.clientWidth;
-    const top = 640; // start below the hero text
-    const gap = Math.max(300, (pageH - top - 500) / Math.ceil(items.length / 2));
+    layer.style.height = `${pageH}px`;
+    const room = band - 14; // never closer than 14px to the text
+    const gap = Math.max(260, (pageH - 200) / items.length);
     items.forEach((it, i) => {
-      const s = Math.round(Math.min(it.size, band * 0.62));
-      it.el.style.width = `${s}px`;
-      const pair = Math.floor(i / 2);
-      it.y = top + pair * gap + (it.side > 0 ? gap * 0.5 : 0);
-      const centre = band / 2 - s / 2;
-      it.x = it.side < 0 ? centre : vw - band / 2 - s / 2;
-      it.el.style.left = `${it.x}px`;
+      // Small things (buttons) sit fully inside the margin; big ones peek in from the edge.
+      const size = it.peek === 1 ? Math.min(it.size, room - 6) : it.size;
+      const visible = Math.min(room * 0.72, size * it.peek); // leaves room for turning
+      it.el.style.width = `${size}px`;
+      it.y = 90 + i * gap;
+      const x = it.peek === 1
+        ? (it.side < 0 ? (room - size) / 2 : vw - room + (room - size) / 2)
+        : (it.side < 0 ? visible - size : vw - visible);
+      it.el.style.left = `${x}px`;
       it.el.style.top = `${it.y}px`;
     });
     onScroll();
@@ -116,17 +149,14 @@ function initDeco() {
   function onScroll() {
     ticking = false;
     if (layer.hidden || reduce) return;
-    const sy = window.scrollY;
+    const mid = window.scrollY + innerHeight / 2;
     for (const it of items) {
-      // Distance of the item from the middle of the screen drives the parallax, so
-      // items drift and turn as they pass by.
-      const d = it.y - (sy + innerHeight / 2);
-      it.el.style.transform = `translateY(${(d * it.speed).toFixed(1)}px) rotate(${(it.tilt + d * it.spin).toFixed(1)}deg)`;
+      const d = it.y - mid;
+      it.el.style.transform = `translateY(${(d * it.speed).toFixed(1)}px) rotate(${Math.max(-14, Math.min(14, it.tilt + d * it.spin)).toFixed(1)}deg)`;
     }
   }
 
-  // Pop in each time an item comes into view, so the margins keep changing while scrolling.
-  if (!reduce) {
+  if (!reduce && 'IntersectionObserver' in window) {
     const io = new IntersectionObserver((entries) => {
       for (const e of entries) e.target.classList.toggle('is-in', e.isIntersecting);
     });

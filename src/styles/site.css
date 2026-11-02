@@ -869,74 +869,151 @@ ol.howto li:has(.step-fig) { display: grid; gap: 10px; }
   .cards-motion > .tile:hover .tile-icon { transform: translateY(-4px) rotate(-8deg) scale(1.12); }
 }
 
-/* ---------- Homepage: crochet tools in the side margins ---------- */
+/* ---------- Homepage: yarn, buttons and thread peeking in from the edges ---------- */
+:root { --deco-1: #d2aca7; --deco-2: #e2c5c0; --deco-line: #fffaf6; }
+@media (prefers-color-scheme: dark) { :root { --deco-1: #5c4148; --deco-2: #4c363c; --deco-line: #2b2327; } }
 .deco { position: absolute; z-index: 1; top: 0; left: 0; width: 100%; overflow: hidden; pointer-events: none; }
 .deco-item { position: absolute; will-change: transform; }
-.deco-item svg { width: 100%; height: auto; opacity: 0; transform: scale(0.4) rotate(-30deg); filter: drop-shadow(0 6px 8px rgb(90 50 60 / 0.18)); transition: opacity 0.5s, transform 0.7s cubic-bezier(0.2, 0.9, 0.3, 1.4); }
-.deco-item.is-in svg { opacity: 0.95; transform: none; }
+.deco-item svg { display: block; width: 100%; height: auto; opacity: 0; transform: scale(0.6) rotate(-20deg); transition: opacity 0.6s, transform 0.9s cubic-bezier(0.2, 0.9, 0.3, 1.3); }
+.deco-item.is-in svg { opacity: 0.9; transform: none; }
 @media (prefers-reduced-motion: no-preference) {
-  .deco-float { animation: deco-bob 6s ease-in-out infinite; }
+  .deco-float { animation: deco-bob 7s ease-in-out infinite; }
 }
-@keyframes deco-bob { 50% { translate: 0 -12px; rotate: 6deg; } }
+@keyframes deco-bob { 50% { translate: 0 -10px; rotate: 4deg; } }
 @media print { .deco { display: none; } }
 
-/* ---------- Homepage: animated story cards (cartoon scenes) ---------- */
-.story-card { display: grid; gap: 16px; align-items: center; }
-@media (min-width: 640px) { .story-card { grid-template-columns: minmax(0, 0.95fr) minmax(0, 1fr); } }
-.story-card h3 { margin-top: 0; }
-.scene { width: 100%; height: auto; border-radius: 14px; }
+/* ---------- Homepage: cartoon story ("Why crocheters love…") ---------- */
+.story { --story-gap: 40px; position: relative; }
+.story-track { display: grid; gap: 16px; }
+@media (min-width: 640px) { .story-track { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (min-width: 1100px) { .story-track { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+.story-card { display: flex; flex-direction: column; gap: 14px; }
+.story-card h3 { margin: 0 0 6px; }
+.story-card .story-text p { margin: 0; }
+.scene-slot { margin-top: auto; }
+.scene { display: block; width: 100%; height: auto; border-radius: 14px; }
+.story-ui { display: flex; justify-content: center; align-items: center; gap: 16px; margin-top: 18px; }
+.story-dots { display: none; gap: 8px; }
+.story-dots span { width: 9px; height: 9px; border-radius: 9px; background: var(--border-strong); transition: width 0.4s var(--ease), background-color 0.4s; }
+.story-dots span.is-on { width: 28px; background: var(--primary); }
+.story-btn { min-height: 40px; padding: 0 16px; border: 1px solid var(--border-strong); border-radius: 99px; background: var(--surface); color: var(--text-muted); font: inherit; font-weight: 700; font-size: 0.9rem; cursor: pointer; transition: color 0.2s, border-color 0.2s; }
+.story-btn:hover { color: var(--text); border-color: var(--primary); }
+
+/* Story mode: one big card at a time, the track pans to the next one. */
+.story.is-story { width: min(100%, 660px, max(340px, calc((100svh - 330px) * 1.6 + 48px))); margin-inline: auto; padding: 4px; overflow: hidden; }
+.story.is-story .story-track { display: flex; gap: var(--story-gap); transition: transform 1.35s cubic-bezier(0.55, 0, 0.3, 1); }
+.story.is-story .story-card { flex: 0 0 100%; }
+.story.is-story .story-card h3 { font-size: clamp(1.2rem, 1rem + 0.8vw, 1.5rem); }
+.story.is-story .story-dots { display: flex; }
+
+/* The girl walking between cards */
+.story-walker { position: absolute; z-index: 3; top: 0; left: 0; pointer-events: none; opacity: 0; transition: transform 1.35s cubic-bezier(0.55, 0, 0.3, 1); }
+.story-walker svg { display: block; width: auto; height: 100%; overflow: visible; }
+.story-walker.is-up, .story-walker.is-walking { opacity: 1; }
+.story-walker * { transform-box: fill-box; }
+.story-walker.is-up .w-body { transform-origin: 50% 100%; animation: w-stand 0.42s cubic-bezier(0.3, 1.4, 0.5, 1); }
+.story-walker .w-leg, .story-walker .w-arm { transform-origin: 50% 0; }
+.story-walker.is-walking .w-leg-l, .story-walker.is-walking .w-arm-r { animation: w-swing 0.4s ease-in-out infinite alternate; }
+.story-walker.is-walking .w-leg-r, .story-walker.is-walking .w-arm-l { animation: w-swing 0.4s ease-in-out infinite alternate-reverse; }
+.story-walker.is-walking .w-body { animation: w-bob 0.2s ease-in-out infinite alternate; }
+@keyframes w-stand { from { transform: scaleY(0.8) translateY(8%); } }
+@keyframes w-swing { from { transform: rotate(-20deg); } to { transform: rotate(20deg); } }
+@keyframes w-bob { to { transform: translateY(-3%); } }
+
+/* ---- Scenes: shared ---- */
 .scene * { transform-box: view-box; }
-.scene .s-head { transform-origin: 134px 90px; transition: transform 0.6s var(--ease); }
-.scene .s-eyes { transition: transform 0.4s var(--ease); }
-.scene .s-arm { transform-origin: 152px 100px; transition: transform 0.7s cubic-bezier(0.3, 1.3, 0.5, 1); }
+.scene .s-girl { transition: none; }
+.scene.girl-out .s-girl, .scene.girl-out .s-bubble, .scene.girl-out .s-qmarks { opacity: 0; }
+.scene .f { opacity: 0; transition: opacity 0.3s; }
+.scene .f-blush { opacity: 0.6; transition: opacity 0.3s; }
+.scene[data-face='smile'] :is(.f-brow-up, .f-smile),
+.scene[data-face='sad'] :is(.f-brow-sad, .f-sad, .f-sweat),
+.scene[data-face='joy'] :is(.f-brow-up, .f-joy),
+.scene[data-face='puzzled'] :is(.f-brow-sad, .f-o) { opacity: 1; }
+.scene[data-face='joy'] .f-blush { opacity: 1; }
+.scene[data-face='sad'] .f-sweat { animation: s-drip 1.2s ease-in infinite; }
+.scene .s-head { transform-origin: 134px 90px; transition: transform 0.5s var(--ease); }
+.scene[data-face='sad'] .s-head { transform: rotate(7deg); }
+.scene[data-face='puzzled'] .s-head { transform: rotate(-7deg); }
+.scene[data-face='joy'] .s-head { transform: rotate(-4deg); }
+.scene .s-eyes { transition: transform 0.35s var(--ease); }
+.scene[data-look='phone'] .s-eyes { transform: translate(2.5px, -1px); }
+.scene[data-look='lap'] .s-eyes { transform: translate(2px, 2.5px); }
+.scene .s-bubble { transform-origin: 172px 44px; transition: opacity 0.25s; }
+.scene .s-bubble.is-pop { animation: s-pop 0.45s cubic-bezier(0.3, 1.6, 0.5, 1); }
+.scene .s-qmarks, .scene .s-sparkles { opacity: 0; transition: opacity 0.3s; }
+.scene .s-qmarks text, .scene .s-sparkles path, .scene .s-tick { transform-box: fill-box; transform-origin: center; }
+.scene .s-thumb { transition: transform 0.2s; }
+.scene .s-larm { transform-origin: 117px 100px; }
 .scene .s-work { transform-origin: 145px 123px; }
-.scene .s-brow-sad, .scene .s-mouth-sad, .scene .s-mouth-joy, .scene .s-sweat, .scene .s-qmarks, .scene .s-sparkles, .scene .s-say-forget, .scene .s-say-happy, .scene .s-phone { opacity: 0; }
-.scene .s-brow-happy, .scene .s-brow-sad, .scene .s-mouth-smile, .scene .s-mouth-sad, .scene .s-mouth-joy, .scene .s-sweat, .scene .s-say, .scene .s-table-phone { transition: opacity 0.35s; }
-.scene .s-qmarks text, .scene .s-sparkles path { transform-origin: center; transform-box: fill-box; }
-.scene .s-phone { transform-origin: 250px 112px; transform: scale(0.25); transition: transform 0.7s cubic-bezier(0.3, 1.3, 0.5, 1) 0.1s, opacity 0.3s 0.1s; }
-.scene .s-bubble { transform-origin: 172px 44px; }
-
-/* 1. crocheting happily */
-.scene[data-phase='knit'] .s-arm { animation: s-knit 0.45s ease-in-out infinite alternate; }
-.scene[data-phase='knit'] .s-work { animation: s-turn 2.4s linear infinite; }
-@keyframes s-knit { from { transform: rotate(-7deg); } to { transform: rotate(9deg); } }
-@keyframes s-turn { to { transform: rotate(360deg); } }
-
-/* 2. forgets: stops, worried, question marks */
-.scene[data-phase='forget'] .s-head { transform: rotate(7deg); }
-.scene[data-phase='forget'] .s-brow-happy, .scene[data-phase='forget'] .s-mouth-smile, .scene[data-phase='forget'] .s-say-knit { opacity: 0; }
-.scene[data-phase='forget'] .s-brow-sad, .scene[data-phase='forget'] .s-mouth-sad, .scene[data-phase='forget'] .s-say-forget, .scene[data-phase='forget'] .s-sweat { opacity: 1; }
-.scene[data-phase='forget'] .s-qmarks { opacity: 1; }
-.scene[data-phase='forget'] .s-qmarks text { animation: s-pop 0.5s cubic-bezier(0.3, 1.6, 0.5, 1) both, s-wobble 1.2s 0.5s ease-in-out infinite alternate; }
-.scene[data-phase='forget'] .s-qmarks text:nth-child(2) { animation-delay: 0.25s, 0.75s; }
-.scene[data-phase='forget'] .s-qmarks text:nth-child(3) { animation-delay: 0.5s, 1s; }
-.scene[data-phase='forget'] .s-bubble { animation: s-shake 0.5s 0.2s ease-in-out; }
-.scene[data-phase='forget'] .s-sweat { animation: s-drip 1.4s ease-in infinite; }
+.scene .s-scr-b { opacity: 0; }
 @keyframes s-pop { from { transform: scale(0); opacity: 0; } }
-@keyframes s-wobble { to { transform: rotate(14deg) translateY(-3px); } }
-@keyframes s-shake { 25% { transform: rotate(-4deg); } 75% { transform: rotate(4deg); } }
 @keyframes s-drip { from { transform: translateY(0); opacity: 1; } to { transform: translateY(8px); opacity: 0; } }
-
-/* 3 + 4. picks up the phone, sees Round 7, smiles */
-.scene[data-phase='phone'] .s-arm, .scene[data-phase='happy'] .s-arm { transform: rotate(-100deg); }
-.scene[data-phase='phone'] .s-phone, .scene[data-phase='happy'] .s-phone { opacity: 1; transform: none; }
-.scene[data-phase='phone'] .s-table-phone, .scene[data-phase='happy'] .s-table-phone { opacity: 0; }
-.scene[data-phase='phone'] .s-hook, .scene[data-phase='happy'] .s-hook { opacity: 0; }
-.scene[data-phase='phone'] .s-eyes, .scene[data-phase='happy'] .s-eyes { transform: translate(2.5px, -1px); }
-.scene[data-phase='phone'] .s-say-knit, .scene[data-phase='happy'] .s-say-knit { opacity: 0; }
-.scene[data-phase='phone'] .s-bubble { opacity: 0; transition: opacity 0.3s; }
-.scene[data-phase='happy'] .s-head { transform: rotate(-5deg); }
-.scene[data-phase='happy'] .s-brow-happy { opacity: 1; }
-.scene[data-phase='happy'] .s-mouth-smile { opacity: 0; }
-.scene[data-phase='happy'] .s-mouth-joy, .scene[data-phase='happy'] .s-say-happy, .scene[data-phase='happy'] .s-sparkles { opacity: 1; }
-.scene[data-phase='happy'] .s-bubble { animation: s-pop 0.5s cubic-bezier(0.3, 1.6, 0.5, 1) both; }
-.scene[data-phase='happy'] .s-sparkles path { animation: s-twinkle 0.9s ease-in-out infinite alternate; }
-.scene[data-phase='happy'] .s-sparkles path:nth-child(2) { animation-delay: 0.3s; }
-.scene[data-phase='happy'] .s-sparkles path:nth-child(3) { animation-delay: 0.6s; }
-.scene[data-phase='happy'] .s-glow { animation: s-glow 1.2s ease-in-out infinite alternate; transform-origin: 176px 88px; }
-.scene[data-phase='happy'] .s-girl { animation: s-bounce 0.6s ease-out; }
+@keyframes s-knit { from { transform: rotate(-7deg); } to { transform: rotate(9deg); } }
+@keyframes s-knit2 { from { transform: rotate(-4deg); } to { transform: rotate(6deg); } }
+@keyframes s-turn { to { transform: rotate(360deg); } }
+@keyframes s-wobble { to { transform: rotate(14deg) translateY(-3px); } }
 @keyframes s-twinkle { from { transform: scale(0.5) rotate(0); } to { transform: scale(1.2) rotate(45deg); } }
 @keyframes s-glow { from { opacity: 0.5; transform: scale(0.85); } to { opacity: 1; transform: scale(1.15); } }
 @keyframes s-bounce { 40% { transform: translateY(-5px); } }
-.scene .s-glow { opacity: 0.8; }
-.scene .s-say { transition: none; }
+.scene:is([data-phase='found'], [data-phase='done'], [data-phase='proud'], [data-phase='again'], [data-phase='learn']) .s-sparkles { opacity: 1; }
+.scene:is([data-phase='found'], [data-phase='done'], [data-phase='proud'], [data-phase='again'], [data-phase='learn']) .s-sparkles path { animation: s-twinkle 0.8s ease-in-out infinite alternate; }
+.scene .s-sparkles path:nth-child(2) { animation-delay: 0.3s; }
+.scene .s-sparkles path:nth-child(3) { animation-delay: 0.6s; }
+.scene:is([data-phase='forget'], [data-phase='puzzle']) .s-qmarks { opacity: 1; }
+.scene:is([data-phase='forget'], [data-phase='puzzle']) .s-qmarks text { animation: s-pop 0.5s cubic-bezier(0.3, 1.6, 0.5, 1) both, s-wobble 1s 0.5s ease-in-out infinite alternate; }
+.scene .s-qmarks text:nth-child(2) { animation-delay: 0.2s, 0.7s; }
+.scene .s-qmarks text:nth-child(3) { animation-delay: 0.4s, 0.9s; }
+.scene:is([data-phase='found'], [data-phase='done'], [data-phase='again'], [data-phase='learn']) .s-girl { animation: s-bounce 0.6s ease-out; }
+
+/* ---- Scene 1: forgets, checks phone ---- */
+.scene .s-arm { transform-origin: 152px 100px; transition: transform 0.7s cubic-bezier(0.3, 1.3, 0.5, 1); }
+.scene[data-phase='knit'] .s-arm { animation: s-knit 0.4s ease-in-out infinite alternate; }
+.scene[data-phase='knit'] .s-work { animation: s-turn 2.4s linear infinite; }
+.scene .s-phone { opacity: 0; transform-origin: 250px 112px; transform: scale(0.25); transition: transform 0.7s cubic-bezier(0.3, 1.3, 0.5, 1) 0.1s, opacity 0.3s 0.1s; }
+.scene .s-table-phone, .scene .s-hook { transition: opacity 0.3s; }
+.scene[data-phase='found'] .s-arm { transform: rotate(-100deg); }
+.scene[data-phase='found'] .s-phone { opacity: 1; transform: none; }
+.scene[data-phase='found'] :is(.s-table-phone, .s-hook) { opacity: 0; }
+.scene[data-phase='found'] .s-glow { transform-origin: 176px 88px; animation: s-glow 1s ease-in-out infinite alternate; }
+
+/* ---- Scene 2: one hand ---- */
+.scene[data-phase='work'] .s-larm { animation: s-knit2 0.4s ease-in-out infinite alternate; }
+.scene[data-phase='work'] .s-work { animation: s-turn 2.4s linear infinite; }
+.scene[data-scene='onehand'][data-phase='tap'] .s-thumb { transform: translate(0, 3px) scale(0.9); }
+.scene[data-scene='onehand'][data-phase='tap'] .s-donebtn { opacity: 0.55; }
+.scene[data-phase='done'] .s-scr-a { opacity: 0; }
+.scene[data-phase='done'] .s-scr-b { opacity: 1; }
+.scene .s-tick { opacity: 0; }
+.scene[data-phase='done'] .s-tick { opacity: 1; animation: s-pop 0.5s cubic-bezier(0.3, 1.6, 0.5, 1); }
+.scene .s-steam { stroke-dasharray: 3 3; animation: s-steam 1.6s linear infinite; opacity: 0.8; }
+@keyframes s-steam { to { stroke-dashoffset: -12; } }
+
+/* ---- Scene 3: make it again ---- */
+.scene .s-work-new, .scene .s-newyarn { opacity: 0; }
+.scene[data-phase='proud'] .s-ball { transform-origin: 246px 115px; animation: s-bounce 0.5s ease-out 2; }
+.scene[data-scene='again'][data-phase='tap'] .s-thumb { transform: translate(0, 3px) scale(0.9); }
+.scene[data-scene='again'][data-phase='tap'] .s-reset { opacity: 0.55; }
+.scene[data-phase='again'] .s-work-old { opacity: 0; }
+.scene[data-phase='again'] :is(.s-work-new, .s-newyarn) { opacity: 1; }
+.scene[data-phase='again'] .s-work-new .s-work { animation: s-pop 0.5s cubic-bezier(0.3, 1.6, 0.5, 1); }
+.scene[data-phase='again'] .s-newyarn { transform-origin: 214px 140px; animation: s-pop 0.5s cubic-bezier(0.3, 1.6, 0.5, 1); }
+.scene[data-phase='again'] .s-scr-a { opacity: 0; }
+.scene[data-phase='again'] .s-scr-b { opacity: 1; }
+
+/* ---- Scene 4: learn a stitch ---- */
+.scene[data-scene='learn'][data-phase='tap'] .s-thumb { transform: translate(0, -12px) scale(0.9); }
+.scene[data-scene='learn'][data-phase='tap'] .s-chip { opacity: 0.6; }
+.scene .s-board, .scene .s-bulb { opacity: 0; }
+.scene[data-phase='learn'] .s-board { opacity: 1; transform-origin: 250px 100px; animation: s-pop 0.5s cubic-bezier(0.3, 1.5, 0.5, 1); }
+.scene[data-phase='learn'] .s-bulb { opacity: 1; transform-origin: 134px 22px; animation: s-pop 0.5s 0.2s cubic-bezier(0.3, 1.6, 0.5, 1) both, s-glow 0.9s 0.7s ease-in-out infinite alternate; }
+.scene[data-phase='learn'] .s-bighook { transform-origin: 272px 126px; animation: s-hook 0.8s ease-in-out infinite alternate; }
+.scene[data-phase='learn'] :is(.s-loop1, .s-loop2) { stroke-dasharray: 40; animation: s-loop 1.6s ease-in-out infinite; }
+.scene[data-phase='learn'] .s-loop2 { animation-delay: 0.4s; }
+@keyframes s-hook { to { transform: rotate(-10deg); } }
+@keyframes s-loop { 0% { stroke-dashoffset: 40; } 50%, 100% { stroke-dashoffset: 0; } }
+
+@media print { .story-walker, .story-ui { display: none; } }
+
+/* Sliding cards must never cause sideways scrolling. */
+main { overflow-x: clip; }
