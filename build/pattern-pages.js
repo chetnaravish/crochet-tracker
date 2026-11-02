@@ -217,12 +217,12 @@ export function renderPattern(p) {
                 <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9V3h12v6"/><rect x="3" y="9" width="18" height="8" rx="2"/><path d="M6 14h12v7H6z"/></svg>
                 Print
               </button>
-              ${hasPdf ? `<a class="btn btn-ghost btn-lg" href="/pdf/${esc(p.slug)}.pdf" download>
-                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
-                Download free PDF
+              ${hasPdf ? `<a class="btn btn-ghost btn-lg" href="/pdf/${esc(p.slug)}.pdf" data-pdf-view="${esc(p.slug)}">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5"/></svg>
+                Free PDF
               </a>` : ''}
             </div>
-            ${hasPdf ? `<p class="pp-pdf-note no-print">Free printable PDF of this crochet pattern${chartRounds.length ? ', with the round diagram' : ''}. Print it, or keep it on your phone. Want every pattern in one file? Get the <a href="/pdf/${BOOK_PDF}" download>free crochet pattern book PDF</a>.</p>` : ''}
+            ${hasPdf ? `<p class="pp-pdf-note no-print">Free printable PDF of this crochet pattern${chartRounds.length ? ', with the round diagram' : ''}. Tap <strong>Free PDF</strong> to preview it, then download it if you like it. You can also read all our patterns together in the <a href="/free-patterns/#pdf" data-pdf-view="book">free crochet pattern book</a> (view only).</p>` : ''}
             <p class="open-status" aria-live="polite"></p>
           </header>
 
@@ -286,8 +286,6 @@ export function renderPattern(p) {
 // ---------- Hub-page cards ----------
 // A simple card: the product picture on top, the name underneath. Until a real
 // photo exists the picture is an SVG illustration (marked "Illustration").
-// Free PDFs made by `npm run pdfs` (scripts/make-pdfs.mjs).
-export const BOOK_PDF = 'crochet-tracker-free-pattern-book.pdf';
 
 const CARD_BG = { sunflower: 'bg-butter', ball: 'bg-rose', coaster: 'bg-mint', flower: 'bg-lavender' };
 export function cardArt(kind) {

@@ -74,6 +74,20 @@ for (const btn of document.querySelectorAll('[data-open-pattern]')) {
   });
 }
 
+// Free PDFs: open a preview first (download only from inside the preview).
+document.addEventListener('click', async (e) => {
+  const link = e.target.closest('[data-pdf-view]');
+  if (!link || e.ctrlKey || e.metaKey || e.shiftKey) return;
+  e.preventDefault();
+  try {
+    const { openPdfViewer } = await import('./lib/pdf-viewer.js');
+    if (!(await openPdfViewer(link.dataset.pdfView, link))) throw new Error('missing');
+  } catch {
+    // Preview not available (e.g. offline): fall back to the link itself.
+    location.href = link.href;
+  }
+});
+
 // Pattern pages: Print / Save as PDF (print styles hide everything but the pattern).
 for (const btn of document.querySelectorAll('[data-print]')) btn.addEventListener('click', () => window.print());
 

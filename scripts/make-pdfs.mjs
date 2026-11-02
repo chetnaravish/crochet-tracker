@@ -1,6 +1,9 @@
-// Free PDF downloads: one PDF per pattern plus one "pattern book" PDF with every
-// pattern and a cover page. Uses the print styles of the pattern pages, so the PDF
-// matches "Print / Save as PDF". Output goes to public/pdf/ and is committed.
+// Free PDFs: one downloadable PDF per pattern, plus a "pattern book" with every
+// pattern and a cover page that visitors can only view (it is not published as a PDF).
+// Uses the print styles of the pattern pages, so the PDFs match "Print".
+// Every page is also saved as an image (public/pdf/pages/) for the in-site preview,
+// which works on every phone (Android browsers download PDFs instead of showing them).
+// Output goes to public/pdf/ and is committed.
 //
 // Run with: npm run build && npm run pdfs && npm run build
 // (rerun after adding or editing a pattern, and after changing SITE_URL)
@@ -15,7 +18,9 @@ import { SITE_URL } from '../site.config.js';
 
 const DIST = path.resolve('dist');
 const OUT = path.resolve('public/pdf');
-import { BOOK_PDF as BOOK } from '../build/pattern-pages.js';
+const PAGES = path.join(OUT, 'pages');
+const PDFJS = path.resolve('node_modules/pdfjs-dist/build');
+const made = new Map(); // file name -> PDF bytes, served to the page renderer
 const BROWSERS = [
   process.env.BROWSER,
   'C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe',
@@ -73,6 +78,9 @@ const TYPES = { '.html': 'text/html', '.css': 'text/css', '.js': 'text/javascrip
 const server = http.createServer((req, res) => {
   const url = decodeURIComponent(req.url.split('?')[0]);
   if (url === '/__book.html') return res.writeHead(200, { 'content-type': 'text/html' }).end(bookHtml());
+  if (url === '/__render.html') return res.writeHead(200, { 'content-type': 'text/html' }).end(RENDER_HTML);
+  if (url.startsWith('/__pdf/')) return res.writeHead(200, { 'content-type': 'application/pdf' }).end(made.get(url.slice(7)));
+  if (url.startsWith('/__pdfjs/')) return res.writeHead(200, { 'content-type': 'text/javascript' }).end(fs.readFileSync(path.join(PDFJS, path.basename(url))));
   let file = path.join(DIST, url);
   if (fs.existsSync(file) && fs.statSync(file).isDirectory()) file = path.join(file, 'index.html');
   if (!file.startsWith(DIST) || !fs.existsSync(file)) return res.writeHead(404).end();
@@ -121,7 +129,7 @@ await s('Emulation.setEmulatedMedia', { media: 'print', features: [{ name: 'pref
 const footer = (link) =>
   `<div style="width:100%;font:8px Arial,sans-serif;color:#777;padding:0 12mm;display:flex;justify-content:space-between"><span>Free pattern from Crochet Tracker · ${link}</span><span><span class="pageNumber"></span> / <span class="totalPages"></span></span></div>`;
 
-async function pdf(url, file, link) {
+async function pdf(url, file, link, save = true) {
   await s('Page.navigate', { url });
   // Wait for fonts and layout.
   for (let i = 0; i < 50; i++) {
@@ -142,14 +150,56 @@ async function pdf(url, file, link) {
     headerTemplate: '<span></span>',
     footerTemplate: footer(link),
   });
-  fs.writeFileSync(path.join(OUT, file), Buffer.from(data, 'base64'));
-  console.log('pdf:', file, Math.round(Buffer.from(data, 'base64').length / 1024), 'KB');
+  const bytes = Buffer.from(data, 'base64');
+  made.set(file, bytes);
+  if (save) fs.writeFileSync(path.join(OUT, file), bytes);
+  console.log('pdf:', file, Math.round(bytes.length / 1024), 'KB', save ? '' : '(preview only, not published)');
 }
 
-fs.mkdirSync(OUT, { recursive: true });
+// Renders every page of a PDF to a WebP image with pdf.js inside the browser.
+const RENDER_HTML = `<!doctype html><body><script type="module">
+import * as pdfjs from '/__pdfjs/pdf.min.mjs';
+pdfjs.GlobalWorkerOptions.workerSrc = '/__pdfjs/pdf.worker.min.mjs';
+const file = new URLSearchParams(location.search).get('f');
+const doc = await pdfjs.getDocument('/__pdf/' + file).promise;
+const out = [];
+for (let n = 1; n <= doc.numPages; n++) {
+  const page = await doc.getPage(n);
+  const vp = page.getViewport({ scale: 1100 / page.getViewport({ scale: 1 }).width });
+  const c = document.createElement('canvas');
+  c.width = Math.round(vp.width);
+  c.height = Math.round(vp.height);
+  await page.render({ canvasContext: c.getContext('2d'), viewport: vp }).promise;
+  out.push(c.toDataURL('image/webp', 0.82));
+}
+window.__pages = out;
+</script></body>`;
+
+async function pages(file, key) {
+  await s('Page.navigate', { url: `${base}/__render.html?f=${encodeURIComponent(file)}` });
+  let list = null;
+  for (let i = 0; i < 150 && !list; i++) {
+    await new Promise((r) => setTimeout(r, 200));
+    list = (await s('Runtime.evaluate', { expression: 'window.__pages || null', returnByValue: true })).result.value;
+  }
+  if (!list) throw new Error('Could not render the pages of ' + file);
+  list.forEach((d, i) => fs.writeFileSync(path.join(PAGES, `${key}-${i + 1}.webp`), Buffer.from(d.split(',')[1], 'base64')));
+  console.log('pages:', key, list.length);
+  return list.length;
+}
+
+fs.rmSync(OUT, { recursive: true, force: true });
+fs.mkdirSync(PAGES, { recursive: true });
+const manifest = {};
 try {
-  for (const p of patterns) await pdf(`${base}/free-patterns/${p.slug}/`, `${p.slug}.pdf`, `${SITE_URL}/free-patterns/${p.slug}/`);
-  await pdf(`${base}/__book.html`, BOOK, `${SITE_URL}/free-patterns/`);
+  for (const p of patterns) {
+    await pdf(`${base}/free-patterns/${p.slug}/`, `${p.slug}.pdf`, `${SITE_URL}/free-patterns/${p.slug}/`);
+    manifest[p.slug] = { title: p.title, pages: await pages(`${p.slug}.pdf`, p.slug), pdf: `/pdf/${p.slug}.pdf` };
+  }
+  // The book is view-only: its PDF is only used to make the preview images.
+  await pdf(`${base}/__book.html`, 'book.pdf', `${SITE_URL}/free-patterns/`, false);
+  manifest.book = { title: 'Free Crochet Pattern Book', pages: await pages('book.pdf', 'book'), pdf: null, items: patterns.map((p) => p.slug) };
+  fs.writeFileSync(path.join(OUT, 'pages.json'), JSON.stringify(manifest, null, 2) + '\n');
 } finally {
   ws.close();
   browser.kill();

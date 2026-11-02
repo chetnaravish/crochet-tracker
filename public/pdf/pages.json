@@ -1,0 +1,33 @@
+{
+  "mini-sunflower": {
+    "title": "Mini Crochet Sunflower",
+    "pages": 4,
+    "pdf": "/pdf/mini-sunflower.pdf"
+  },
+  "little-amigurumi-ball": {
+    "title": "Little Amigurumi Ball",
+    "pages": 3,
+    "pdf": "/pdf/little-amigurumi-ball.pdf"
+  },
+  "mini-flower-keychain": {
+    "title": "Mini Flower Keychain",
+    "pages": 3,
+    "pdf": "/pdf/mini-flower-keychain.pdf"
+  },
+  "simple-round-coaster": {
+    "title": "Simple Round Coaster",
+    "pages": 3,
+    "pdf": "/pdf/simple-round-coaster.pdf"
+  },
+  "book": {
+    "title": "Free Crochet Pattern Book",
+    "pages": 14,
+    "pdf": null,
+    "items": [
+      "mini-sunflower",
+      "little-amigurumi-ball",
+      "mini-flower-keychain",
+      "simple-round-coaster"
+    ]
+  }
+}

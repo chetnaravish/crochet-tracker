@@ -15,6 +15,7 @@
   },
   "license": "MIT",
   "devDependencies": {
+    "pdfjs-dist": "^4.4.168",
     "sharp": "^0.35.5",
     "vite": "^8.3.5"
   }
