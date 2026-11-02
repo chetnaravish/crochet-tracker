@@ -204,6 +204,17 @@ function figureFor(spec) {
   return stepClip(spec);
 }
 
+// The few words every step list uses, explained once above the steps.
+const HOWTO_TERMS = `<aside class="howto-terms" aria-label="Words used in these steps">
+            <p class="howto-terms-title">Words used in these steps</p>
+            <dl>
+              <div><dt>Working yarn</dt><dd>The yarn coming from the ball.</dd></div>
+              <div><dt>Yarn over (yo)</dt><dd>Wrap the working yarn over your hook from back to front.</dd></div>
+              <div><dt>Pull up a loop</dt><dd>With the yarn caught in the hook, pull the hook back out through the stitch.</dd></div>
+              <div><dt>Loops on your hook</dt><dd>The loops sitting around the hook. Each step tells you how many there should be.</dd></div>
+            </dl>
+          </aside>`;
+
 function expandDrawings(html) {
   html = html.replace(/<!--@symbol\s+([\w-]+)\s*-->/g, (_, name) => symbol(name));
   html = html.replace(/<!--@chart\s+([\w-]+)\s*-->/g, (_, name) => `<figure class="mini-chart">${miniChart(name)}</figure>`);
@@ -214,7 +225,8 @@ function expandDrawings(html) {
       const cap = spec.cap ? `<span class="step-cap">${spec.cap}</span>` : '';
       return `<li><span class="step-text">${text}</span><span class="step-fig">${figureFor(spec)}${cap}</span></li>`;
     });
-    return `<ol${attrs}>${items}</ol>`;
+    return `${HOWTO_TERMS}
+          <ol${attrs}>${items}</ol>`;
   });
 }
 
