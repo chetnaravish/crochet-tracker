@@ -143,6 +143,18 @@ function crumbBar(crumbs) {
     </div>`;
 }
 
+// Website pages always open at the top (hero): on refresh and when arriving from any
+// link, the browser must not keep the old scroll spot (e.g. the footer). Exceptions:
+// a #section link still jumps to that section, and browser Back/Forward (and our Back
+// button) returns to where you were, using the spot saved in history.state on leave.
+const SCROLL_TOP_SCRIPT = `(function(){var h=history;if(!('scrollRestoration' in h))return;h.scrollRestoration='manual';
+addEventListener('pagehide',function(){try{h.replaceState(Object.assign({},h.state,{ctY:scrollY}),'')}catch(e){}});
+var n=performance.getEntriesByType&&performance.getEntriesByType('navigation')[0];
+var y=n&&n.type==='back_forward'&&h.state&&h.state.ctY;
+if(location.hash)return;
+if(!y){scrollTo(0,0);return}
+var go=function(){scrollTo(0,y)};addEventListener('DOMContentLoaded',go);addEventListener('load',go)})()`.replace(/\n/g, '');
+
 function renderMeta(meta, html) {
   const url = abs(meta.path);
   const ogImage = abs(OG_IMAGE);
@@ -151,6 +163,7 @@ function renderMeta(meta, html) {
     '<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">',
     // Tiny inline flag so CSS can collapse the mobile menu only when JS can open it again.
     "<script>document.documentElement.classList.add('js')</script>",
+    meta.path.startsWith('/app/') ? '' : `<script>${SCROLL_TOP_SCRIPT}</script>`,
     `<title>${escAttr(meta.title)}</title>`,
     `<meta name="description" content="${escAttr(meta.description)}">`,
     `<meta name="robots" content="${meta.noindex ? 'noindex, nofollow' : 'index, follow, max-image-preview:large'}">`,
