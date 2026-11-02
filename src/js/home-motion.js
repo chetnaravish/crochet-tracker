@@ -174,3 +174,24 @@ function initDeco() {
 }
 
 initDeco();
+
+// ---------- 3. "How it works": steps take turns, the thread fills up ----------
+for (const flow of document.querySelectorAll('[data-flow]')) {
+  const steps = [...flow.querySelectorAll('.steps-anim > li')];
+  const thread = flow.querySelector('.flow-thread');
+  let i = 0;
+  let timer = null;
+  const show = (n) => {
+    i = n;
+    steps.forEach((li, k) => li.classList.toggle('is-active', k === n));
+    if (thread) thread.style.setProperty('--p', `${(n / (steps.length - 1)) * 100}%`);
+  };
+  if (reduce || !('IntersectionObserver' in window)) { show(0); continue; }
+  show(0);
+  steps.forEach((li) => li.classList.remove('is-active'));
+  const tick = () => { show((i + 1) % steps.length); timer = setTimeout(tick, 3000); };
+  new IntersectionObserver(([e]) => {
+    if (e.isIntersecting && !timer) { show(0); timer = setTimeout(tick, 3000); }
+    else if (!e.isIntersecting && timer) { clearTimeout(timer); timer = null; }
+  }, { threshold: 0.35 }).observe(flow);
+}

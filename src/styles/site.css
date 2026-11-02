@@ -900,7 +900,7 @@ ol.howto li:has(.step-fig) { display: grid; gap: 10px; }
 .story-btn:hover { color: var(--text); border-color: var(--primary); }
 
 /* Story mode: one big card at a time, the track pans to the next one. */
-.story.is-story { width: min(100%, 660px, max(340px, calc((100svh - 330px) * 1.6 + 48px))); margin-inline: auto; padding: 4px; overflow: hidden; }
+.story.is-story { width: min(100%, 860px, max(420px, calc((100svh - 230px) * 1.75 + 48px))); margin-inline: auto; padding: 4px; overflow: hidden; }
 .story.is-story .story-track { display: flex; gap: var(--story-gap); transition: transform 1.35s cubic-bezier(0.55, 0, 0.3, 1); }
 .story.is-story .story-card { flex: 0 0 100%; }
 .story.is-story .story-card h3 { font-size: clamp(1.2rem, 1rem + 0.8vw, 1.5rem); }
@@ -1017,3 +1017,100 @@ ol.howto li:has(.step-fig) { display: grid; gap: 10px; }
 
 /* Sliding cards must never cause sideways scrolling. */
 main { overflow-x: clip; }
+
+/* ---------- Homepage: "How it works" — animated steps joined by a yarn thread ---------- */
+.flow { position: relative; padding-top: 24px; }
+.steps-anim li {
+  display: flex;
+  flex-direction: column;
+  padding: 34px 20px 22px;
+  top: 0;
+  transition: top 0.55s cubic-bezier(0.2, 0.9, 0.3, 1.2), box-shadow 0.55s var(--ease), border-color 0.4s;
+}
+.steps-anim li::before {
+  left: 20px;
+  top: -22px;
+  z-index: 2;
+  width: 46px;
+  height: 46px;
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  box-shadow: 0 0 0 5px var(--surface-2);
+  transition: transform 0.5s cubic-bezier(0.3, 1.6, 0.5, 1), background-color 0.4s;
+}
+.steps-anim .step-art { width: 100%; height: auto; margin-bottom: 14px; border-radius: 14px; }
+.steps-anim li.is-active {
+  top: -8px; /* not transform: keeps the number above the thread */
+  border-color: color-mix(in srgb, var(--primary) 40%, var(--border));
+  box-shadow: 0 22px 40px -20px rgb(180 67 108 / 0.45);
+}
+.steps-anim li.is-active::before { transform: scale(1.15); animation: num-pulse 1.4s ease-out infinite; }
+@keyframes num-pulse { 0% { box-shadow: 0 0 0 5px var(--surface-2), 0 0 0 5px rgb(180 67 108 / 0.5); } 100% { box-shadow: 0 0 0 5px var(--surface-2), 0 0 0 18px rgb(180 67 108 / 0); } }
+
+/* The yarn thread through the step numbers (desktop: 3 cards in a row) */
+.flow-thread { display: none; }
+@media (min-width: 768px) {
+  .flow-thread {
+    --p: 0%;
+    display: block;
+    position: absolute;
+    z-index: 1;
+    top: 25px;
+    left: 43px;
+    width: calc((100% - 32px) * 2 / 3 + 32px);
+    height: 4px;
+    translate: 0 -2px;
+    background: repeating-linear-gradient(90deg, var(--border-strong) 0 8px, transparent 8px 14px);
+    border-radius: 4px;
+  }
+  .flow-thread span { position: absolute; inset: 0 auto 0 0; width: var(--p); border-radius: 4px; background: var(--primary); transition: width 1s cubic-bezier(0.5, 0, 0.2, 1); }
+  .flow-thread span::after { content: ''; position: absolute; right: -9px; top: 50%; width: 18px; height: 18px; translate: 0 -50%; border-radius: 50%; background: var(--primary); box-shadow: inset -4px -3px 0 rgb(0 0 0 / 0.15), inset 3px 2px 0 rgb(255 255 255 / 0.3); }
+}
+
+.step-art * { transform-box: fill-box; }
+/* Step 1: lines appear, arrow nudges, round chips pop out */
+.steps-anim li.is-active .a-line { transform-origin: 0 50%; animation: a-grow 0.5s var(--ease) both; }
+.steps-anim li.is-active .a-l2 { animation-delay: 0.25s; }
+.steps-anim li.is-active .a-l3 { animation-delay: 0.5s; }
+.steps-anim li.is-active .a-arrow { animation: a-nudge 0.5s 0.8s ease-in-out 2 alternate both; }
+.steps-anim li.is-active .a-chip { transform-origin: 0 50%; animation: a-chip 0.55s cubic-bezier(0.3, 1.5, 0.5, 1) both; }
+.steps-anim li.is-active .a-c1 { animation-delay: 1.2s; }
+.steps-anim li.is-active .a-c2 { animation-delay: 1.4s; }
+.steps-anim li.is-active .a-c3 { animation-delay: 1.6s; }
+@keyframes a-grow { from { transform: scaleX(0); } }
+@keyframes a-nudge { to { transform: translateX(6px); } }
+@keyframes a-chip { from { transform: translateX(-26px) scale(0.6); opacity: 0; } }
+
+/* Step 2: done row ticks, current round glows, stitch counter counts up */
+.steps-anim li.is-active .a-done circle, .steps-anim li.is-active .a-done path { transform-origin: center; animation: a-pop 0.45s cubic-bezier(0.3, 1.6, 0.5, 1) both; }
+.steps-anim li.is-active .a-cur { transform-origin: center; animation: a-breathe 1.4s 0.2s ease-in-out 2; }
+.steps-anim li.is-active .a-shine { animation: a-shine 1.3s 0.4s ease-in-out 2; }
+.steps-anim li.is-active .a-odo { animation: a-odo 2.4s 0.3s steps(1, end) both; }
+.steps-anim li.is-active .a-next { animation: a-fade 0.6s 0.2s both; }
+@keyframes a-pop { from { transform: scale(0); } }
+@keyframes a-breathe { 50% { transform: scale(1.04); } }
+@keyframes a-shine { to { transform: translateX(300px); } }
+@keyframes a-odo { 0% { transform: none; } 30% { transform: translateY(-20px); } 60% { transform: translateY(-40px); } 90%, 100% { transform: translateY(-60px); } }
+@keyframes a-fade { from { opacity: 0; } }
+
+/* Step 3: finger taps Done, confetti, progress grows, "Saved" */
+.a-finger, .a-ring, .a-burst { opacity: 0; }
+.steps-anim li.is-active .a-finger { animation: a-finger 1.3s ease-in-out both; }
+.steps-anim li.is-active .a-btn { transform-origin: center; animation: a-press 0.3s 0.75s ease-in-out both; }
+.steps-anim li.is-active .a-ring { transform-origin: center; animation: a-ring 0.6s 0.85s ease-out both; }
+.steps-anim li.is-active .a-burst circle { animation: a-burst 0.9s 0.9s cubic-bezier(0.2, 0.7, 0.3, 1) both; }
+.steps-anim li.is-active .a-burst { opacity: 1; }
+.steps-anim li.is-active .a-bar { transform-origin: 0 50%; animation: a-bar 0.8s 1s cubic-bezier(0.3, 1.2, 0.5, 1) both; }
+.steps-anim li.is-active .a-saved { transform-origin: center; animation: a-chip 0.5s 1.4s cubic-bezier(0.3, 1.5, 0.5, 1) both; }
+@keyframes a-finger { 0% { opacity: 0; transform: translate(60px, 50px); } 25% { opacity: 1; } 55% { opacity: 1; transform: none; } 62% { transform: scale(0.85); } 75% { opacity: 1; transform: none; } 100% { opacity: 0; transform: translate(30px, 30px); } }
+@keyframes a-press { 50% { transform: scale(0.94); } }
+@keyframes a-ring { from { opacity: 1; transform: scale(0.6); } to { opacity: 0; transform: scale(2.4); } }
+@keyframes a-burst { from { transform: translate(var(--bx, 0), var(--by, 0)) scale(0); opacity: 1; } 60% { opacity: 1; } to { transform: none; opacity: 0; } }
+@keyframes a-bar { from { transform: scaleX(0.5); } }
+.a-burst circle:nth-child(1) { --bx: 60px; --by: 22px; }
+.a-burst circle:nth-child(2) { --bx: -46px; --by: 24px; }
+.a-burst circle:nth-child(3) { --bx: -76px; --by: -2px; }
+.a-burst circle:nth-child(4) { --bx: 94px; --by: -10px; }
+.a-burst circle:nth-child(5) { --bx: 20px; --by: 28px; }
+.a-burst circle:nth-child(6) { --bx: -10px; --by: -24px; }
+@media (prefers-reduced-motion: reduce) { .steps-anim li.is-active, .steps-anim li.is-active * { animation: none !important; } }

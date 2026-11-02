@@ -93,11 +93,55 @@
             <h2 id="how-h">How it works</h2>
             <p>Three steps, and you're crocheting.</p>
           </div>
-          <ol class="steps">
-            <li><h3>Add your pattern</h3><p>Type it in round by round, or paste the full pattern text and let the tracker split it into rounds.</p></li>
-            <li><h3>Open Work Mode</h3><p>Your current round is shown big and bright. Upcoming rounds stay visible so you can read ahead.</p></li>
-            <li><h3>Tap Done after each round</h3><p>Progress saves instantly. Close the app, come back next week, and you'll be on the exact same round.</p></li>
-          </ol>
+          <div class="flow" data-flow>
+            <div class="flow-thread" aria-hidden="true"><span></span></div>
+            <ol class="steps steps-anim">
+              <li class="is-active">
+                <svg class="step-art" viewBox="0 0 260 120" aria-hidden="true">
+                  <rect width="260" height="120" rx="14" fill="#fdeee4" />
+                  <g class="a-paper"><rect x="14" y="14" width="96" height="92" rx="10" fill="#fff" stroke="#ecdcd0" stroke-width="2" /><text x="26" y="31" font-family="Nunito, sans-serif" font-size="9" font-weight="800" fill="#6e5961">Pattern</text>
+                    <rect class="a-line a-l1" x="26" y="42" width="70" height="8" rx="4" fill="#e7def6" />
+                    <rect class="a-line a-l2" x="26" y="60" width="56" height="8" rx="4" fill="#ffe1cf" />
+                    <rect class="a-line a-l3" x="26" y="78" width="64" height="8" rx="4" fill="#d9f0e1" /></g>
+                  <path class="a-arrow" d="M118 60h20m-7-7 7 7-7 7" fill="none" stroke="#b4436c" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+                  <g font-family="Nunito, sans-serif" font-size="10" font-weight="800">
+                    <g class="a-chip a-c1"><rect x="148" y="16" width="98" height="24" rx="12" fill="#fff" stroke="#f3c6d6" stroke-width="2" /><circle cx="161" cy="28" r="5" fill="#e7def6" /><text x="172" y="31.5" fill="#3a2a30">Round 1</text></g>
+                    <g class="a-chip a-c2"><rect x="148" y="48" width="98" height="24" rx="12" fill="#fff" stroke="#f3c6d6" stroke-width="2" /><circle cx="161" cy="60" r="5" fill="#ffe1cf" /><text x="172" y="63.5" fill="#3a2a30">Round 2</text></g>
+                    <g class="a-chip a-c3"><rect x="148" y="80" width="98" height="24" rx="12" fill="#fff" stroke="#f3c6d6" stroke-width="2" /><circle cx="161" cy="92" r="5" fill="#d9f0e1" /><text x="172" y="95.5" fill="#3a2a30">Round 3</text></g>
+                  </g>
+                </svg>
+                <h3>Add your pattern</h3><p>Type it in round by round, or paste the full pattern text and let the tracker split it into rounds.</p>
+              </li>
+              <li>
+                <svg class="step-art" viewBox="0 0 260 120" aria-hidden="true">
+                  <defs><clipPath id="odo"><rect x="196" y="47" width="22" height="20" rx="4" /></clipPath><linearGradient id="shine" x1="0" x2="1"><stop offset="0" stop-color="#fff" stop-opacity="0" /><stop offset=".5" stop-color="#fff" stop-opacity=".85" /><stop offset="1" stop-color="#fff" stop-opacity="0" /></linearGradient><clipPath id="currow"><rect x="34" y="38" width="192" height="38" rx="11" /></clipPath></defs>
+                  <rect width="260" height="120" rx="14" fill="#e8f4ec" />
+                  <g font-family="Nunito, sans-serif" font-weight="800">
+                    <g class="a-done"><rect x="40" y="10" width="180" height="22" rx="9" fill="#d9f0e1" /><circle cx="54" cy="21" r="6" fill="#3d7a50" /><path d="M51 21l2 2.4 4-4.4" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" /><text x="66" y="24.5" font-size="9.5" fill="#4f3f45">Round 1 · 6 sc in MR</text></g>
+                    <g class="a-cur"><rect x="34" y="38" width="192" height="38" rx="11" fill="#fff" stroke="#b4436c" stroke-width="2.5" /><text x="46" y="52" font-size="8" fill="#b4436c">ROUND 2</text><text x="46" y="68" font-size="13" fill="#3a2a30">inc x6</text>
+                      <rect x="194" y="45" width="26" height="24" rx="6" fill="#fbf3ec" />
+                      <g clip-path="url(#odo)"><g class="a-odo" font-size="13" fill="#b4436c" text-anchor="middle"><text x="207" y="62">4</text><text x="207" y="82">5</text><text x="207" y="102">6</text><text x="207" y="122">7</text></g></g>
+                      <g clip-path="url(#currow)"><rect class="a-shine" x="-60" y="38" width="50" height="38" fill="url(#shine)" /></g></g>
+                    <g class="a-next"><rect x="40" y="84" width="180" height="22" rx="9" fill="none" stroke="#ddcabd" stroke-dasharray="4 3" /><text x="52" y="98.5" font-size="9.5" fill="#6e5961">Round 3 · (sc, inc) x6</text></g>
+                  </g>
+                </svg>
+                <h3>Open Work Mode</h3><p>Your current round is shown big and bright. Upcoming rounds stay visible so you can read ahead.</p>
+              </li>
+              <li>
+                <svg class="step-art" viewBox="0 0 260 120" aria-hidden="true">
+                  <rect width="260" height="120" rx="14" fill="#f1ebfb" />
+                  <g class="a-saved"><rect x="176" y="8" width="72" height="20" rx="10" fill="#fff" /><text x="212" y="21.5" text-anchor="middle" font-family="Nunito, sans-serif" font-size="9" font-weight="800" fill="#3d7a50">Saved ✓</text></g>
+                  <g class="a-btn"><rect x="40" y="36" width="180" height="40" rx="20" fill="#3d7a50" /><text x="130" y="60.5" text-anchor="middle" font-family="Nunito, sans-serif" font-size="13" font-weight="800" fill="#fff">✓ Done · Round 3</text></g>
+                  <g class="a-burst"><circle cx="70" cy="34" r="3.5" fill="#e88b5a" /><circle cx="196" cy="32" r="3.5" fill="#f5c84c" /><circle cx="226" cy="58" r="3" fill="#b4436c" /><circle cx="36" cy="66" r="3" fill="#8a6fd1" /><circle cx="110" cy="28" r="2.6" fill="#7fbf95" /><circle cx="160" cy="80" r="2.6" fill="#e47c9f" /></g>
+                  <circle class="a-ring" cx="150" cy="56" r="16" fill="none" stroke="#fff" stroke-width="3" />
+                  <circle class="a-finger" cx="150" cy="56" r="13" fill="rgb(58 42 48 / .3)" stroke="#fff" stroke-width="2.5" />
+                  <rect x="40" y="92" width="180" height="9" rx="4.5" fill="#e2d8f2" /><rect class="a-bar" x="40" y="92" width="120" height="9" rx="4.5" fill="#3d7a50" />
+                  <text x="130" y="114" text-anchor="middle" font-family="Nunito, sans-serif" font-size="8.5" font-weight="800" fill="#6e5961">3 / 6 rounds</text>
+                </svg>
+                <h3>Tap Done after each round</h3><p>Progress saves instantly. Close the app, come back next week, and you'll be on the exact same round.</p>
+              </li>
+            </ol>
+          </div>
         </div>
       </section>
 
