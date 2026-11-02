@@ -853,3 +853,90 @@ ol.howto li:has(.step-fig) { display: grid; gap: 10px; }
   .pp-rounds tr, .pp-steps li, .pp-chart { break-inside: avoid; }
   a { color: inherit; text-decoration: none; }
 }
+
+/* ---------- Homepage: feature cards motion ---------- */
+.cards-motion.is-waiting > * { opacity: 0; }
+.cards-motion > .tile {
+  transition: transform 0.5s cubic-bezier(0.2, 0.9, 0.3, 1.25), box-shadow 0.5s var(--ease), border-color 0.3s;
+}
+.cards-motion .tile-icon { transition: transform 0.5s cubic-bezier(0.2, 0.9, 0.3, 1.4); }
+@media (hover: hover) {
+  .cards-motion > .tile:hover {
+    transform: translateY(-12px);
+    border-color: color-mix(in srgb, var(--primary) 35%, var(--border));
+    box-shadow: 0 24px 40px -18px rgb(180 67 108 / 0.42), 0 6px 14px -8px rgb(90 50 60 / 0.15);
+  }
+  .cards-motion > .tile:hover .tile-icon { transform: translateY(-4px) rotate(-8deg) scale(1.12); }
+}
+
+/* ---------- Homepage: crochet tools in the side margins ---------- */
+.deco { position: absolute; z-index: 1; top: 0; left: 0; width: 100%; overflow: hidden; pointer-events: none; }
+.deco-item { position: absolute; will-change: transform; }
+.deco-item svg { width: 100%; height: auto; opacity: 0; transform: scale(0.4) rotate(-30deg); filter: drop-shadow(0 6px 8px rgb(90 50 60 / 0.18)); transition: opacity 0.5s, transform 0.7s cubic-bezier(0.2, 0.9, 0.3, 1.4); }
+.deco-item.is-in svg { opacity: 0.95; transform: none; }
+@media (prefers-reduced-motion: no-preference) {
+  .deco-float { animation: deco-bob 6s ease-in-out infinite; }
+}
+@keyframes deco-bob { 50% { translate: 0 -12px; rotate: 6deg; } }
+@media print { .deco { display: none; } }
+
+/* ---------- Homepage: animated story cards (cartoon scenes) ---------- */
+.story-card { display: grid; gap: 16px; align-items: center; }
+@media (min-width: 640px) { .story-card { grid-template-columns: minmax(0, 0.95fr) minmax(0, 1fr); } }
+.story-card h3 { margin-top: 0; }
+.scene { width: 100%; height: auto; border-radius: 14px; }
+.scene * { transform-box: view-box; }
+.scene .s-head { transform-origin: 134px 90px; transition: transform 0.6s var(--ease); }
+.scene .s-eyes { transition: transform 0.4s var(--ease); }
+.scene .s-arm { transform-origin: 152px 100px; transition: transform 0.7s cubic-bezier(0.3, 1.3, 0.5, 1); }
+.scene .s-work { transform-origin: 145px 123px; }
+.scene .s-brow-sad, .scene .s-mouth-sad, .scene .s-mouth-joy, .scene .s-sweat, .scene .s-qmarks, .scene .s-sparkles, .scene .s-say-forget, .scene .s-say-happy, .scene .s-phone { opacity: 0; }
+.scene .s-brow-happy, .scene .s-brow-sad, .scene .s-mouth-smile, .scene .s-mouth-sad, .scene .s-mouth-joy, .scene .s-sweat, .scene .s-say, .scene .s-table-phone { transition: opacity 0.35s; }
+.scene .s-qmarks text, .scene .s-sparkles path { transform-origin: center; transform-box: fill-box; }
+.scene .s-phone { transform-origin: 250px 112px; transform: scale(0.25); transition: transform 0.7s cubic-bezier(0.3, 1.3, 0.5, 1) 0.1s, opacity 0.3s 0.1s; }
+.scene .s-bubble { transform-origin: 172px 44px; }
+
+/* 1. crocheting happily */
+.scene[data-phase='knit'] .s-arm { animation: s-knit 0.45s ease-in-out infinite alternate; }
+.scene[data-phase='knit'] .s-work { animation: s-turn 2.4s linear infinite; }
+@keyframes s-knit { from { transform: rotate(-7deg); } to { transform: rotate(9deg); } }
+@keyframes s-turn { to { transform: rotate(360deg); } }
+
+/* 2. forgets: stops, worried, question marks */
+.scene[data-phase='forget'] .s-head { transform: rotate(7deg); }
+.scene[data-phase='forget'] .s-brow-happy, .scene[data-phase='forget'] .s-mouth-smile, .scene[data-phase='forget'] .s-say-knit { opacity: 0; }
+.scene[data-phase='forget'] .s-brow-sad, .scene[data-phase='forget'] .s-mouth-sad, .scene[data-phase='forget'] .s-say-forget, .scene[data-phase='forget'] .s-sweat { opacity: 1; }
+.scene[data-phase='forget'] .s-qmarks { opacity: 1; }
+.scene[data-phase='forget'] .s-qmarks text { animation: s-pop 0.5s cubic-bezier(0.3, 1.6, 0.5, 1) both, s-wobble 1.2s 0.5s ease-in-out infinite alternate; }
+.scene[data-phase='forget'] .s-qmarks text:nth-child(2) { animation-delay: 0.25s, 0.75s; }
+.scene[data-phase='forget'] .s-qmarks text:nth-child(3) { animation-delay: 0.5s, 1s; }
+.scene[data-phase='forget'] .s-bubble { animation: s-shake 0.5s 0.2s ease-in-out; }
+.scene[data-phase='forget'] .s-sweat { animation: s-drip 1.4s ease-in infinite; }
+@keyframes s-pop { from { transform: scale(0); opacity: 0; } }
+@keyframes s-wobble { to { transform: rotate(14deg) translateY(-3px); } }
+@keyframes s-shake { 25% { transform: rotate(-4deg); } 75% { transform: rotate(4deg); } }
+@keyframes s-drip { from { transform: translateY(0); opacity: 1; } to { transform: translateY(8px); opacity: 0; } }
+
+/* 3 + 4. picks up the phone, sees Round 7, smiles */
+.scene[data-phase='phone'] .s-arm, .scene[data-phase='happy'] .s-arm { transform: rotate(-100deg); }
+.scene[data-phase='phone'] .s-phone, .scene[data-phase='happy'] .s-phone { opacity: 1; transform: none; }
+.scene[data-phase='phone'] .s-table-phone, .scene[data-phase='happy'] .s-table-phone { opacity: 0; }
+.scene[data-phase='phone'] .s-hook, .scene[data-phase='happy'] .s-hook { opacity: 0; }
+.scene[data-phase='phone'] .s-eyes, .scene[data-phase='happy'] .s-eyes { transform: translate(2.5px, -1px); }
+.scene[data-phase='phone'] .s-say-knit, .scene[data-phase='happy'] .s-say-knit { opacity: 0; }
+.scene[data-phase='phone'] .s-bubble { opacity: 0; transition: opacity 0.3s; }
+.scene[data-phase='happy'] .s-head { transform: rotate(-5deg); }
+.scene[data-phase='happy'] .s-brow-happy { opacity: 1; }
+.scene[data-phase='happy'] .s-mouth-smile { opacity: 0; }
+.scene[data-phase='happy'] .s-mouth-joy, .scene[data-phase='happy'] .s-say-happy, .scene[data-phase='happy'] .s-sparkles { opacity: 1; }
+.scene[data-phase='happy'] .s-bubble { animation: s-pop 0.5s cubic-bezier(0.3, 1.6, 0.5, 1) both; }
+.scene[data-phase='happy'] .s-sparkles path { animation: s-twinkle 0.9s ease-in-out infinite alternate; }
+.scene[data-phase='happy'] .s-sparkles path:nth-child(2) { animation-delay: 0.3s; }
+.scene[data-phase='happy'] .s-sparkles path:nth-child(3) { animation-delay: 0.6s; }
+.scene[data-phase='happy'] .s-glow { animation: s-glow 1.2s ease-in-out infinite alternate; transform-origin: 176px 88px; }
+.scene[data-phase='happy'] .s-girl { animation: s-bounce 0.6s ease-out; }
+@keyframes s-twinkle { from { transform: scale(0.5) rotate(0); } to { transform: scale(1.2) rotate(45deg); } }
+@keyframes s-glow { from { opacity: 0.5; transform: scale(0.85); } to { opacity: 1; transform: scale(1.15); } }
+@keyframes s-bounce { 40% { transform: translateY(-5px); } }
+.scene .s-glow { opacity: 0.8; }
+.scene .s-say { transition: none; }
