@@ -154,3 +154,11 @@ if (tocLinks.length && 'IntersectionObserver' in window) {
     if (h) spy.observe(h);
   }
 }
+
+// Sticky header: a soft shadow once the page has scrolled.
+const header = document.querySelector('.site-header');
+if (header) {
+  const onScroll = () => header.classList.toggle('is-scrolled', window.scrollY > 8);
+  addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+}

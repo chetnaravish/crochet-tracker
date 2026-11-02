@@ -267,15 +267,53 @@ export function renderPattern(p) {
 `;
 }
 
-// Hub-page card for each (non-draft) pattern.
+// ---------- Hub-page cards ----------
+// A simple card: the product picture on top, the name underneath. Until a real
+// photo exists the picture is an SVG illustration (marked "Illustration").
+const CARD_BG = { sunflower: 'bg-butter', ball: 'bg-rose', coaster: 'bg-mint', flower: 'bg-lavender' };
+function cardArt(kind) {
+  const shadow = '<ellipse cx="120" cy="160" rx="62" ry="8" fill="#000" opacity=".08"/>';
+  switch (kind) {
+    case 'sunflower': {
+      const petals = Array.from({ length: 12 }, (_, i) => `<ellipse cx="0" cy="-42" rx="12" ry="24" transform="rotate(${i * 30})"/>`).join('');
+      const seeds = [[-9, -7], [7, -10], [0, 2], [-10, 9], [10, 8], [0, -16], [15, -1], [-15, -2]].map(([x, y]) => `<circle cx="${x}" cy="${y}" r="3"/>`).join('');
+      return `${shadow}<g transform="translate(120 88)"><g fill="#f5c84c" stroke="#d29a1c" stroke-width="2">${petals}</g><circle r="27" fill="#7a4a2a" stroke="#5a3218" stroke-width="2"/><g fill="#5a3218">${seeds}</g></g>`;
+    }
+    case 'ball': {
+      const rows = [-30, -15, 0, 15, 30].map((y) => {
+        const w = Math.sqrt(52 * 52 - y * y);
+        return `<path d="M${-w + 6} ${y} Q0 ${y + 8} ${w - 6} ${y}" stroke-dasharray="6 6"/>`;
+      }).join('');
+      return `${shadow}<g transform="translate(120 92)"><circle r="54" fill="#e47c9f" stroke="#b4436c" stroke-width="2.5"/><g fill="none" stroke="#c45a80" stroke-width="3" stroke-linecap="round">${rows}</g><ellipse cx="-18" cy="-26" rx="14" ry="8" fill="#fff" opacity=".35"/></g>`;
+    }
+    case 'coaster': {
+      const ticks = (r, n) => Array.from({ length: n }, (_, i) => `<path d="M0 ${-r + 5}V${-r - 5}" transform="rotate(${(i * 360) / n})"/>`).join('');
+      return `${shadow}<g transform="translate(120 90) scale(1 .78)"><circle r="66" fill="#7fbf95" stroke="#4f9467" stroke-width="2.5"/><g fill="none" stroke="#4f9467" stroke-width="2.6" stroke-linecap="round">${ticks(56, 32)}${ticks(40, 24)}${ticks(24, 12)}</g><circle r="9" fill="#4f9467"/></g>`;
+    }
+    case 'flower': {
+      const petals = Array.from({ length: 6 }, (_, i) => `<circle cx="0" cy="-30" r="20" transform="rotate(${i * 60})"/>`).join('');
+      return `${shadow}<path d="M120 26c-14 0-14-20 0-20s14 20 0 20Z" fill="none" stroke="#9a8fb0" stroke-width="5"/><path d="M120 26v20" stroke="#a98ad8" stroke-width="4" stroke-dasharray="4 3"/><g transform="translate(120 98)"><g fill="#a98ad8" stroke="#7d5fbf" stroke-width="2">${petals}</g><circle r="17" fill="#f5c84c" stroke="#d29a1c" stroke-width="2"/></g>`;
+    }
+    default:
+      return `${shadow}<circle cx="120" cy="90" r="50" fill="#e47c9f"/>`;
+  }
+}
+const card = (href, title, kind) =>
+  `<a class="pcard" href="${href}"><div class="pcard-img ${CARD_BG[kind] || 'bg-rose'}"><svg viewBox="0 0 240 180" aria-hidden="true">${cardArt(kind)}</svg><span class="pcard-tag">Illustration</span></div><div class="pcard-body"><h3>${esc(title)}</h3><span class="pcard-go" aria-hidden="true">→</span></div></a>`;
+
+// Patterns that still live on the hub page itself (not yet moved to their own page).
+const HUB_PATTERNS = [
+  ['#amigurumi-ball', 'Little Amigurumi Ball', 'ball'],
+  ['#round-coaster', 'Simple Round Coaster', 'coaster'],
+  ['#flower-keychain', 'Mini Flower Keychain', 'flower'],
+];
+const ART_BY_SLUG = { 'mini-sunflower': 'sunflower' };
+
 export function patternCards(patterns) {
-  return patterns
-    .filter((p) => !p.draft)
-    .map(
-      (p) =>
-        `<a class="tile pattern-card" href="/free-patterns/${p.slug}/"><h3>${esc(p.title)}</h3><p>${esc(p.level)} · ${esc(p.time)} · ${esc(p.size)}</p><span class="more">See the pattern →</span></a>`,
-    )
-    .join('');
+  return [
+    ...patterns.filter((p) => !p.draft).map((p) => card(`/free-patterns/${p.slug}/`, p.title, ART_BY_SLUG[p.slug] || 'ball')),
+    ...HUB_PATTERNS.map(([href, title, kind]) => card(href, title, kind)),
+  ].join('');
 }
 
 // Write every page. Returns the warnings so the caller can print them.
