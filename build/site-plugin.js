@@ -264,9 +264,12 @@ function buildSearchIndex() {
     });
 
     if (meta.path === '/crochet-abbreviations/') {
-      const tbody = (html.match(/<table data-filter-rows>[\s\S]*?<tbody>([\s\S]*?)<\/tbody>/) || [, ''])[1];
+      // The chart is split into several <tbody> groups. Group header rows have a
+      // class, so the plain /<tr>/ match below skips them.
+      const tbody = (html.match(/<table[^>]*data-filter-rows[^>]*>([\s\S]*?)<\/table>/) || [, ''])[1];
       for (const row of tbody.matchAll(/<tr>([\s\S]*?)<\/tr>/g)) {
         const [abbr, us, uk, meaning] = [...row[1].matchAll(/<td>([\s\S]*?)<\/td>/g)].map((c) => toText(c[1]));
+        if (!abbr) continue; // header row
         entries.push({ u: `/crochet-abbreviations/?q=${encodeURIComponent(abbr)}`, t: `${abbr} – ${us}`, d: `UK: ${uk}. ${meaning}`, k: 'Abbreviation', a: abbr });
       }
     }

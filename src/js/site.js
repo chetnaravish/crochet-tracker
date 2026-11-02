@@ -116,7 +116,8 @@ if (searchForm) import('./lib/search.js').then(({ initSearch }) => initSearch(se
 // Abbreviation glossary: live filter (pre-filled from ?q= when coming from search).
 const filter = document.getElementById('abbr-filter');
 if (filter) {
-  const rows = [...document.querySelectorAll('[data-filter-rows] tbody tr')];
+  const rows = [...document.querySelectorAll('[data-filter-rows] tbody tr:not(.gl-group)')];
+  const groups = [...document.querySelectorAll('[data-filter-rows] tbody')];
   const count = document.getElementById('abbr-count');
   filter.addEventListener('input', () => {
     const q = filter.value.trim().toLowerCase();
@@ -126,7 +127,12 @@ if (filter) {
       row.hidden = !match;
       if (match) shown++;
     }
-    count.textContent = q ? `${shown} of ${rows.length} abbreviations match` : '';
+    // Hide a group heading when none of its rows match.
+    for (const g of groups) {
+      const head = g.querySelector('.gl-group');
+      if (head) head.hidden = ![...g.rows].some((r) => r !== head && !r.hidden);
+    }
+    count.textContent = q ? (shown ? `${shown} of ${rows.length} abbreviations match` : 'No abbreviation matches. Try a shorter word.') : '';
   });
   const q = new URLSearchParams(location.search).get('q');
   if (q) {
