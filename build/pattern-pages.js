@@ -157,6 +157,10 @@ export function renderPattern(p) {
     schema: 'article',
     date: p.date,
     priority: '0.8',
+    // Share image made by `npm run og` (falls back to the site image if missing).
+    ...(fs.existsSync(`public/og/${p.slug}.png`)
+      ? { ogImage: `/og/${p.slug}.png`, ogImageAlt: `${p.title}: free beginner crochet pattern (illustration)` }
+      : {}),
     ...(p.draft ? { noindex: true } : {}),
   };
   const chartRounds = p.sections.flatMap((s) => s.rounds.filter((r) => r.chart).map((r) => ({ ...r, colour: s.colour })));
@@ -275,7 +279,7 @@ export function renderPattern(p) {
 // A simple card: the product picture on top, the name underneath. Until a real
 // photo exists the picture is an SVG illustration (marked "Illustration").
 const CARD_BG = { sunflower: 'bg-butter', ball: 'bg-rose', coaster: 'bg-mint', flower: 'bg-lavender' };
-function cardArt(kind) {
+export function cardArt(kind) {
   const shadow = '<ellipse cx="120" cy="160" rx="62" ry="8" fill="#000" opacity=".08"/>';
   switch (kind) {
     case 'sunflower': {

@@ -97,7 +97,7 @@ function articleSchema(html, meta) {
     '@type': 'Article',
     headline: h1Text(html),
     description: meta.description,
-    image: abs(OG_IMAGE),
+    image: abs(meta.ogImage || OG_IMAGE),
     datePublished: meta.date || '2026-10-30',
     dateModified: meta.modified || meta.date || '2026-10-30',
     author: org,
@@ -120,6 +120,40 @@ function webAppSchema(meta) {
     isAccessibleForFree: true,
     offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
     image: abs(OG_IMAGE),
+  };
+}
+
+// Homepage: who runs the site and what it is called (helps Google show the site name).
+function siteSchema() {
+  return {
+    '@context': 'https://schema.org',
+    '@graph': [
+      { '@type': 'WebSite', '@id': abs('/#website'), name: SITE_NAME, url: abs('/'), inLanguage: 'en', publisher: { '@id': abs('/#org') } },
+      { '@type': 'Organization', '@id': abs('/#org'), name: SITE_NAME, url: abs('/'), logo: abs('/icons/icon-512.png') },
+    ],
+  };
+}
+
+// Hub pages (stitches, guides, free patterns): a list of the child pages they link to.
+function collectionSchema(html, meta) {
+  const seen = new Map();
+  // Links to a direct child page of this hub, e.g. /stitches/chain/ on /stitches/.
+  const re = /<a[^>]+href="(\/[\w-]+\/[\w-]+\/)"[^>]*>([\s\S]*?)<\/a>/g;
+  for (const [, href, inner] of html.matchAll(re)) {
+    if (!href.startsWith(meta.path)) continue;
+    const name = toText((inner.match(/<h[23][^>]*>([\s\S]*?)<\/h[23]>/) || [, inner])[1]);
+    if (name && !seen.has(href)) seen.set(href, name);
+  }
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: h1Text(html),
+    description: meta.description,
+    url: abs(meta.path),
+    mainEntity: {
+      '@type': 'ItemList',
+      itemListElement: [...seen].map(([href, name], i) => ({ '@type': 'ListItem', position: i + 1, url: abs(href), name })),
+    },
   };
 }
 
@@ -157,7 +191,8 @@ var go=function(){scrollTo(0,y)};addEventListener('DOMContentLoaded',go);addEven
 
 function renderMeta(meta, html) {
   const url = abs(meta.path);
-  const ogImage = abs(OG_IMAGE);
+  const ogImage = abs(meta.ogImage || OG_IMAGE);
+  const ogAlt = meta.ogImageAlt || `${SITE_NAME} – track crochet patterns round by round`;
   const tags = [
     '<meta charset="utf-8">',
     '<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">',
@@ -186,12 +221,13 @@ function renderMeta(meta, html) {
     `<meta property="og:image" content="${ogImage}">`,
     '<meta property="og:image:width" content="1200">',
     '<meta property="og:image:height" content="630">',
-    `<meta property="og:image:alt" content="${SITE_NAME} – track crochet patterns round by round">`,
+    `<meta property="og:image:alt" content="${escAttr(ogAlt)}">`,
     '<meta property="og:locale" content="en_US">',
     '<meta name="twitter:card" content="summary_large_image">',
     `<meta name="twitter:title" content="${escAttr(meta.ogTitle || meta.title)}">`,
     `<meta name="twitter:description" content="${escAttr(meta.description)}">`,
     `<meta name="twitter:image" content="${ogImage}">`,
+    `<meta name="twitter:image:alt" content="${escAttr(ogAlt)}">`,
   ];
 
   if (!meta.noindex) {
@@ -202,7 +238,11 @@ function renderMeta(meta, html) {
       if (s) tags.push(jsonLd(s));
       tags.push(jsonLd(articleSchema(html, meta)));
     }
-    if (meta.schema === 'webapp') tags.push(jsonLd(webAppSchema(meta)));
+    if (meta.schema === 'webapp') {
+      tags.push(jsonLd(webAppSchema(meta)));
+      tags.push(jsonLd(siteSchema()));
+    }
+    if (meta.schema === 'collection') tags.push(jsonLd(collectionSchema(html, meta)));
     const faq = faqSchema(html);
     if (faq) tags.push(jsonLd(faq));
   }
@@ -366,6 +406,9 @@ export default function sitePlugin() {
           fs.readFileSync(path.join(PARTIALS_DIR, `${name}.html`), 'utf8'),
         );
 
+        // Free-pattern cards go in first, so the hub's ItemList schema can list them.
+        if (html.includes('<!--@pattern-cards-->')) html = html.replace('<!--@pattern-cards-->', () => patternCards(loadPatterns()));
+
         // 2. Meta block
         const metaMatch = html.match(/<!--@meta\s+([\s\S]*?)-->/);
         let pagePath = null;
@@ -384,7 +427,6 @@ export default function sitePlugin() {
         // 3. Drawings and the free-pattern cards
         html = expandDrawings(html);
         if (pagePath && SIDEBAR_PAGES.test(pagePath)) html = addSidebar(html);
-        if (html.includes('<!--@pattern-cards-->')) html = html.replace('<!--@pattern-cards-->', () => patternCards(loadPatterns()));
 
         // 4. Constants
         return html
