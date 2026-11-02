@@ -1191,25 +1191,25 @@ main { overflow-x: clip; }
 .side-cta p:not(.side-title) { margin: 0 0 14px; color: var(--text-muted); font-size: 0.93rem; line-height: 1.55; }
 .has-side h2[id] { scroll-margin-top: 96px; }
 
-/* ---------- Stitch lessons: one animated clip per step ---------- */
+/* ---------- Stitch lessons: one clear picture per step ---------- */
 ol.howto li { padding: 16px 18px 16px 62px; }
 @media (min-width: 640px) {
-  ol.howto li:has(.step-fig) { display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 22px; align-items: start; }
+  ol.howto li:has(.step-fig) { display: grid; grid-template-columns: minmax(0, 1fr) minmax(260px, 380px); gap: 22px; align-items: start; }
 }
 .step-text { display: block; padding-top: 5px; font-size: 1.02rem; line-height: 1.6; }
 .step-fig { display: block; margin-top: 12px; }
 @media (min-width: 640px) { .step-fig { margin-top: 0; } }
 .step-fig .clip { border-radius: 14px; box-shadow: 0 0 0 1px var(--border), 0 6px 16px -10px rgb(90 50 60 / 0.35); }
-.step-cap { display: block; margin-top: 8px; color: var(--text-muted); font-size: 0.82rem; font-weight: 700; text-align: center; }
+.step-cap { display: block; margin-top: 8px; color: var(--text-muted); font-size: 0.85rem; font-weight: 700; text-align: center; }
 
 .clip { display: block; width: 100%; height: auto; }
 .clip .c-bg { fill: #fdf8f3; }
-/* Yarn: twisted plies, white with a dark outline (new loops in warm yellow) */
+/* Colour 1 – white: yarn that is already there */
 .clip .rope ellipse { fill: #fff; stroke: #33262b; stroke-width: 2.3; }
 .clip .c-backrope ellipse { fill: #e9e1db; }
-.clip :is(.c-new, .c-result, .c-wrap) .rope ellipse { fill: #ffd166; }
-.clip :is(.c-new, .c-result, .c-wrap) .c-backrope ellipse { fill: #eab446; }
-/* Row below: braided chain, target stitch in blue */
+/* Colour 2 – blue: what you do in this step (new loop, yarn over, the stitch to work into) */
+.clip .is-act .rope ellipse, .clip .is-act.rope ellipse { fill: #7ea6ec; }
+.clip .is-act .c-backrope ellipse { fill: #5b84cf; }
 .clip .f-st ellipse { fill: #fff; stroke: #33262b; stroke-width: 2.3; }
 .clip .f-target ellipse { fill: #5b8bd9; }
 /* Hook */
@@ -1218,64 +1218,15 @@ ol.howto li { padding: 16px 18px 16px 62px; }
 .clip .h-i { stroke: #ec8c95; stroke-width: 21; }
 .clip .h-hl { stroke: #f7c4c9; stroke-width: 4; }
 .clip .h-notch { fill: #fdf8f3; stroke: #5e2a38; stroke-width: 2.6; stroke-linejoin: round; }
-/* Arrows, words, badge */
+/* Arrows, words, numbers, badge */
 .clip .c-arrow { fill: none; stroke: #33262b; stroke-width: 2.4; stroke-linecap: round; }
 .clip .c-head { fill: #33262b; }
-.clip .c-label { fill: #33262b; font: 800 14px var(--font); transform-box: fill-box; transform-origin: center; }
-.clip .c-yo { font-size: 16px; letter-spacing: 0.04em; }
+.clip .c-label { fill: #33262b; font: 800 14px var(--font); }
+.clip .c-yo { font-size: 16px; letter-spacing: 0.04em; fill: #3d64b8; }
+.clip .c-num circle { fill: #33262b; }
+.clip .c-num .c-label { fill: #fff; font-size: 11.5px; }
 .clip .c-badge rect { fill: #33262b; }
 .clip .c-count { fill: #fff; font-size: 11.5px; }
-.clip .c-after, .clip .c-result { opacity: 0; }
-.clip :is(.c-loop, .c-yarn) { transform-box: fill-box; transform-origin: center; }
-
-/* Shared motion */
-@keyframes c-draw { from { stroke-dashoffset: 1; opacity: 0; } 8% { opacity: 1; } to { stroke-dashoffset: 0; opacity: 1; } }
-@keyframes c-ply { from { opacity: 0; } }
-@keyframes c-pop { from { opacity: 0; transform: scale(0.3); } }
-@keyframes c-in { to { opacity: 1; transform: none; } }
-@keyframes c-out { to { opacity: 0; } }
-@keyframes c-vanish { to { opacity: 0; transform: scale(0.3); } }
-@keyframes c-shift { to { transform: translateX(var(--sx, 0)); } }
-@keyframes c-rise { from { opacity: 0; transform: translate(var(--rx, 0), var(--ry, 90px)) scale(0.3); } 30% { opacity: 1; } to { opacity: 1; transform: none; } }
-@keyframes c-insert { 0%, 10% { transform: none; } 55%, 100% { transform: translate(var(--ix, 54px), var(--iy, 80px)); } }
-@keyframes c-pulse { to { fill: #9cbcf2; } }
-@keyframes c-bob { to { transform: translateY(-5px); } }
-.clip.is-playing .c-arrow { stroke-dasharray: 1; animation: c-draw 0.7s 0.15s both; }
-
-/* Yarn over: the wraps are spun around the hook ply by ply, "YO" pops up */
-.k-yo.is-playing .c-wrapnew ellipse { animation: c-ply 0.16s calc(0.4s + var(--d, 0s) + var(--i) * 0.05s) both; }
-.k-yo1.is-playing .c-wrap ellipse { animation: c-ply 0.16s calc(0.4s + var(--i) * 0.05s) both; }
-.k-yo.is-playing .c-yo, .k-yo1.is-playing .c-yo { animation: c-pop 0.4s calc(1s + var(--d, 0s)) cubic-bezier(0.3, 1.6, 0.5, 1) both; }
-
-/* Insert: the hook dives into the blue stitch */
-.k-insert.is-playing .c-hookg { animation: c-insert 2.4s 0.5s cubic-bezier(0.5, 0, 0.3, 1) both; }
-.k-insert.is-playing .f-target ellipse { animation: c-pulse 0.5s 1.8s ease-in-out 4 alternate; }
-.k-insert.is-playing .c-l1 { animation: c-pop 0.4s 0.3s both; }
-
-/* Pull up a loop: the new loop rises from the stitch onto the hook */
-.k-pull.is-playing .c-rise { animation: c-rise 1.3s calc(0.6s + var(--d, 0s)) cubic-bezier(0.3, 1.2, 0.5, 1) both; }
-.k-pull.is-playing .c-l1 { animation: c-pop 0.4s 0.3s both; }
-
-/* Pull through: yarn over, arrow, the loops slide off and one new loop is left */
-.k-through.is-playing .c-wrap ellipse { animation: c-ply 0.16s calc(0.3s + var(--i) * 0.05s) both; }
-.k-through.is-playing .c-wrap { animation: c-vanish 0.5s 2.2s ease-in both; }
-.k-through.is-playing .c-yo-th { animation: c-pop 0.4s 0.8s cubic-bezier(0.3, 1.6, 0.5, 1) both, c-out 0.4s 2.2s both; }
-.k-through.is-playing .c-a2 { animation: c-draw 0.8s 1.1s both, c-out 0.4s 2.4s both; }
-.k-through.is-playing .c-l2 { animation: c-pop 0.4s 1.3s both, c-out 0.4s 2.4s both; }
-.k-through.is-playing .c-gone { animation: c-vanish 0.5s 2.2s ease-in both; }
-.k-through.is-playing .c-result { transform: scale(0.3); animation: c-in 0.5s 2.6s cubic-bezier(0.3, 1.6, 0.5, 1) both; }
-.k-through.is-playing .c-rest { animation: c-shift 0.6s 2.5s cubic-bezier(0.4, 0, 0.2, 1) both; }
-.k-through.is-playing .c-before { animation: c-out 0.3s 2.6s both; }
-.k-through.is-playing .c-after { animation: c-in 0.3s 2.8s both; }
-
-/* Magic ring forms ply by ply */
-.k-ringform.is-playing .f-ring ellipse { animation: c-ply 0.16s calc(0.3s + var(--i) * 0.05s) both; }
-
-/* Just loops on the hook */
-.k-idle.is-playing .c-hookg { animation: c-bob 0.9s ease-in-out 4 alternate; }
-
-/* Chart-style steps: the new stitches pop in */
-.k-chart.is-playing .d-new { transform-box: fill-box; transform-origin: center bottom; animation: c-pop 0.5s 0.5s cubic-bezier(0.3, 1.5, 0.5, 1) both; }
 
 @media print { .article-side { display: none !important; } }
 /* The sidebar already lists the sections, so hide the in-page contents box there. */

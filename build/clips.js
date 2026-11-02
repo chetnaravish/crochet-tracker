@@ -10,8 +10,8 @@
 //   insert  – hook goes into the stitch below     fabric  – show the row below
 //   ring    – magic ring instead of a row         hook:false – no hook (ring only)
 //   cap     – caption / accessible label
-// When the clip scrolls into view the site script adds .is-playing and the CSS in
-// site.css ("Stitch lessons") animates the step, then repeats.
+// Each step is one still picture in two colours: white for the yarn that is
+// already there, blue for what you do in this step (styles: "Stitch lessons" in site.css).
 
 const W = 320;
 const H = 220;
@@ -123,84 +123,85 @@ export function stepClip(spec = {}) {
   }
 
   if (hasHook) {
-    const shift = through ? -(through - 1) * GAP : 0;
-    const role = (i) => {
-      if (kind === 'through' && i < through) return 'c-gone';
-      if (kind === 'through') return 'c-old c-rest';
-      if (i < fresh) return kind === 'pull' ? 'c-new c-rise' : 'c-new c-wrapnew';
-      return 'c-old';
-    };
-    const delay = (i) => (i < fresh ? `--d:${((fresh - 1 - i) * 0.5).toFixed(2)}s` : '');
-    const vars = (i) => [kind === 'through' && i >= through ? `--sx:${shift}px` : '', delay(i)].filter(Boolean).join(';');
+    // Two colours: white = yarn already there, blue = what you do in this step.
+    const loopCls = (i) => (i < fresh ? 'is-act' : '');
 
     // One loop coiled around the shaft: back half behind the hook, front half over it.
     const coil = (x, half) => rope(arc(x, 0, 10, 22, 24, half === 'back' ? 90 : -90, half === 'back' ? 270 : 90, 4), half === 'back' ? 'c-backrope' : '');
-    const loopG = (x, half, cls, style) => `<g class="c-loop ${cls}"${style ? ` style="${style}"` : ''}>${coil(x, half)}</g>`;
+    const loopG = (x, half, cls) => `<g class="c-loop ${cls}">${coil(x, half)}</g>`;
     const withWrap = kind === 'through' || kind === 'yo1';
 
     const local = [];
-    for (let i = 0; i < total; i++) local.push(loopG(LX(i), 'back', role(i), vars(i)));
-    if (withWrap) local.push(loopG(WRAPX, 'back', 'c-wrap', ''));
-    if (kind === 'through') local.push(loopG(LX(0), 'back', 'c-result', ''));
+    for (let i = 0; i < total; i++) local.push(loopG(LX(i), 'back', loopCls(i)));
+    if (withWrap) local.push(loopG(WRAPX, 'back', 'is-act'));
     // The hook: dark outline, pink body, light stripe, and the throat notch at the tip.
     local.push(`<g class="c-hookshape"><path d="M0 0H420" class="h-o"/><path d="M0 0H420" class="h-i"/><path d="M26 -6H420" class="h-hl"/><path d="M5 -14Q14 2 27 -14" class="h-notch"/></g>`);
-    for (let i = 0; i < total; i++) local.push(loopG(LX(i), 'front', role(i), vars(i)));
-    if (withWrap) local.push(loopG(WRAPX, 'front', 'c-wrap', ''));
-    if (kind === 'through') local.push(loopG(LX(0), 'front', 'c-result', ''));
+    for (let i = 0; i < total; i++) local.push(loopG(LX(i), 'front', loopCls(i)));
+    if (withWrap) local.push(loopG(WRAPX, 'front', 'is-act'));
     // Working yarn from the last loop down and away to the right.
     if (total) {
       const lx = LX(total - 1) + 4;
-      const yarn = rope(bezier([lx, 20], [lx + 14, 70], [lx + 70, 74], [lx + 190, 96], 8));
-      local.push(`<g class="c-yarn${kind === 'through' ? ' c-rest' : ''}"${kind === 'through' ? ` style="--sx:${shift}px"` : ''}>${yarn}</g>`);
+      local.push(rope(bezier([lx, 20], [lx + 14, 70], [lx + 70, 74], [lx + 190, 96], 8)));
     }
-    parts.push(`<g class="c-hookg"><g transform="translate(${tip[0]} ${tip[1]}) rotate(${ANG})">${local.join('')}</g></g>`);
+    // Pull up a loop: the new (blue) loop is still joined to the blue stitch below.
+    if (kind === 'pull') {
+      const [bx, by] = onHook(tip, LX(0) + 4, 20);
+      const s0 = toLocal(tip, T.x + 4, T.y - 8);
+      const s1 = [bx - tip[0], by - tip[1]];
+      const e = [s1[0] * Math.cos(-RAD) - s1[1] * Math.sin(-RAD), s1[0] * Math.sin(-RAD) + s1[1] * Math.cos(-RAD)];
+      local.unshift(`<g class="is-act">${rope(bezier(s0, [s0[0] - 6, s0[1] - 30], [e[0] + 8, e[1] + 30], e, 5))}</g>`);
+    }
+    parts.push(`<g transform="translate(${tip[0]} ${tip[1]}) rotate(${ANG})">${local.join('')}</g>`);
 
     // ---- Arrows and words ----
     if (kind === 'insert') {
-      parts.push(arrow(`M${tip[0] - 14} ${tip[1] + 14} C ${tip[0] - 40} ${tip[1] + 60}, ${T.x - 70} ${T.y - 10}, ${T.x - 26} ${T.y - 12}`, 'c-a1'));
-      parts.push(label(10, tip[1] - 28, 'insert here', 'c-l1', 'start'));
+      parts.push(arrow(`M${tip[0] - 14} ${tip[1] + 14} C ${tip[0] - 40} ${tip[1] + 60}, ${T.x - 70} ${T.y - 10}, ${T.x - 26} ${T.y - 12}`));
+      parts.push(label(10, tip[1] - 28, 'insert here', '', 'start'));
     }
     if (kind === 'pull') {
       const [lx, ly] = onHook(tip, LX(fresh - 1), 20);
-      parts.push(arrow(`M${T.x + 22} ${T.y - 14} C ${T.x + 50} ${T.y - 40}, ${lx + 26} ${ly + 40}, ${lx + 8} ${ly + 8}`, 'c-a1'));
-      parts.push(label(10, T.y - 40, 'pull up a loop', 'c-l1', 'start'));
+      parts.push(arrow(`M${T.x + 30} ${T.y - 14} C ${T.x + 56} ${T.y - 40}, ${lx + 34} ${ly + 40}, ${lx + 14} ${ly + 10}`));
+      parts.push(label(10, T.y - 40, 'pull up a loop', '', 'start'));
     }
     if (kind === 'yo' || kind === 'yo1') {
       const xs = kind === 'yo' ? Array.from({ length: fresh }, (_, i) => LX(i)) : [WRAPX];
-      xs.forEach((x, i) => {
+      xs.forEach((x) => {
         const [px, py] = onHook(tip, x, -30);
-        parts.push(label(px, py, 'YO', 'c-yo', 'middle', kind === 'yo' ? `--d:${((fresh - 1 - i) * 0.5).toFixed(2)}s` : ''));
+        parts.push(label(px, py, 'YO', 'c-yo'));
       });
-      parts.push(arrow(`M${tip[0] + 10} ${tip[1] + 34} C ${tip[0] - 30} ${tip[1] + 30}, ${tip[0] - 34} ${tip[1] - 26}, ${tip[0] + 2} ${tip[1] - 34}`, 'c-a1'));
+      parts.push(arrow(`M${tip[0] + 10} ${tip[1] + 34} C ${tip[0] - 30} ${tip[1] + 30}, ${tip[0] - 34} ${tip[1] - 26}, ${tip[0] + 2} ${tip[1] - 34}`));
     }
     if (kind === 'through') {
       const [wx, wy] = onHook(tip, WRAPX, -30);
       const [ex, ey] = onHook(tip, LX(through - 1) + 12, -24);
-      parts.push(label(wx - 4, wy, 'YO', 'c-yo c-yo-th'));
-      parts.push(arrow(`M${wx + 12} ${wy - 4} C ${wx + 30} ${wy - 40}, ${ex - 10} ${ey - 44}, ${ex} ${ey - 4}`, 'c-a2'));
+      parts.push(label(wx - 4, wy, 'YO', 'c-yo'));
+      parts.push(arrow(`M${wx + 12} ${wy - 4} C ${wx + 30} ${wy - 40}, ${ex - 10} ${ey - 44}, ${ex} ${ey - 4}`));
       const word = through === total && through > 2 ? 'all' : String(through);
-      parts.push(label((wx + ex) / 2 + 8, Math.min(wy, ey) - 36, `pull through ${word}`, 'c-l2'));
+      parts.push(label((wx + ex) / 2 + 8, Math.min(wy, ey) - 36, `pull through ${word}`));
+      // Number the loops the yarn goes through: 1, 2, …
+      for (let i = 0; i < through; i++) {
+        const [nx, ny] = onHook(tip, LX(i), 40);
+        parts.push(`<g class="c-num"><circle cx="${r1(nx)}" cy="${r1(ny)}" r="9"/>${label(nx, ny + 4.5, String(i + 1))}</g>`);
+      }
     }
     if (total) {
       const after = kind === 'through' ? total - through + 1 : total;
       const by = H - 34;
-      const txt = (n) => `${n} loop${n === 1 ? '' : 's'} on hook`;
-      parts.push(`<g class="c-badge"><rect x="${W - 124}" y="${by}" width="112" height="24" rx="12"/>${label(W - 68, by + 16.5, txt(total), 'c-count c-before')}${kind === 'through' ? label(W - 68, by + 16.5, txt(after), 'c-count c-after') : ''}</g>`);
+      const txt = kind === 'through' ? `${total} → ${after} loop${after === 1 ? '' : 's'}` : `${total} loop${total === 1 ? '' : 's'} on hook`;
+      parts.push(`<g class="c-badge"><rect x="${W - 124}" y="${by}" width="112" height="24" rx="12"/>${label(W - 68, by + 16.5, txt, 'c-count')}</g>`);
     }
   } else {
-    parts.push(label(206, 40, 'magic ring', 'c-l1', 'start'));
-    parts.push(arrow(`M200 36 C 170 24, 150 36, 150 70`, 'c-a1'));
+    parts.push(label(206, 40, 'magic ring', '', 'start'));
+    parts.push(arrow(`M200 36 C 170 24, 150 36, 150 70`));
   }
 
-  // Motion distances for the CSS (hook dives into the stitch; new loop rises from it).
-  // The rising loop lives inside the slanted hook group, so turn its distance into
-  // the hook's own direction.
-  const [l0x, l0y] = onHook(tip, LX(0), 0);
-  const dx = T.x - l0x;
-  const dy = T.y - l0y;
-  const rx = dx * Math.cos(-RAD) - dy * Math.sin(-RAD);
-  const ry = dx * Math.sin(-RAD) + dy * Math.cos(-RAD);
-  const vars = `--ix:${r1(T.x - 18 - tip[0])}px;--iy:${r1(T.y - 14 - tip[1])}px;--rx:${r1(rx)}px;--ry:${r1(ry)}px`;
   const cap = spec.cap || (total ? `${total} loop${total === 1 ? '' : 's'} on the hook` : 'Crochet step');
-  return `<svg class="clip k-${kind}" viewBox="0 0 ${W} ${H}" style="${vars}" role="img" aria-label="${cap.replace(/"/g, '&quot;')}" focusable="false">${parts.join('')}</svg>`;
+  return `<svg class="clip k-${kind}" viewBox="0 0 ${W} ${H}" role="img" aria-label="${cap.replace(/"/g, '&quot;')}" focusable="false">${parts.join('')}</svg>`;
+}
+
+// A point in the picture, turned into the slanted hook's own coordinates.
+function toLocal(tip, x, y) {
+  const dx = x - tip[0];
+  const dy = y - tip[1];
+  return [dx * Math.cos(-RAD) - dy * Math.sin(-RAD), dx * Math.sin(-RAD) + dy * Math.cos(-RAD)];
 }

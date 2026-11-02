@@ -77,34 +77,6 @@ for (const btn of document.querySelectorAll('[data-open-pattern]')) {
 // Pattern pages: Print / Save as PDF (print styles hide everything but the pattern).
 for (const btn of document.querySelectorAll('[data-print]')) btn.addEventListener('click', () => window.print());
 
-// Stitch pages: every step has a small animated clip. A clip plays while it is on
-// screen (the motion runs once, holds, then starts again) and rests as a still
-// diagram when off screen or when the visitor prefers reduced motion.
-const clips = document.querySelectorAll('svg.clip');
-if (clips.length && !matchMedia('(prefers-reduced-motion: reduce)').matches && 'IntersectionObserver' in window) {
-  const LOOP = 4200;
-  const timers = new Map();
-  const replay = (svg) => {
-    svg.classList.remove('is-playing');
-    void svg.getBoundingClientRect();
-    svg.classList.add('is-playing');
-  };
-  const io = new IntersectionObserver((entries) => {
-    for (const e of entries) {
-      const svg = e.target;
-      if (e.isIntersecting && !timers.has(svg)) {
-        replay(svg);
-        timers.set(svg, setInterval(() => replay(svg), LOOP));
-      } else if (!e.isIntersecting && timers.has(svg)) {
-        clearInterval(timers.get(svg));
-        timers.delete(svg);
-        svg.classList.remove('is-playing');
-      }
-    }
-  }, { threshold: 0.5 });
-  clips.forEach((c) => io.observe(c));
-}
-
 // Site search page.
 const searchForm = document.getElementById('site-search');
 if (searchForm) import('./lib/search.js').then(({ initSearch }) => initSearch(searchForm));
