@@ -1,6 +1,7 @@
 {
   "slug": "mini-sunflower",
   "draft": false,
+  "order": 1,
   "title": "Mini Crochet Sunflower",
   "name": "Mini Sunflower",
   "subtitle": "No-Sew Crochet Pattern",
@@ -153,6 +154,7 @@
     "Weave in any ends you can still see, hiding them between the two centres.",
     "Optional: thread a jump ring through the tip of one petal and add a keyring, or sew a brooch pin to the back."
   ],
+  "chartNote": "One centre from the middle out, then the petal round.",
   "variations": "Use white petals and a yellow centre for a daisy, or pink petals for a cosmos. For a bigger flower, add Rnd 3 to both centres, (sc, inc) x6 for 18 sts, and make 9 petals.",
   "tracker": [
     {
@@ -210,11 +212,11 @@
   "related": [
     {
       "title": "Mini Flower Keychain",
-      "url": "/free-patterns/#flower-keychain"
+      "url": "/free-patterns/mini-flower-keychain/"
     },
     {
       "title": "Simple Round Coaster",
-      "url": "/free-patterns/#round-coaster"
+      "url": "/free-patterns/simple-round-coaster/"
     },
     {
       "title": "Treble Crochet (tr)",

@@ -1143,7 +1143,7 @@ main { overflow-x: clip; }
 .gl-group th { padding: 14px 20px 10px; background: var(--surface-2); text-align: left; font-family: var(--font-display); font-size: 1.1rem; font-weight: 650; text-transform: none; letter-spacing: -0.01em; border-top: 1px solid var(--border); }
 .gl-table thead + tbody .gl-group th { border-top: 0; }
 .gl-group span { margin-right: 6px; }
-.ab { display: inline-block; min-width: 3.4em; padding: 4px 11px; border-radius: var(--radius-pill); background: var(--primary-soft); color: var(--primary); font-family: var(--font-mono); font-weight: 800; font-size: 0.9rem; text-align: center; white-space: nowrap; }
+.gl-table .ab { display: inline-block; min-width: 3.4em; padding: 4px 11px; border-radius: var(--radius-pill); background: var(--primary-soft); color: var(--primary); font-family: var(--font-mono); font-weight: 800; font-size: 0.9rem; text-align: center; white-space: nowrap; }
 .sym-table .ab { background: var(--yarn-butter); color: var(--text); font-size: 1rem; }
 .sym-table td:nth-child(2) { color: var(--text); width: 42%; }
 .gl-table code { display: inline-block; margin: 2px 4px 2px 0; padding: 2px 8px; border-radius: 8px; background: var(--surface-2); border: 1px solid var(--border); font-family: var(--font-mono); font-size: 0.86em; color: var(--text); }

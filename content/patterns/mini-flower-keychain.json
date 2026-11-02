@@ -1,0 +1,48 @@
+{
+  "slug": "mini-flower-keychain",
+  "draft": false,
+  "title": "Mini Flower Keychain",
+  "name": "Mini Flower Keychain",
+  "subtitle": "Beginner Crochet Pattern",
+  "tagline": "Free crochet pattern | Leftover yarn | Printable",
+  "seoTitle": "Easy Crochet Flower Keychain Pattern for Beginners (Free) | Crochet Tracker",
+  "description": "A free, easy crochet flower keychain pattern for beginners: a tiny six-petal flower in two colours, made from leftover yarn. Four rounds, printable.",
+  "date": "2026-11-02",
+  "lead": "A tiny six-petal flower that's perfect for using up leftover yarn. It uses chains, slip stitches and double crochet, and makes a sweet gift.",
+  "theme": { "accent": "#7d5fbf", "dark": "#2e2347", "cream": "#f3eefb" },
+  "level": "Beginner",
+  "hook": "3 mm",
+  "yarn": "Sport or DK yarn, two colours (centre + petals), a few grams each",
+  "size": "About 6 cm",
+  "terms": "US",
+  "image": { "type": "illustration", "art": "flower" },
+  "materialsTable": [
+    ["Yarn", "Sport or DK yarn in two colours (centre + petals), a few grams each"],
+    ["Hook", "3 mm crochet hook"],
+    ["Extra", "Keyring or lobster clasp"],
+    ["Tools", "Yarn needle, scissors"]
+  ],
+  "abbreviations": ["mr", "sc", "inc", "ch", "dc", "sl st", "st"],
+  "notes": [
+    "Change to the petal colour at the start of round 3.",
+    "You also need a keyring or lobster clasp."
+  ],
+  "sections": [
+    {
+      "title": "",
+      "rounds": [
+        { "r": "R1", "text": "With the centre colour: 6 sc in mr, sl st to first sc", "count": "6" },
+        { "r": "R2", "text": "ch 1, inc x6, sl st to first sc. Fasten off the centre colour.", "count": "12" },
+        { "r": "R3", "text": "Join the petal colour in any st. (ch 2, 2 dc in next st, ch 2, sl st in next st) x6", "count": "6 petals" },
+        { "r": "R4", "text": "From the tip of any petal: ch 12, sl st back into the same st to make a loop. Fasten off, weave in ends and attach the keyring to the loop.", "count": "" }
+      ]
+    }
+  ],
+  "variations": "Make the petals pop by working round 3 in a brighter colour than the centre, or embroider a tiny smile on the centre.",
+  "related": [
+    { "title": "Mini Crochet Sunflower", "url": "/free-patterns/mini-sunflower/" },
+    { "title": "Simple Round Coaster", "url": "/free-patterns/simple-round-coaster/" },
+    { "title": "Chain (ch)", "url": "/stitches/chain/" },
+    { "title": "Slip Stitch", "url": "/stitches/slip-stitch/" }
+  ]
+}

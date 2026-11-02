@@ -131,7 +131,7 @@ function sectionHtml(s) {
   const rounds = s.rounds.filter((r) => !r.hidden);
   return `
           <section class="pp-part">
-            <h3>${esc(s.title)}${s.colourName ? ` <span class="pp-part-colour">(${esc(s.colourName)})</span>` : ''}${s.make > 1 ? ` <span class="pp-make">Make ${s.make}</span>` : ''}</h3>
+            ${s.title ? `<h3>${esc(s.title)}${s.colourName ? ` <span class="pp-part-colour">(${esc(s.colourName)})</span>` : ''}${s.make > 1 ? ` <span class="pp-make">Make ${s.make}</span>` : ''}</h3>` : ''}
             ${s.note ? `<p class="pp-note">${para(s.note)}</p>` : ''}
             ${(s.intro || []).map((t) => `<p>${para(t)}</p>`).join('')}
             ${rounds.length ? `<div class="pp-table-wrap"><table class="pp-rounds">
@@ -165,7 +165,11 @@ export function renderPattern(p) {
   const isPhoto = p.image?.type === 'photo';
   const art = isPhoto
     ? `<img src="${esc(p.image.src)}" alt="${esc(p.image.alt)}" width="1200" height="1200" loading="eager">`
-    : p.image?.art === 'sunflower' ? sunflowerArt() : '';
+    : p.image?.art === 'sunflower'
+      ? sunflowerArt()
+      : p.image?.art
+        ? `<svg class="pp-art" viewBox="0 0 240 180" role="img" aria-label="Illustration of the ${esc(p.title)}">${cardArt(p.image.art)}</svg>`
+        : '';
   const t = p.theme || {};
   const themeStyle = [t.accent && `--pp-accent:${t.accent}`, t.dark && `--pp-dark:${t.dark}`, t.cream && `--pp-cream:${t.cream}`].filter(Boolean).join(';');
   const materials = p.materialsTable || (p.materials || []).map((m) => ['', m]);
@@ -193,10 +197,10 @@ export function renderPattern(p) {
               ${isPhoto ? '' : '<figcaption class="no-print"><span class="badge">Illustration</span> Real photo coming soon</figcaption>'}
             </figure>
             <dl class="pp-bar">
-              <div><dt>Skill level</dt><dd>${esc(p.level)}</dd></div>
-              <div><dt>Time</dt><dd>${esc(p.time)}</dd></div>
-              <div><dt>Size</dt><dd>${esc(p.size)}</dd></div>
-              <div><dt>Hook</dt><dd>${esc(p.hook)}</dd></div>
+              ${[['Skill level', p.level], ['Time', p.time], ['Size', p.size], ['Hook', p.hook]]
+                .filter(([, v]) => v)
+                .map(([k, v]) => `<div><dt>${k}</dt><dd>${esc(v)}</dd></div>`)
+                .join('')}
             </dl>
             <p class="pp-lead">${esc(p.lead)}</p>
             <div class="pp-actions no-print">
@@ -232,7 +236,7 @@ export function renderPattern(p) {
 
           ${chartRounds.length ? `<section class="pp-block pp-chart" aria-labelledby="chart-h">
             <h3 id="chart-h">Round chart</h3>
-            <p class="pp-note">One centre from the middle out, then the petal round.</p>
+            ${p.chartNote ? `<p class="pp-note">${esc(p.chartNote)}</p>` : ''}
             <div class="pp-chart-body">${roundChart(chartRounds, `Round chart for the ${p.title}`)}${legend(chartSymbols(p))}</div>
           </section>` : ''}
 
@@ -301,19 +305,13 @@ function cardArt(kind) {
 const card = (href, title, kind) =>
   `<a class="pcard" href="${href}"><div class="pcard-img ${CARD_BG[kind] || 'bg-rose'}"><svg viewBox="0 0 240 180" aria-hidden="true">${cardArt(kind)}</svg><span class="pcard-tag">Illustration</span></div><div class="pcard-body"><h3>${esc(title)}</h3><span class="pcard-go" aria-hidden="true">→</span></div></a>`;
 
-// Patterns that still live on the hub page itself (not yet moved to their own page).
-const HUB_PATTERNS = [
-  ['#amigurumi-ball', 'Little Amigurumi Ball', 'ball'],
-  ['#round-coaster', 'Simple Round Coaster', 'coaster'],
-  ['#flower-keychain', 'Mini Flower Keychain', 'flower'],
-];
-const ART_BY_SLUG = { 'mini-sunflower': 'sunflower' };
-
+// One card per published pattern, ordered by "order" in the JSON, then by title.
 export function patternCards(patterns) {
-  return [
-    ...patterns.filter((p) => !p.draft).map((p) => card(`/free-patterns/${p.slug}/`, p.title, ART_BY_SLUG[p.slug] || 'ball')),
-    ...HUB_PATTERNS.map(([href, title, kind]) => card(href, title, kind)),
-  ].join('');
+  return patterns
+    .filter((p) => !p.draft)
+    .sort((a, b) => (a.order ?? 99) - (b.order ?? 99) || a.title.localeCompare(b.title))
+    .map((p) => card(`/free-patterns/${p.slug}/`, p.title, p.image?.art || 'ball'))
+    .join('');
 }
 
 // Write every page. Returns the warnings so the caller can print them.

@@ -1,0 +1,59 @@
+{
+  "slug": "little-amigurumi-ball",
+  "draft": false,
+  "title": "Little Amigurumi Ball",
+  "name": "Little Amigurumi Ball",
+  "subtitle": "Beginner Crochet Pattern",
+  "tagline": "Free crochet pattern | Beginner friendly | Printable",
+  "seoTitle": "Easy Crochet Ball Pattern for Beginners (Free Amigurumi) | Crochet Tracker",
+  "description": "A free, easy crochet ball pattern for beginners: a small amigurumi ball worked in a spiral with a magic ring, increases and decreases. Printable, with stitch counts for every round.",
+  "date": "2026-11-02",
+  "lead": "The perfect first amigurumi. You'll practise the magic ring, increases and decreases, and end up with a squishy ball for a cat toy, a rattle or a pom-pom alternative.",
+  "theme": { "accent": "#c4517a", "dark": "#4a1f30", "cream": "#fdeef3" },
+  "level": "Beginner",
+  "hook": "3.5 mm",
+  "yarn": "Worsted / DK cotton, about 15 g",
+  "size": "About 6 cm",
+  "terms": "US",
+  "image": { "type": "illustration", "art": "ball" },
+  "materialsTable": [
+    ["Yarn", "Worsted or DK cotton, about 15 g"],
+    ["Hook", "3.5 mm crochet hook"],
+    ["Stuffing", "Toy stuffing"],
+    ["Tools", "Yarn needle, stitch marker"]
+  ],
+  "abbreviations": ["mr", "sc", "inc", "dec", "st"],
+  "notes": [
+    "Worked in a continuous spiral. Don't join rounds.",
+    "Use a stitch marker in the first stitch of each round.",
+    "Stuff firmly after round 10."
+  ],
+  "sections": [
+    {
+      "title": "",
+      "rounds": [
+        { "r": "R1", "text": "6 sc in mr", "count": "6" },
+        { "r": "R2", "text": "inc x6", "count": "12" },
+        { "r": "R3", "text": "(sc, inc) x6", "count": "18" },
+        { "r": "R4", "text": "(2 sc, inc) x6", "count": "24" },
+        { "r": "R5", "text": "sc in each st around", "count": "24" },
+        { "r": "R6", "text": "sc in each st around", "count": "24" },
+        { "r": "R7", "text": "sc in each st around", "count": "24" },
+        { "r": "R8", "text": "sc in each st around", "count": "24" },
+        { "r": "R9", "text": "sc in each st around", "count": "24" },
+        { "r": "R10", "text": "(2 sc, dec) x6", "count": "18" },
+        { "r": "R11", "text": "(sc, dec) x6. Stuff the ball firmly now.", "count": "12" },
+        { "r": "R12", "text": "dec x6", "count": "6" },
+        { "r": "Finish", "text": "Fasten off, leaving a 15 cm tail. Thread it through the front loops of the last 6 stitches, pull tight and weave in.", "count": "" }
+      ]
+    }
+  ],
+  "variations": "Want a bigger ball? Add one more increase round, e.g. (3 sc, inc) x6 for 30, and one more decrease round to match.",
+  "related": [
+    { "title": "Mini Crochet Sunflower", "url": "/free-patterns/mini-sunflower/" },
+    { "title": "Simple Round Coaster", "url": "/free-patterns/simple-round-coaster/" },
+    { "title": "Magic Ring", "url": "/stitches/magic-ring/" },
+    { "title": "Increase (inc)", "url": "/stitches/increase/" },
+    { "title": "Decrease (dec)", "url": "/stitches/decrease/" }
+  ]
+}
