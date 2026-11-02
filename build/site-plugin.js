@@ -14,7 +14,8 @@ import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
 import { SITE_URL, SITE_NAME, THEME_COLOR, OG_IMAGE } from '../site.config.js';
-import { hookFigure, miniChart, symbol } from './drawings.js';
+import { miniChart, symbol } from './drawings.js';
+import { stepClip } from './clips.js';
 import { generatePatternPages, loadPatterns, patternCards } from './pattern-pages.js';
 
 const PARTIALS_DIR = path.resolve('src/partials');
@@ -195,32 +196,25 @@ function renderMeta(meta, html) {
   return tags.filter(Boolean).join('\n    ');
 }
 
-// Step drawings: <li data-fig='{"loops":2,"yo":true}'> gets an SVG drawing, and the
-// first <ol data-howto> that has drawings also gets a small "play the steps" animation.
+// Step drawings: <li data-fig='{"loops":2,"yo":true}'> gets an SVG drawing.
+// Each step gets its own small animated "clip" (see build/clips.js). Steps that are
+// better shown as a chart keep the chart drawing, with the new stitches popping in.
 function figureFor(spec) {
-  return spec.chart ? miniChart(spec.chart) : hookFigure(spec);
+  if (spec.chart) return miniChart(spec.chart).replace('class="fig ', 'class="clip k-chart fig ');
+  return stepClip(spec);
 }
 
 function expandDrawings(html) {
   html = html.replace(/<!--@symbol\s+([\w-]+)\s*-->/g, (_, name) => symbol(name));
   html = html.replace(/<!--@chart\s+([\w-]+)\s*-->/g, (_, name) => `<figure class="mini-chart">${miniChart(name)}</figure>`);
   return html.replace(/<ol([^>]*data-howto[^>]*)>([\s\S]*?)<\/ol>/, (whole, attrs, inner) => {
-    const frames = [];
-    let n = 0;
     const items = inner.replace(/<li(?: data-fig='([^']+)')?>([\s\S]*?)<\/li>/g, (li, json, text) => {
-      n++;
       if (!json) return li;
-      const fig = figureFor(JSON.parse(json));
-      frames.push({ fig, n, text: text.replace(/<[^>]+>/g, '') });
-      return `<li><span class="step-text">${text}</span><span class="step-fig">${fig}</span></li>`;
+      const spec = JSON.parse(json);
+      const cap = spec.cap ? `<span class="step-cap">${spec.cap}</span>` : '';
+      return `<li><span class="step-text">${text}</span><span class="step-fig">${figureFor(spec)}${cap}</span></li>`;
     });
-    if (!frames.length) return whole;
-    const player = `<figure class="fig-player" data-player>
-            <div class="fig-frames">${frames.map((f, i) => `<div class="fig-frame"${i ? ' hidden' : ''}>${f.fig}<p><b>Step ${f.n}.</b> ${f.text}</p></div>`).join('')}</div>
-            <figcaption><button type="button" class="btn btn-outline btn-sm" data-player-toggle aria-pressed="false">Play steps</button><span class="fig-count" aria-live="polite">Picture 1 of ${frames.length}</span></figcaption>
-          </figure>`;
-    return `${player}
-          <ol${attrs}>${items}</ol>`;
+    return `<ol${attrs}>${items}</ol>`;
   });
 }
 
@@ -229,6 +223,34 @@ function listFiles(dir, base = dir) {
     const full = path.join(dir, d.name);
     return d.isDirectory() ? listFiles(full, base) : [path.relative(base, full).split(path.sep).join('/')];
   });
+}
+
+
+// ---------- Article sidebar ----------
+// Lesson, guide and info pages get a right-hand column on wide screens: an
+// "On this page" list built from the h2 headings and a small tracker card, so the
+// page is balanced instead of leaving the right side empty.
+const SIDEBAR_PAGES = /^\/(stitches\/[\w-]+|guides\/[\w-]+|about|privacy)\/$/;
+const slug = (t) => t.toLowerCase().replace(/<[^>]+>/g, '').replace(/&[a-z]+;/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+
+function addSidebar(html) {
+  const m = html.match(/<article class="container article">([\s\S]*)<\/article>(\s*<\/main>)/);
+  if (!m) return html;
+  // Headings of an in-page contents box or a call-to-action band are not sections.
+  let inner = m[1].replace(/(<(?:nav class="toc"|div class="cta-band)[^>]*>\s*)<h2/g, '$1<h2 data-notoc');
+  const toc = [];
+  inner = inner.replace(/<h2([^>]*)>([\s\S]*?)<\/h2>/g, (all, attrs, text) => {
+    if (attrs.includes('data-notoc')) return `<h2${attrs.replace(' data-notoc', '')}>${text}</h2>`;
+    let id = (attrs.match(/id="([^"]+)"/) || [])[1];
+    if (!id) { id = slug(text); attrs += ` id="${id}"`; }
+    toc.push(`<li><a href="#${id}">${text.replace(/<[^>]+>/g, '')}</a></li>`);
+    return `<h2${attrs}>${text}</h2>`;
+  });
+  const side = `<aside class="article-side">
+          ${toc.length > 1 ? `<nav class="side-card side-toc" aria-label="On this page"><p class="side-title">On this page</p><ol>${toc.join('')}</ol></nav>` : ''}
+          <div class="side-card side-cta"><p class="side-title">🧶 Crochet Tracker</p><p>Follow any pattern round by round and never lose your place. Free, no sign-up.</p><a class="btn btn-primary btn-sm" href="/app/">Start Tracking</a></div>
+        </aside>`;
+  return html.replace(m[0], () => `<article class="container article has-side"><div class="article-main">${inner}</div>${side}</article>${m[2]}`);
 }
 
 // ---------- Site search index ----------
@@ -321,8 +343,10 @@ export default function sitePlugin() {
 
         // 2. Meta block
         const metaMatch = html.match(/<!--@meta\s+([\s\S]*?)-->/);
+        let pagePath = null;
         if (metaMatch) {
           const meta = JSON.parse(metaMatch[1]);
+          pagePath = meta.path;
           pages.set(meta.path, { noindex: !!meta.noindex, priority: meta.priority });
           html = html.replace(metaMatch[0], () => renderMeta(meta, html));
           if (meta.nav) {
@@ -334,6 +358,7 @@ export default function sitePlugin() {
 
         // 3. Drawings and the free-pattern cards
         html = expandDrawings(html);
+        if (pagePath && SIDEBAR_PAGES.test(pagePath)) html = addSidebar(html);
         if (html.includes('<!--@pattern-cards-->')) html = html.replace('<!--@pattern-cards-->', () => patternCards(loadPatterns()));
 
         // 4. Constants

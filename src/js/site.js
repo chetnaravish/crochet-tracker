@@ -77,36 +77,32 @@ for (const btn of document.querySelectorAll('[data-open-pattern]')) {
 // Pattern pages: Print / Save as PDF (print styles hide everything but the pattern).
 for (const btn of document.querySelectorAll('[data-print]')) btn.addEventListener('click', () => window.print());
 
-// Stitch pages: "Play steps" shows the step drawings one after another.
-for (const player of document.querySelectorAll('[data-player]')) {
-  const frames = [...player.querySelectorAll('.fig-frame')];
-  const btn = player.querySelector('[data-player-toggle]');
-  const count = player.querySelector('.fig-count');
-  let i = 0;
-  let timer = null;
-  const show = (n) => {
-    i = (n + frames.length) % frames.length;
-    frames.forEach((f, k) => (f.hidden = k !== i));
-    count.textContent = `Picture ${i + 1} of ${frames.length}`;
+// Stitch pages: every step has a small animated clip. A clip plays while it is on
+// screen (the motion runs once, holds, then starts again) and rests as a still
+// diagram when off screen or when the visitor prefers reduced motion.
+const clips = document.querySelectorAll('svg.clip');
+if (clips.length && !matchMedia('(prefers-reduced-motion: reduce)').matches && 'IntersectionObserver' in window) {
+  const LOOP = 4200;
+  const timers = new Map();
+  const replay = (svg) => {
+    svg.classList.remove('is-playing');
+    void svg.getBoundingClientRect();
+    svg.classList.add('is-playing');
   };
-  const stop = () => {
-    clearInterval(timer);
-    timer = null;
-    btn.textContent = 'Play steps';
-    btn.setAttribute('aria-pressed', 'false');
-  };
-  btn.addEventListener('click', () => {
-    if (timer) return stop();
-    btn.textContent = 'Pause';
-    btn.setAttribute('aria-pressed', 'true');
-    show(i + 1);
-    timer = setInterval(() => show(i + 1), 2200);
-  });
-  // Tap the picture to step through it by hand.
-  player.querySelector('.fig-frames').addEventListener('click', () => {
-    stop();
-    show(i + 1);
-  });
+  const io = new IntersectionObserver((entries) => {
+    for (const e of entries) {
+      const svg = e.target;
+      if (e.isIntersecting && !timers.has(svg)) {
+        replay(svg);
+        timers.set(svg, setInterval(() => replay(svg), LOOP));
+      } else if (!e.isIntersecting && timers.has(svg)) {
+        clearInterval(timers.get(svg));
+        timers.delete(svg);
+        svg.classList.remove('is-playing');
+      }
+    }
+  }, { threshold: 0.5 });
+  clips.forEach((c) => io.observe(c));
 }
 
 // Site search page.
@@ -139,5 +135,22 @@ if (filter) {
     filter.value = q;
     filter.dispatchEvent(new Event('input'));
     filter.scrollIntoView({ block: 'start' });
+  }
+}
+
+// Article sidebar: highlight the section you are reading in "On this page".
+const tocLinks = [...document.querySelectorAll('.side-toc a')];
+if (tocLinks.length && 'IntersectionObserver' in window) {
+  const byId = new Map(tocLinks.map((a) => [a.hash.slice(1), a]));
+  const spy = new IntersectionObserver((entries) => {
+    for (const e of entries) {
+      if (!e.isIntersecting) continue;
+      tocLinks.forEach((a) => a.classList.remove('is-active'));
+      byId.get(e.target.id)?.classList.add('is-active');
+    }
+  }, { rootMargin: '-90px 0px -65% 0px' });
+  for (const id of byId.keys()) {
+    const h = document.getElementById(id);
+    if (h) spy.observe(h);
   }
 }

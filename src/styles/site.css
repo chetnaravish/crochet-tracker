@@ -661,10 +661,6 @@ mark { background: var(--yarn-butter); color: inherit; border-radius: 3px; paddi
 .fig-symbol { width: 40px; height: 46px; }
 .facts .fig-symbol { margin-top: 2px; }
 
-ol.howto li:has(.step-fig) { display: grid; gap: 10px; }
-@media (min-width: 640px) { ol.howto li:has(.step-fig) { grid-template-columns: 1fr 190px; align-items: start; } }
-.step-text { padding-top: 4px; }
-.step-fig { display: block; max-width: 220px; padding: 6px; border-radius: var(--radius-sm); background: var(--surface-2); }
 .mini-chart { margin: 16px 0; max-width: 320px; padding: 12px; border-radius: var(--radius); background: var(--surface); border: 1px solid var(--border); }
 
 .fig-player { margin: 16px 0 20px; padding: 16px; border-radius: var(--radius-lg); background: var(--surface); border: 1px solid var(--border); }
@@ -1178,3 +1174,104 @@ main { overflow-x: clip; }
 .gl-faq { margin-inline: auto; }
 .gl-faq .faq-item p { line-height: 1.65; }
 .gl-cta { max-width: 1000px; margin: 76px auto 0; }
+
+/* ---------- Article pages: balanced two-column layout with a sidebar ---------- */
+.article-side { display: none; }
+@media (min-width: 1080px) {
+  .article.has-side { display: grid; grid-template-columns: minmax(0, 1fr) 290px; gap: 56px; align-items: start; }
+  .has-side .prose { max-width: 50rem; }
+  .article-side { display: grid; gap: 16px; position: sticky; top: 88px; padding-top: 28px; }
+}
+.side-card { padding: 18px 20px; border-radius: var(--radius-lg); background: var(--surface); border: 1px solid var(--border); box-shadow: var(--shadow-sm); }
+.side-title { margin: 0 0 10px; font-family: var(--font-display); font-weight: 700; font-size: 1.05rem; font-variation-settings: 'SOFT' 100; }
+.side-toc ol { display: grid; gap: 2px; margin: 0; padding: 0; list-style: none; }
+.side-toc a { display: block; padding: 7px 10px; border-left: 3px solid transparent; border-radius: 4px 10px 10px 4px; color: var(--text-muted); font-weight: 700; font-size: 0.93rem; line-height: 1.35; text-decoration: none; transition: background-color 0.2s, color 0.2s, border-color 0.2s; }
+.side-toc a:hover, .side-toc a.is-active { background: var(--primary-soft); border-left-color: var(--primary); color: var(--primary); }
+.side-cta { background: linear-gradient(150deg, var(--yarn-rose), var(--yarn-peach)); border-color: transparent; }
+.side-cta p:not(.side-title) { margin: 0 0 14px; color: var(--text-muted); font-size: 0.93rem; line-height: 1.55; }
+.has-side h2[id] { scroll-margin-top: 96px; }
+
+/* ---------- Stitch lessons: one animated clip per step ---------- */
+ol.howto li { padding: 16px 18px 16px 62px; }
+@media (min-width: 640px) {
+  ol.howto li:has(.step-fig) { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 22px; align-items: start; }
+}
+.step-text { display: block; padding-top: 5px; font-size: 1.02rem; line-height: 1.6; }
+.step-fig { display: block; margin-top: 12px; }
+@media (min-width: 640px) { .step-fig { margin-top: 0; } }
+.step-fig .clip { border-radius: 14px; box-shadow: 0 0 0 1px var(--border), 0 6px 16px -10px rgb(90 50 60 / 0.35); }
+.step-cap { display: block; margin-top: 8px; color: var(--text-muted); font-size: 0.82rem; font-weight: 700; text-align: center; }
+
+.clip { display: block; width: 100%; height: auto; }
+.clip * { transform-box: view-box; }
+.clip .c-bg { fill: #fdf6f0; }
+.clip .t-o, .clip .t-i, .clip .c-arrow, .clip [class^='h-'] { fill: none; stroke-linecap: round; stroke-linejoin: round; }
+.clip .t-o { stroke: #3a2a30; stroke-width: 11; }
+.clip .t-i { stroke: #fff; stroke-width: 6.6; }
+.clip .c-back .t-i { stroke: #ebe3dd; }
+.clip :is(.c-new, .c-result, .c-wrap) .t-i { stroke: #ffd166; }
+.clip :is(.c-new, .c-result, .c-wrap).c-back .t-i { stroke: #f1bf47; }
+.clip .h-o { stroke: #7a3346; stroke-width: 25; }
+.clip .h-i { stroke: #ee8f98; stroke-width: 19.5; }
+.clip .h-hl { stroke: #f8c4c9; stroke-width: 4; }
+.clip .h-notch { stroke: #7a3346; stroke-width: 2.5; }
+.clip .f-st { fill: #fff; stroke: #3a2a30; stroke-width: 2.6; }
+.clip .f-target { fill: #5b8bd9; }
+.clip .c-arrow { stroke: #3a2a30; stroke-width: 2.6; }
+.clip .c-head { fill: #3a2a30; }
+.clip .c-label { fill: #3a2a30; font: 800 14px var(--font); transform-box: fill-box; transform-origin: center; }
+.clip .c-yo { font-size: 15px; letter-spacing: 0.04em; fill: #b4436c; }
+.clip .c-badge rect { fill: #3a2a30; }
+.clip .c-count { fill: #fff; font-size: 11.5px; }
+.clip .c-after, .clip .c-result { opacity: 0; }
+
+/* Shared motion */
+@keyframes c-draw { from { stroke-dashoffset: 1; opacity: 0; } 8% { opacity: 1; } to { stroke-dashoffset: 0; opacity: 1; } }
+@keyframes c-pop { from { opacity: 0; transform: scale(0.3); } }
+@keyframes c-in { to { opacity: 1; transform: none; } }
+@keyframes c-out { to { opacity: 0; } }
+@keyframes c-vanish { to { opacity: 0; transform: scale(0.35); } }
+@keyframes c-shift { to { transform: translateX(var(--sx, 0)); } }
+@keyframes c-rise { from { opacity: 0; transform: translateY(var(--ry, 90px)) scale(0.35); } 35% { opacity: 1; } to { opacity: 1; transform: none; } }
+@keyframes c-insert { 0%, 10% { transform: none; } 55%, 100% { transform: translate(var(--ix, 54px), var(--iy, 80px)); } }
+@keyframes c-pulse { to { fill: #9cbcf2; } }
+@keyframes c-bob { to { transform: translateY(-5px); } }
+.clip.is-playing .c-arrow { stroke-dasharray: 1; animation: c-draw 0.7s 0.15s both; }
+
+/* Yarn over: the new wraps are drawn around the hook, "YO" pops up */
+.k-yo.is-playing .c-wrapnew path, .k-yo1.is-playing .c-wrap path { stroke-dasharray: 1; animation: c-draw 0.8s calc(0.5s + var(--d, 0s)) both; }
+.k-yo.is-playing .c-yo, .k-yo1.is-playing .c-yo { animation: c-pop 0.4s calc(1s + var(--d, 0s)) cubic-bezier(0.3, 1.6, 0.5, 1) both; }
+
+/* Insert: the hook dives into the blue stitch */
+.k-insert.is-playing .c-hookg { animation: c-insert 2.4s 0.5s cubic-bezier(0.5, 0, 0.3, 1) both; }
+.k-insert.is-playing .f-target { animation: c-pulse 0.5s 1.8s ease-in-out 4 alternate; }
+.k-insert.is-playing .c-l1 { animation: c-pop 0.4s 0.3s both; }
+
+/* Pull up a loop: the new loop rises from the stitch onto the hook */
+.k-pull.is-playing .c-rise { animation: c-rise 1.3s calc(0.6s + var(--d, 0s)) cubic-bezier(0.3, 1.2, 0.5, 1) both; }
+.k-pull.is-playing .c-l1 { animation: c-pop 0.4s 0.3s both; }
+
+/* Pull through: wrap, arrow, the loops slide off and one new loop is left */
+.k-through.is-playing .c-wrap path { stroke-dasharray: 1; animation: c-draw 0.8s 0.3s both; }
+.k-through.is-playing .c-wrap { animation: c-vanish 0.5s 2.2s ease-in both; }
+.k-through.is-playing .c-yo-th { animation: c-pop 0.4s 0.8s cubic-bezier(0.3, 1.6, 0.5, 1) both, c-out 0.4s 2.2s both; }
+.k-through.is-playing .c-a2 { animation: c-draw 0.8s 1.1s both, c-out 0.4s 2.4s both; }
+.k-through.is-playing .c-l2 { animation: c-pop 0.4s 1.3s both, c-out 0.4s 2.4s both; }
+.k-through.is-playing .c-gone { animation: c-vanish 0.5s 2.2s ease-in both; }
+.k-through.is-playing .c-result { transform: scale(0.3); animation: c-in 0.5s 2.6s cubic-bezier(0.3, 1.6, 0.5, 1) both; }
+.k-through.is-playing .c-rest { animation: c-shift 0.6s 2.5s cubic-bezier(0.4, 0, 0.2, 1) both; }
+.k-through.is-playing .c-before { animation: c-out 0.3s 2.6s both; }
+.k-through.is-playing .c-after { animation: c-in 0.3s 2.8s both; }
+
+/* Magic ring forms */
+.k-ringform.is-playing .f-ring path { stroke-dasharray: 1; animation: c-draw 1.4s 0.3s both; }
+
+/* Just loops on the hook */
+.k-idle.is-playing .c-hookg { animation: c-bob 0.9s ease-in-out 4 alternate; }
+
+/* Chart-style steps: the new stitches pop in */
+.k-chart.is-playing .d-new { transform-box: fill-box; transform-origin: center bottom; animation: c-pop 0.5s 0.5s cubic-bezier(0.3, 1.5, 0.5, 1) both; }
+
+@media print { .article-side { display: none !important; } }
+/* The sidebar already lists the sections, so hide the in-page contents box there. */
+@media (min-width: 1080px) { .has-side .toc { display: none; } }
