@@ -5,8 +5,8 @@
   "name": "Mini Flower Keychain",
   "subtitle": "Beginner Crochet Pattern",
   "tagline": "Free crochet pattern | Leftover yarn | Printable",
-  "seoTitle": "Easy Crochet Flower Keychain Pattern for Beginners (Free)",
-  "description": "A free, easy crochet flower keychain pattern for beginners: a tiny six-petal flower in two colours, made from leftover yarn. Four rounds, printable.",
+  "seoTitle": "Easy Crochet Flower Keychain Pattern (Free Beginner PDF)",
+  "description": "Free, easy crochet flower keychain pattern for beginners: a six-petal flower from leftover yarn. Free printable PDF download with a round diagram.",
   "date": "2026-11-02",
   "lead": "A tiny six-petal flower that's perfect for using up leftover yarn. It uses chains, slip stitches and double crochet, and makes a sweet gift.",
   "theme": { "accent": "#7d5fbf", "dark": "#2e2347", "cream": "#f3eefb" },
@@ -31,9 +31,9 @@
     {
       "title": "",
       "rounds": [
-        { "r": "R1", "text": "With the centre colour: 6 sc in mr, sl st to first sc", "count": "6" },
-        { "r": "R2", "text": "ch 1, inc x6, sl st to first sc. Fasten off the centre colour.", "count": "12" },
-        { "r": "R3", "text": "Join the petal colour in any st. (ch 2, 2 dc in next st, ch 2, sl st in next st) x6", "count": "6 petals" },
+        { "r": "R1", "text": "With the centre colour: 6 sc in mr, sl st to first sc", "count": "6", "chart": {"type": "ring", "sym": "sc", "count": 6} },
+        { "r": "R2", "text": "ch 1, inc x6, sl st to first sc. Fasten off the centre colour.", "count": "12", "chart": {"type": "inc", "sym": "sc", "count": 12} },
+        { "r": "R3", "text": "Join the petal colour in any st. (ch 2, 2 dc in next st, ch 2, sl st in next st) x6", "count": "6 petals", "chart": {"type": "petals", "count": 6, "fan": ["dc", "dc"]} },
         { "r": "R4", "text": "From the tip of any petal: ch 12, sl st back into the same st to make a loop. Fasten off, weave in ends and attach the keyring to the loop.", "count": "" }
       ]
     }
@@ -44,5 +44,6 @@
     { "title": "Simple Round Coaster", "url": "/free-patterns/simple-round-coaster/" },
     { "title": "Chain (ch)", "url": "/stitches/chain/" },
     { "title": "Slip Stitch", "url": "/stitches/slip-stitch/" }
-  ]
+  ],
+  "chartNote": "The flower from the middle out: centre, increase round, then the six petals."
 }

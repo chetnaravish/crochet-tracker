@@ -10,7 +10,8 @@
     "preview": "vite preview",
     "test": "node --test tests/",
     "icons": "node scripts/make-icons.mjs",
-    "og": "node scripts/make-og.mjs"
+    "og": "node scripts/make-og.mjs",
+    "pdfs": "node scripts/make-pdfs.mjs"
   },
   "license": "MIT",
   "devDependencies": {

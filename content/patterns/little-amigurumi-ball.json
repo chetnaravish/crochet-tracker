@@ -5,8 +5,8 @@
   "name": "Little Amigurumi Ball",
   "subtitle": "Beginner Crochet Pattern",
   "tagline": "Free crochet pattern | Beginner friendly | Printable",
-  "seoTitle": "Easy Crochet Ball Pattern for Beginners (Free Amigurumi)",
-  "description": "Free, easy crochet ball pattern for beginners: a small amigurumi ball worked in a spiral with a magic ring, inc and dec. Printable, with stitch counts.",
+  "seoTitle": "Easy Amigurumi Ball Crochet Pattern for Beginners (Free PDF)",
+  "description": "Free, easy crochet ball pattern for beginners: a small amigurumi ball in a spiral. Free PDF download with stitch counts and a round diagram. Printable.",
   "date": "2026-11-02",
   "lead": "The perfect first amigurumi. You'll practise the magic ring, increases and decreases, and end up with a squishy ball for a cat toy, a rattle or a pom-pom alternative.",
   "theme": { "accent": "#c4517a", "dark": "#4a1f30", "cream": "#fdeef3" },
@@ -32,11 +32,11 @@
     {
       "title": "",
       "rounds": [
-        { "r": "R1", "text": "6 sc in mr", "count": "6" },
-        { "r": "R2", "text": "inc x6", "count": "12" },
-        { "r": "R3", "text": "(sc, inc) x6", "count": "18" },
-        { "r": "R4", "text": "(2 sc, inc) x6", "count": "24" },
-        { "r": "R5", "text": "sc in each st around", "count": "24" },
+        { "r": "R1", "text": "6 sc in mr", "count": "6", "chart": {"type": "ring", "sym": "sc", "count": 6} },
+        { "r": "R2", "text": "inc x6", "count": "12", "chart": {"type": "inc", "sym": "sc", "count": 12} },
+        { "r": "R3", "text": "(sc, inc) x6", "count": "18", "chart": {"type": "inc", "sym": "sc", "count": 18, "every": 2} },
+        { "r": "R4", "text": "(2 sc, inc) x6", "count": "24", "chart": {"type": "inc", "sym": "sc", "count": 24, "every": 3} },
+        { "r": "R5", "text": "sc in each st around", "count": "24", "chart": {"type": "even", "sym": "sc", "count": 24} },
         { "r": "R6", "text": "sc in each st around", "count": "24" },
         { "r": "R7", "text": "sc in each st around", "count": "24" },
         { "r": "R8", "text": "sc in each st around", "count": "24" },
@@ -55,5 +55,6 @@
     { "title": "Magic Ring", "url": "/stitches/magic-ring/" },
     { "title": "Increase (inc)", "url": "/stitches/increase/" },
     { "title": "Decrease (dec)", "url": "/stitches/decrease/" }
-  ]
+  ],
+  "chartNote": "Rounds 1 to 5 from the middle out. Rounds 6 to 9 repeat round 5, then the decrease rounds close the ball."
 }

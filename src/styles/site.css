@@ -461,6 +461,33 @@ a.tile .more { display: inline-block; margin-top: 10px; color: var(--primary); f
 .cta-band h2 { margin: 0; }
 .cta-band p { margin: 0; color: var(--text-muted); font-weight: 600; }
 @media (min-width: 768px) { .cta-band { grid-template-columns: 1fr auto; align-items: center; } .cta-band .btn { grid-row: span 2; } }
+.cta-band-soft { background: linear-gradient(135deg, var(--yarn-butter), var(--yarn-mint)); }
+.cta-band-soft p { max-width: 46rem; }
+.cta-actions { display: flex; flex-wrap: wrap; gap: 10px; }
+@media (min-width: 768px) {
+  .cta-band-soft { grid-template-columns: 1fr auto; column-gap: 40px; }
+  .cta-band-soft h2, .cta-band-soft p { grid-column: 1; }
+  .cta-band .cta-actions { grid-column: 2; grid-row: 1 / span 2; flex-direction: column; }
+}
+
+/* Homepage: install steps and "best crochet tracker app" checklist */
+.center-cta { margin: 28px 0 0; text-align: center; }
+.checklist { display: grid; gap: 12px; margin: 0; padding: 0; list-style: none; }
+@media (min-width: 760px) { .checklist { grid-template-columns: 1fr 1fr; } }
+.checklist li {
+  position: relative;
+  display: grid;
+  gap: 4px;
+  padding: 16px 18px 16px 58px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.3s var(--ease), box-shadow 0.3s;
+}
+.checklist li:hover { transform: translateY(-3px); box-shadow: var(--shadow); }
+.checklist li::before { content: '✓'; position: absolute; left: 16px; top: 15px; display: grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; background: var(--yarn-mint); color: #2f6b45; font-weight: 900; }
+.checklist span { color: var(--text-muted); line-height: 1.55; }
 
 /* ---------- Article / prose ---------- */
 .article { padding-block: 24px 56px; }
@@ -871,6 +898,7 @@ mark { background: var(--yarn-butter); color: inherit; border-radius: 3px; paddi
 .pp-actions { display: grid; gap: 10px; margin: 22px auto 0; max-width: 22rem; }
 @media (min-width: 640px) { .pp-actions { display: flex; flex-wrap: wrap; justify-content: center; max-width: none; } }
 .pp-actions .btn { justify-content: center; }
+.pp-pdf-note { max-width: 34rem; margin: 14px auto 0; text-align: center; font-size: 0.92rem; color: var(--text-muted); }
 .pp-btn-main { background: var(--pp-accent); border-color: var(--pp-accent); color: #fff; }
 .pp-btn-main:hover { filter: brightness(0.92); color: #fff; }
 .pp .open-status:empty { display: none; }
@@ -1495,6 +1523,74 @@ ol.howto li { padding: 16px 18px 16px 62px; }
 @media (min-width: 960px) { .fp-steps { grid-template-columns: repeat(4, 1fr); } }
 .fp-steps li { padding: 22px 20px; border-radius: var(--radius-lg); background: var(--surface); border: 1px solid var(--border); box-shadow: var(--shadow-sm); }
 .fp-steps p { margin: 14px 0 0; color: var(--text-muted); line-height: 1.6; }
+.fp .faq { margin: 0 auto; }
+
+/* Free patterns hub: PDF downloads, beginner path */
+.fp-hero-cta { margin: 26px 0 0; }
+.pdf-book {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  max-width: 760px;
+  margin: 0 auto 18px;
+  padding: 22px 26px;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border);
+  background: linear-gradient(120deg, var(--yarn-butter), var(--yarn-rose));
+  color: var(--text);
+  text-decoration: none;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.35s cubic-bezier(0.3, 1.4, 0.5, 1), box-shadow 0.3s;
+}
+.pdf-book:hover { transform: translateY(-5px); color: var(--text); box-shadow: var(--shadow-lg); }
+.pdf-book-cover {
+  display: grid;
+  place-content: center;
+  gap: 2px;
+  flex: none;
+  width: 104px;
+  height: 140px;
+  border-radius: 6px 14px 14px 6px;
+  background: var(--primary);
+  color: #fff;
+  text-align: center;
+  box-shadow: inset 8px 0 0 rgb(0 0 0 / 0.15), var(--shadow);
+  transition: transform 0.45s cubic-bezier(0.3, 1.6, 0.5, 1);
+}
+.pdf-book:hover .pdf-book-cover { transform: rotate(-6deg) scale(1.05); }
+.pdf-book-cover b { font-size: 0.8rem; letter-spacing: 0.12em; }
+.pdf-book-cover span { padding: 0 8px; font-family: var(--font-display); font-size: 0.95rem; line-height: 1.15; }
+.pdf-book-cover small { margin-top: 6px; font-weight: 800; opacity: 0.85; }
+.pdf-book-text { display: grid; gap: 6px; }
+.pdf-book-text strong { font-family: var(--font-display); font-size: 1.35rem; }
+.pdf-book-text > span { color: var(--text-muted); line-height: 1.6; }
+.pdf-book-text .pdf-book-go { color: var(--primary); font-weight: 800; }
+@media (max-width: 520px) {
+  .pdf-book { flex-direction: column; text-align: center; padding: 22px 18px; }
+}
+.pdf-list { display: grid; gap: 12px; max-width: 760px; margin: 0 auto; padding: 0; list-style: none; }
+@media (min-width: 620px) { .pdf-list { grid-template-columns: 1fr 1fr; } }
+.pdf-list a {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  text-decoration: none;
+  transition: transform 0.3s var(--ease), border-color 0.2s, box-shadow 0.3s;
+}
+.pdf-list a:hover { transform: translateY(-3px); border-color: var(--primary); color: var(--text); box-shadow: var(--shadow); }
+.pdf-ico { display: grid; place-items: center; flex: none; width: 44px; height: 52px; border-radius: 6px 12px 6px 6px; background: var(--primary-soft); color: var(--primary); font-size: 0.75rem; font-weight: 900; }
+.pdf-list strong { display: block; }
+.pdf-list small { color: var(--text-muted); font-weight: 700; }
+.fp-path { display: grid; gap: 14px; max-width: 760px; margin: 0 auto; padding: 0; list-style: none; }
+.fp-path li { display: flex; gap: 16px; align-items: flex-start; padding: 18px 20px; border-radius: var(--radius-lg); border: 1px solid var(--border); background: var(--surface); box-shadow: var(--shadow-sm); }
+.fp-path h3 { margin: 0 0 4px; font-size: 1.15rem; }
+.fp-path p { margin: 0; color: var(--text-muted); line-height: 1.6; }
+.fp-path-no { display: grid; place-items: center; flex: none; width: 40px; height: 40px; border-radius: 50%; background: var(--primary); color: #fff; font-family: var(--font-display); font-weight: 700; font-size: 1.2rem; }
 
 /* ---------- Stitch lessons: written steps ---------- */
 .howto-terms { margin: 8px 0 18px; padding: 16px 20px; border-radius: var(--radius); background: var(--yarn-sky); }

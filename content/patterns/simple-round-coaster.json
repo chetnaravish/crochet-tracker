@@ -5,8 +5,8 @@
   "name": "Simple Round Coaster",
   "subtitle": "Beginner Crochet Pattern",
   "tagline": "Free crochet pattern | Beginner friendly | Printable",
-  "seoTitle": "Easy Crochet Coaster Pattern for Beginners (Free Printable)",
-  "description": "A free, easy round crochet coaster pattern for beginners, worked in double crochet in about 20 minutes. Five rounds with stitch counts. Printable.",
+  "seoTitle": "Easy Crochet Coaster Pattern for Beginners (Free PDF)",
+  "description": "Free, easy round crochet coaster pattern for beginners in double crochet, about 20 minutes. Free printable PDF download with a round diagram.",
   "date": "2026-11-02",
   "lead": "A flat circle in double crochet that works up in about 20 minutes. Cotton yarn makes it absorbent and heat-friendly. Make a set in different colours.",
   "theme": { "accent": "#3f8a5c", "dark": "#1f3b2a", "cream": "#ecf7f0" },
@@ -31,11 +31,11 @@
     {
       "title": "",
       "rounds": [
-        { "r": "R1", "text": "ch 3 (counts as dc), 11 dc in mr, sl st to top of ch 3", "count": "12" },
-        { "r": "R2", "text": "ch 3, dc in same st, 2 dc in each st around, sl st to join", "count": "24" },
-        { "r": "R3", "text": "ch 3, 2 dc in next st, (dc, 2 dc in next st) x11, sl st to join", "count": "36" },
-        { "r": "R4", "text": "ch 3, dc in next st, 2 dc in next st, (dc in next 2 sts, 2 dc in next st) x11, sl st to join", "count": "48" },
-        { "r": "R5", "text": "ch 1, sc in each st around, sl st to first sc. Fasten off and weave in ends.", "count": "48" }
+        { "r": "R1", "text": "ch 3 (counts as dc), 11 dc in mr, sl st to top of ch 3", "count": "12", "chart": {"type": "ring", "sym": "dc", "count": 12} },
+        { "r": "R2", "text": "ch 3, dc in same st, 2 dc in each st around, sl st to join", "count": "24", "chart": {"type": "inc", "sym": "dc", "count": 24} },
+        { "r": "R3", "text": "ch 3, 2 dc in next st, (dc, 2 dc in next st) x11, sl st to join", "count": "36", "chart": {"type": "inc", "sym": "dc", "count": 36, "every": 2} },
+        { "r": "R4", "text": "ch 3, dc in next st, 2 dc in next st, (dc in next 2 sts, 2 dc in next st) x11, sl st to join", "count": "48", "chart": {"type": "inc", "sym": "dc", "count": 48, "every": 3} },
+        { "r": "R5", "text": "ch 1, sc in each st around, sl st to first sc. Fasten off and weave in ends.", "count": "48", "chart": {"type": "even", "sym": "sc", "count": 48} }
       ]
     }
   ],
@@ -45,5 +45,6 @@
     { "title": "Little Amigurumi Ball", "url": "/free-patterns/little-amigurumi-ball/" },
     { "title": "Double Crochet (dc)", "url": "/stitches/double-crochet/" },
     { "title": "Magic Ring", "url": "/stitches/magic-ring/" }
-  ]
+  ],
+  "chartNote": "All five rounds from the middle out. The ch 3 at the start of each round counts as the first dc."
 }

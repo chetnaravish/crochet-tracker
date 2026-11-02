@@ -474,7 +474,8 @@ export default function sitePlugin() {
       fs.writeFileSync(path.join(out, 'search-index.json'), JSON.stringify(buildSearchIndex()));
 
       // sw.js – precache every built file so the whole site works offline
-      const skip = /(^|\/)(sw\.js|sitemap\.xml|robots\.txt|og-image\.png)$|\.map$/;
+      // PDFs and share images are big and only needed on demand, so they are not precached.
+      const skip = /(^|\/)(sw\.js|sitemap\.xml|robots\.txt|og-image\.png)$|\.map$|^(pdf|og)\//;
       const files = listFiles(out).filter((f) => !skip.test(f));
       const hash = crypto.createHash('sha256');
       for (const f of files) hash.update(f).update(fs.readFileSync(path.join(out, f)));

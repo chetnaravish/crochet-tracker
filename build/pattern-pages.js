@@ -58,7 +58,9 @@ export function checkCounts(p) {
       const label = `${p.slug} ${s.title} ${r.r}`;
       if (c.type === 'ring') prev = c.count;
       else if (c.type === 'inc') {
-        if (prev && c.count !== prev * 2) warnings.push(`${label}: inc in every stitch of ${prev} should give ${prev * 2}, not ${c.count}.`);
+        const n = c.every || 1; // inc in every nth stitch
+        const want = prev + Math.floor(prev / n);
+        if (prev && c.count !== want) warnings.push(`${label}: inc in every ${n === 1 ? '' : `${n}th `}stitch of ${prev} should give ${want}, not ${c.count}.`);
         prev = c.count;
       } else if (c.type === 'even') {
         if (prev && c.count !== prev) warnings.push(`${label}: one stitch in each of ${prev} should give ${prev}, not ${c.count}.`);
@@ -163,6 +165,7 @@ export function renderPattern(p) {
       : {}),
     ...(p.draft ? { noindex: true } : {}),
   };
+  const hasPdf = fs.existsSync(`public/pdf/${p.slug}.pdf`);
   const chartRounds = p.sections.flatMap((s) => s.rounds.filter((r) => r.chart).map((r) => ({ ...r, colour: s.colour })));
   const notes = (p.notes || []).join(' ');
   const steps = trackerSteps(p);
@@ -212,9 +215,14 @@ export function renderPattern(p) {
               <button type="button" class="btn btn-outline btn-lg" data-open-pattern>Open in Tracker</button>
               <button type="button" class="btn btn-ghost btn-lg" data-print>
                 <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9V3h12v6"/><rect x="3" y="9" width="18" height="8" rx="2"/><path d="M6 14h12v7H6z"/></svg>
-                Print / PDF
+                Print
               </button>
+              ${hasPdf ? `<a class="btn btn-ghost btn-lg" href="/pdf/${esc(p.slug)}.pdf" download>
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
+                Download free PDF
+              </a>` : ''}
             </div>
+            ${hasPdf ? `<p class="pp-pdf-note no-print">Free printable PDF of this crochet pattern${chartRounds.length ? ', with the round diagram' : ''}. Print it, or keep it on your phone. Want every pattern in one file? Get the <a href="/pdf/${BOOK_PDF}" download>free crochet pattern book PDF</a>.</p>` : ''}
             <p class="open-status" aria-live="polite"></p>
           </header>
 
@@ -239,7 +247,7 @@ export function renderPattern(p) {
           </section>` : ''}
 
           ${chartRounds.length ? `<section class="pp-block pp-chart" aria-labelledby="chart-h">
-            <h3 id="chart-h">Round chart</h3>
+            <h3 id="chart-h">Round chart (crochet diagram)</h3>
             ${p.chartNote ? `<p class="pp-note">${esc(p.chartNote)}</p>` : ''}
             <div class="pp-chart-body">${roundChart(chartRounds, `Round chart for the ${p.title}`)}${legend(chartSymbols(p))}</div>
           </section>` : ''}
@@ -278,6 +286,9 @@ export function renderPattern(p) {
 // ---------- Hub-page cards ----------
 // A simple card: the product picture on top, the name underneath. Until a real
 // photo exists the picture is an SVG illustration (marked "Illustration").
+// Free PDFs made by `npm run pdfs` (scripts/make-pdfs.mjs).
+export const BOOK_PDF = 'crochet-tracker-free-pattern-book.pdf';
+
 const CARD_BG = { sunflower: 'bg-butter', ball: 'bg-rose', coaster: 'bg-mint', flower: 'bg-lavender' };
 export function cardArt(kind) {
   const shadow = '<ellipse cx="120" cy="160" rx="62" ry="8" fill="#000" opacity=".08"/>';

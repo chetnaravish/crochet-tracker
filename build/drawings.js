@@ -266,13 +266,27 @@ export function roundChart(rounds, title = 'Round chart') {
     const c = round.chart;
     if (!c) continue;
     const cls = `c-${round.colour || 'main'}`;
-    const step = c.type === 'petals' ? 84 : 26;
+    // Taller stitches need a wider ring so the symbols don't overlap.
+    const step = c.type === 'petals' ? 84 : c.sym === 'tr' ? 50 : c.sym === 'dc' ? 40 : c.sym === 'hdc' ? 32 : 26;
     const r1 = r + step;
     if (c.type === 'ring' || c.type === 'even' || c.type === 'inc') {
       let angles;
       if (c.type === 'ring' || !prev.length) {
         angles = Array.from({ length: c.count }, (_, i) => (i / c.count) * Math.PI * 2);
         for (const a of angles) body += place(c.sym, ...pt(a, r + 2), ...pt(a, r1 - 2), cls);
+      } else if (c.type === 'inc' && (c.every || 1) > 1) {
+        // Increase in every nth stitch, e.g. (sc, inc) x6 has every: 2.
+        const n = c.every;
+        const targets = [];
+        prev.forEach((a, i) => targets.push(i % n === n - 1 ? [a, true] : [a, false]));
+        const total = prev.length + targets.filter(([, inc]) => inc).length;
+        const start = prev[0] - Math.PI / total / 2;
+        angles = Array.from({ length: total }, (_, k) => start + ((k + 0.5) / total) * Math.PI * 2);
+        let k = 0;
+        for (const [a, inc] of targets) {
+          body += place(c.sym, ...pt(a, r + 2), ...pt(angles[k++], r1 - 2), cls);
+          if (inc) body += place(c.sym, ...pt(a, r + 3), ...pt(angles[k++], r1 - 2), cls);
+        }
       } else if (c.type === 'inc') {
         const d = Math.PI / prev.length / 2;
         angles = prev.flatMap((a) => [a - d, a + d]);
