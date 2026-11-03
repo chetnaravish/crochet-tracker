@@ -941,6 +941,82 @@ mark { background: var(--yarn-butter); color: inherit; border-radius: 3px; paddi
 .pp-rounds .num { width: 3.5em; text-align: center; font-weight: 800; }
 .pp-rounds .tick-col { display: none; }
 .pp .ab { font-weight: 800; color: var(--pp-accent); }
+/* Stitch words that open the popup: soft colour + dotted underline, with a little
+   extra tap area around the word (a round can have 4-5 of them). */
+.pp a.ab {
+  position: relative;
+  padding: 2px 2px;
+  margin: -2px -2px;
+  border-radius: 6px;
+  text-decoration: underline dotted color-mix(in srgb, var(--pp-accent) 65%, transparent);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+  cursor: help;
+  transition: background-color 0.15s, color 0.15s;
+}
+.pp a.ab::after { content: ''; position: absolute; inset: -6px -3px; }
+.pp a.ab:hover, .pp a.ab[aria-expanded='true'] { background: color-mix(in srgb, var(--pp-accent) 14%, transparent); color: var(--pp-accent); text-decoration-style: solid; }
+.pp-tap-hint { margin: 0 0 14px !important; padding: 8px 14px; border-radius: var(--radius-pill); background: color-mix(in srgb, var(--pp-accent) 9%, transparent); color: var(--text-muted); font-size: 0.92rem; font-weight: 600; width: fit-content; }
+.pp-tap-hint .ab { text-decoration: underline dotted; text-underline-offset: 3px; }
+
+/* ---------- Stitch popup (src/js/lib/stitch-pop.js) ---------- */
+.st-pop {
+  position: absolute;
+  z-index: 60;
+  display: grid;
+  grid-template-columns: 118px 1fr;
+  gap: 4px 14px;
+  width: min(390px, calc(100vw - 24px));
+  padding: 16px 16px 16px 12px;
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-lg);
+  text-align: left;
+}
+.st-pop[hidden], .st-pop-back[hidden] { display: none; }
+.st-pop:focus { outline: none; }
+.st-pop:focus-visible { outline: 3px solid var(--primary); outline-offset: 2px; }
+.st-pop-fig { display: grid; place-items: center; align-self: start; min-height: 86px; padding: 6px; border-radius: 14px; background: var(--surface-2); }
+.st-pop-fig svg { width: 100%; height: auto; max-height: 104px; }
+.st-pop-fig .fig-symbol { width: auto; height: 64px; }
+.st-pop-body { min-width: 0; }
+.st-pop-ab { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 8px; margin: 0 30px 4px 0; }
+.st-pop-ab .ab { padding: 2px 10px; border-radius: var(--radius-pill); background: var(--primary-soft); color: var(--primary); font-family: var(--font-mono); font-weight: 800; font-size: 0.9rem; }
+.st-pop-ab small { color: var(--text-muted); font-size: 0.8rem; font-weight: 700; }
+.st-pop h2 { margin: 0 0 4px; font-size: 1.2rem; line-height: 1.2; }
+.st-pop-line { margin: 0 0 12px; color: var(--text-muted); font-size: 0.95rem; line-height: 1.5; }
+.st-pop-go { min-height: 42px; padding-inline: 18px; font-size: 0.95rem; }
+.st-pop-x { position: absolute; top: 8px; right: 8px; display: grid; place-items: center; width: 36px; height: 36px; border: 0; border-radius: 50%; background: transparent; color: var(--text-muted); cursor: pointer; }
+.st-pop-x:hover { background: var(--surface-2); color: var(--text); }
+.st-pop-back { position: fixed; inset: 0; z-index: 59; background: rgb(40 20 30 / 0.35); }
+
+/* Phone: a sheet from the bottom of the screen. */
+.st-pop.is-sheet {
+  position: fixed;
+  left: 0 !important;
+  right: 0;
+  bottom: 0;
+  top: auto !important;
+  width: auto;
+  grid-template-columns: 112px 1fr;
+  padding: 26px 18px calc(18px + env(safe-area-inset-bottom));
+  border-radius: 22px 22px 0 0;
+  border-bottom: 0;
+}
+.st-pop.is-sheet::before { content: ''; position: absolute; top: 9px; left: 50%; width: 44px; height: 5px; margin-left: -22px; border-radius: 5px; background: var(--border-strong); }
+.st-pop.is-sheet .st-pop-go { width: 100%; justify-content: center; }
+@media (prefers-reduced-motion: no-preference) {
+  .st-pop.is-in { animation: st-pop-in 0.22s var(--ease); }
+  .st-pop.is-in.is-above { animation-name: st-pop-in-up; }
+  .st-pop.is-sheet.is-in { animation: st-sheet-in 0.3s var(--ease); }
+  .st-pop-back:not([hidden]) { animation: st-fade 0.25s ease; }
+}
+@keyframes st-pop-in { from { opacity: 0; transform: translateY(-6px) scale(0.97); } }
+@keyframes st-pop-in-up { from { opacity: 0; transform: translateY(6px) scale(0.97); } }
+@keyframes st-sheet-in { from { transform: translateY(100%); } }
+@keyframes st-fade { from { opacity: 0; } }
+@media print { .st-pop, .st-pop-back { display: none !important; } .pp a.ab { text-decoration: none; background: none; } }
 .pp-steps-title { margin-top: 16px !important; }
 .pp-steps { margin: 0; padding: 0; list-style: none; border: 1px solid var(--border); border-radius: var(--radius-sm); overflow: hidden; }
 .pp-steps li { display: flex; align-items: stretch; margin: 0; }
@@ -1643,4 +1719,42 @@ ol.howto li strong { display: block; margin-bottom: 4px; font-family: var(--font
   .pv-pages { padding: 12px; gap: 14px; }
   .pv-foot { padding: 12px 12px calc(12px + env(safe-area-inset-bottom)); }
   .pv-picks .btn { flex: 1 1 calc(50% - 8px); }
+}
+
+/* ---------- Hub pages: stitches index, guides index ---------- */
+.hub { padding-bottom: 72px; }
+.hub .page-hero .lead a { font-weight: 700; }
+.hub-first { margin-top: 56px; }
+.hub-grid { max-width: 1100px; margin: 0 auto; gap: 18px; }
+.hub-grid-3 { max-width: 980px; }
+.hub-grid-2 { max-width: 860px; }
+.st-card { position: relative; display: flex !important; flex-direction: column; padding: 22px 22px 20px; border-radius: var(--radius-lg); }
+.st-card .tile-icon { width: auto; min-width: 58px; height: 58px; padding: 0 14px; border-radius: 18px; font-family: var(--font-mono); font-size: 1.15rem; font-weight: 800; color: var(--text); justify-self: start; align-self: flex-start; transition: transform 0.45s cubic-bezier(0.2, 0.9, 0.3, 1.4); }
+.st-card h3 { margin: 12px 0 4px; font-size: 1.15rem; line-height: 1.25; }
+.st-card .lesson-no + h3 { margin-top: 2px; }
+.st-card > p:not(.lesson-no) { flex: 1; font-size: 0.95rem; line-height: 1.55; }
+.st-card .more { margin-top: 14px; }
+.hub-grid-2 .st-card .tile-icon { font-family: inherit; font-size: 1.6rem; }
+@media (hover: hover) {
+  .hub a.st-card { transition: transform 0.45s cubic-bezier(0.2, 0.9, 0.3, 1.25), box-shadow 0.45s var(--ease), border-color 0.3s; }
+  .hub a.st-card:hover { transform: translateY(-6px); border-color: color-mix(in srgb, var(--primary) 35%, var(--border)); box-shadow: 0 22px 36px -20px rgb(180 67 108 / 0.45); }
+  .hub a.st-card:hover .tile-icon { transform: translateY(-3px) rotate(-6deg) scale(1.08); }
+}
+@media (prefers-reduced-motion: reduce) { .hub a.st-card, .hub a.st-card:hover, .st-card .tile-icon { transform: none !important; transition: none; } }
+.hub-cta { max-width: 980px; margin: 76px auto 0; }
+.hub-grid-2 .st-card .tile-icon-text { font-family: var(--font-mono); font-size: 1.05rem; }
+.hub-cta .btn { white-space: nowrap; }
+@media (min-width: 768px) {
+  .hub-cta { grid-template-columns: 1fr auto; column-gap: 32px; }
+  .hub-cta h2, .hub-cta p { grid-column: 1; }
+  .hub-cta .btn { grid-column: 2; grid-row: 1 / span 2; }
+}
+/* Phone: two small lesson cards per row instead of one tall card each. */
+@media (max-width: 639px) {
+  .hub-grid:not(.hub-grid-2) { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .hub-grid:not(.hub-grid-2) .st-card { padding: 16px 14px; }
+  .hub-grid:not(.hub-grid-2) .st-card .tile-icon { min-width: 48px; height: 48px; padding: 0 10px; font-size: 1rem; border-radius: 14px; }
+  .hub-grid:not(.hub-grid-2) .st-card h3 { font-size: 1rem; }
+  .hub-grid:not(.hub-grid-2) .st-card > p:not(.lesson-no) { font-size: 0.85rem; }
+  .hub-grid:not(.hub-grid-2) .st-card .more { margin-top: 10px; font-size: 0.9rem; }
 }

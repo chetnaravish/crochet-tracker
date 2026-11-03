@@ -9,7 +9,7 @@
 
 import fs from 'node:fs';
 import path from 'node:path';
-import { roundChart, legend, sunflowerArt } from './drawings.js';
+import { roundChart, legend, sunflowerArt, symbol, miniChart } from './drawings.js';
 
 const CONTENT_DIR = path.resolve('content/patterns');
 const OUT_DIR = path.resolve('src/free-patterns');
@@ -109,9 +109,45 @@ function chartSymbols(p) {
   return [...used];
 }
 
-// Stitch abbreviations inside a pattern line get a soft highlight so they are easy to spot.
-const ABBR_RE = /\b(sl st|MR|sc|hdc|dc|tr|inc|dec|ch|BLO|FLO)\b/g;
-const markAbbr = (text) => esc(text).replace(ABBR_RE, '<b class="ab">$1</b>');
+// Stitch words in the pattern (sc, inc, MR…) are links. Tapping one opens a small
+// popup (src/js/lib/stitch-pop.js) with the name, one line on how it's made, a small
+// drawing and a "Full lesson" button, so the reader doesn't lose their place.
+// Without JavaScript the link simply opens the lesson. A word is only linked when its
+// stitch page exists; otherwise it just gets the soft highlight.
+const STITCH_INFO = {
+  ch: { name: 'Chain', uk: 'UK: chain (ch)', line: 'Yarn over and pull the yarn through the loop on your hook. Most projects start with chains.', page: 'chain', fig: 'chain' },
+  slst: { name: 'Slip stitch', uk: 'UK: slip stitch (ss)', line: 'Insert the hook, yarn over and pull straight through the stitch and the loop on your hook. Used to join rounds.', page: 'slip-stitch', sym: 'slst' },
+  sc: { name: 'Single crochet', uk: 'UK: double crochet (dc)', line: 'Insert the hook, pull up a loop (2 loops on hook), then yarn over and pull through both loops.', page: 'single-crochet', sym: 'sc' },
+  hdc: { name: 'Half double crochet', uk: 'UK: half treble (htr)', line: 'Yarn over, insert the hook and pull up a loop (3 loops on hook), then yarn over and pull through all 3.', page: 'half-double-crochet', sym: 'hdc' },
+  dc: { name: 'Double crochet', uk: 'UK: treble (tr)', line: 'Yarn over, insert the hook and pull up a loop, then yarn over and pull through 2 loops, twice.', page: 'double-crochet', sym: 'dc' },
+  tr: { name: 'Treble crochet', uk: 'UK: double treble (dtr)', line: 'Yarn over twice, insert the hook and pull up a loop, then yarn over and pull through 2 loops, three times.', page: 'treble-crochet', sym: 'tr' },
+  mr: { name: 'Magic ring', uk: 'UK: magic loop', line: 'An adjustable loop of yarn. Work the first round into it, then pull the tail to close the centre.', page: 'magic-ring', fig: 'mr6' },
+  inc: { name: 'Increase', uk: 'UK: increase (inc)', line: 'Work 2 stitches into the same stitch. The round grows by one stitch.', page: 'increase', fig: 'inc' },
+  dec: { name: 'Decrease', uk: 'UK: decrease (dc2tog)', line: 'Work 2 stitches together so they become one. The round gets one stitch smaller.', page: 'decrease', fig: 'dec' },
+  blo: { name: 'Back loop only', uk: 'UK: back loop only', line: 'Insert the hook under the back strand of the stitch only. It leaves a ridge on the front.', page: 'front-and-back-loop', fig: 'blo' },
+  flo: { name: 'Front loop only', uk: 'UK: front loop only', line: 'Insert the hook under the front strand of the stitch only. The back strand stays free.', page: 'front-and-back-loop', fig: 'flo' },
+};
+const ABBR_RE = /\b(sl st|MR|mr|sc|hdc|dc|tr|inc|dec|ch|BLO|FLO)\b/g;
+const hasStitchPage = (page) => Boolean(page) && fs.existsSync(path.join(STITCH_DIR, page, 'index.html'));
+const markAbbr = (text) =>
+  esc(text).replace(ABBR_RE, (word) => {
+    const key = word.toLowerCase().replace(' ', '');
+    const info = STITCH_INFO[key];
+    return info && hasStitchPage(info.page)
+      ? `<a class="ab" href="/stitches/${info.page}/" data-st="${key}">${word}</a>`
+      : `<b class="ab">${word}</b>`;
+  });
+
+// Popup data for the stitch words used in some HTML (read by stitch-pop.js).
+export function stitchInfoFor(html) {
+  const out = {};
+  for (const [, k] of html.matchAll(/data-st="(\w+)"/g)) {
+    if (out[k]) continue;
+    const { sym, fig, ...rest } = STITCH_INFO[k];
+    out[k] = { ...rest, url: `/stitches/${rest.page}/`, svg: fig ? miniChart(fig) : symbol(sym) };
+  }
+  return out;
+}
 // Paragraph text: **bold** is allowed (e.g. "**Join:** Hold the two…").
 const para = (text) => esc(text).replace(/\*\*(.+?)\*\*/g, '<b>$1</b>');
 
@@ -120,7 +156,7 @@ function abbrTable(keys) {
     const a = ABBR[k];
     if (!a) return `<td class="pp-ab">${esc(k)}</td><td></td>`;
     const [short, long, page] = a;
-    const hasPage = page && fs.existsSync(path.join(STITCH_DIR, page, 'index.html'));
+    const hasPage = hasStitchPage(page);
     const name = hasPage ? `<a href="/stitches/${page}/">${esc(long)}</a>` : esc(long);
     return `<td class="pp-ab">${esc(short)}</td><td>${name}</td>`;
   });
@@ -180,6 +216,11 @@ export function renderPattern(p) {
   const t = p.theme || {};
   const themeStyle = [t.accent && `--pp-accent:${t.accent}`, t.dark && `--pp-dark:${t.dark}`, t.cream && `--pp-cream:${t.cream}`].filter(Boolean).join(';');
   const materials = p.materialsTable || (p.materials || []).map((m) => ['', m]);
+  const sectionsHtml = p.sections.map(sectionHtml).join('');
+  const stitchInfo = stitchInfoFor(sectionsHtml);
+  const stitchData = Object.keys(stitchInfo).length
+    ? `<script type="application/json" data-stitch-info>${JSON.stringify(stitchInfo).replace(/</g, '\\u003c')}</script>`
+    : '';
 
   return `<!doctype html>
 <!-- GENERATED from content/patterns/${p.file} by build/pattern-pages.js. Edit the JSON file, not this page. -->
@@ -238,7 +279,8 @@ export function renderPattern(p) {
 
           <section class="pp-block" aria-labelledby="pattern">
             <h2 id="pattern">The Pattern</h2>
-            ${p.sections.map(sectionHtml).join('')}
+            ${stitchData ? `<p class="pp-tap-hint no-print"><span aria-hidden="true">👆</span> Tap an underlined stitch, like <span class="ab">${sectionsHtml.match(/data-st="\w+">([^<]+)</)[1]}</span>, to see how it's made without leaving the pattern.</p>` : ''}
+            ${sectionsHtml}
           </section>
 
           ${p.finishing?.length || p.variations ? `<section class="pp-block" aria-labelledby="finish-h">
@@ -275,6 +317,7 @@ export function renderPattern(p) {
           .join('')}</ul></section>` : ''}
 
         <script type="application/json" data-tracker>${JSON.stringify(steps).replace(/</g, '\\u003c')}</script>
+        ${stitchData}
       </article>
     </main>
     <!--@include footer-->

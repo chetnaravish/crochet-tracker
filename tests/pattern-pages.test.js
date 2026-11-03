@@ -46,3 +46,17 @@ test('round chart draws one symbol per stitch', () => {
   ]);
   assert.equal((svg.match(/<g class="sym /g) || []).length, 18);
 });
+
+test('stitch words in a pattern link to their lesson and carry popup data', () => {
+  const p = loadPatterns().find((x) => x.slug === 'mini-sunflower');
+  const html = renderPattern(p);
+  assert.match(html, /<a class="ab" href="\/stitches\/treble-crochet\/" data-st="tr">tr<\/a>/);
+  assert.match(html, /data-st="slst">sl st<\/a>/);
+  const data = JSON.parse(html.match(/<script type="application\/json" data-stitch-info>([\s\S]*?)<\/script>/)[1]);
+  assert.equal(data.tr.name, 'Treble crochet');
+  assert.equal(data.tr.url, '/stitches/treble-crochet/');
+  assert.match(data.sc.svg, /^<svg/);
+  // The tracker steps stay plain text (no link markup).
+  const steps = JSON.parse(html.match(/data-tracker>([\s\S]*?)<\/script>/)[1]);
+  assert.ok(steps.every((s) => !s.text.includes('<')));
+});

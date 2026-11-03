@@ -88,6 +88,10 @@ document.addEventListener('click', async (e) => {
   }
 });
 
+// Pattern pages: tap a stitch word (sc, inc…) for a small "how to" popup.
+const stitchData = document.querySelector('script[data-stitch-info]');
+if (stitchData) import('./lib/stitch-pop.js').then(({ initStitchPop }) => initStitchPop(stitchData));
+
 // Pattern pages: Print / Save as PDF (print styles hide everything but the pattern).
 for (const btn of document.querySelectorAll('[data-print]')) btn.addEventListener('click', () => window.print());
 
