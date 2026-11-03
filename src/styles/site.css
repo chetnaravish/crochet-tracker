@@ -546,16 +546,6 @@ td:first-child, th[scope='row'] { font-family: var(--font-mono); font-weight: 70
 .site-footer { margin-top: 24px; padding-block: 40px 24px; background: var(--surface); border-top: 1px solid var(--border); font-size: 0.95rem; }
 .footer-grid { display: grid; gap: 28px; }
 @media (min-width: 768px) { .footer-grid { grid-template-columns: 1.4fr 1fr 1fr 0.8fr; } }
-/* Phone: links side by side so the footer stays short.
-   Brand on top, then Learn | About next to each other, then Stitches in two columns. */
-@media (max-width: 767px) {
-  .footer-grid { grid-template-columns: 1fr 1fr; gap: 24px 16px; }
-  .footer-brand { grid-column: 1 / -1; }
-  .footer-grid nav[aria-label='Stitches'] { grid-column: 1 / -1; order: 3; }
-  .footer-grid nav[aria-label='Stitches'] ul { display: grid; grid-template-columns: 1fr 1fr; column-gap: 16px; }
-  .site-footer h2 { margin-bottom: 4px; }
-  .site-footer li a { min-height: 34px; font-size: 0.92rem; line-height: 1.3; }
-}
 .footer-logo { font-weight: 800; font-size: 1.15rem; margin-bottom: 6px; }
 .footer-brand p { color: var(--text-muted); }
 .site-footer h2 { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted); }
