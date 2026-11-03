@@ -1,0 +1,356 @@
+# Admin panel (Sveltia CMS) for the free patterns.
+# Each pattern is one JSON file in content/patterns/. Saving in the admin panel
+# writes that file (to GitHub, or straight to this folder in "local repository" mode),
+# and the site build turns it into /free-patterns/<slug>/.
+# Field names must match what build/pattern-pages.js reads.
+
+backend:
+  name: github
+  repo: chetnaravish/crochet-tracker
+  branch: main
+  commit_messages:
+    create: 'Add pattern: {{slug}}'
+    update: 'Update pattern: {{slug}}'
+    delete: 'Delete pattern: {{slug}}'
+    uploadMedia: 'Upload photo: {{path}}'
+    deleteMedia: 'Delete photo: {{path}}'
+
+app_title: Crochet Tracker admin
+logo:
+  src: /icons/icon-192.png
+show_preview_links: true
+
+# Photos go in public/images/patterns/ and are made smaller (WebP, max 1600 px)
+# in the browser before they are saved, so a big phone photo is fine.
+media_folder: public/images/patterns
+public_folder: /images/patterns
+media_libraries:
+  default:
+    config:
+      max_file_size: 25000000
+      slugify_filename: true
+      transformations:
+        raster_image:
+          format: webp
+          quality: 82
+          width: 1600
+          height: 1600
+
+output:
+  omit_empty_optional_fields: true
+  json:
+    indent_size: 2
+
+collections:
+  - name: patterns
+    label: Patterns
+    label_singular: Pattern
+    description: >-
+      Your free crochet patterns. Each one becomes its own page under /free-patterns/.
+      Tick "Draft" to keep a pattern off the live site while you work on it.
+    folder: content/patterns
+    format: json
+    extension: json
+    create: true
+    delete: true
+    slug: '{{fields.slug}}'
+    identifier_field: title
+    summary: '{{title}}{{draft | ternary(" (draft)", "")}}'
+    sortable_fields: [order, title, date]
+    preview_path: 'free-patterns/{{fields.slug}}/'
+    editor:
+      preview: false
+    fields:
+      # ---------- Basics ----------
+      - name: slug
+        label: Page address (slug)
+        hint: 'Small letters and dashes only, e.g. "mini-heart-keychain". The page will be /free-patterns/mini-heart-keychain/. Don''t change it after the page is live.'
+        widget: string
+        pattern: ['^[a-z0-9]+(-[a-z0-9]+)*$', 'Use small letters, numbers and dashes only (no spaces)']
+      - name: draft
+        label: Draft (not on the live site yet)
+        widget: boolean
+        default: true
+      - name: order
+        label: Position on the patterns page
+        hint: 1 is shown first. Leave empty to sort by name.
+        widget: number
+        value_type: int
+        required: false
+      - name: title
+        label: Pattern title
+        hint: 'Short, what people search for, e.g. "Mini Heart Keychain".'
+        widget: string
+      - name: name
+        label: Big name on the pattern card (optional)
+        hint: Defaults to the title.
+        widget: string
+        required: false
+      - name: subtitle
+        label: Subtitle (optional)
+        hint: 'e.g. "No-Sew Crochet Pattern"'
+        widget: string
+        required: false
+      - name: tagline
+        label: Tagline (optional)
+        hint: 'e.g. "Free crochet pattern | Beginner friendly | Printable"'
+        widget: string
+        required: false
+      - name: date
+        label: Date
+        widget: datetime
+        time_format: false
+        format: YYYY-MM-DD
+        default: '{{now}}'
+
+      # ---------- Google ----------
+      - name: seoTitle
+        label: Google title
+        hint: 'Main keyword first, 60 characters or less, e.g. "Easy Crochet Heart Keychain Pattern (Free PDF)".'
+        widget: string
+        required: false
+        maxlength: 60
+      - name: description
+        label: Google description
+        hint: 120 to 158 characters. Say what it is, that it's free and easy, and that there is a PDF.
+        widget: text
+        minlength: 80
+        maxlength: 158
+      - name: lead
+        label: Intro paragraph
+        hint: 2 or 3 sentences shown under the picture.
+        widget: text
+
+      # ---------- Look ----------
+      - name: theme
+        label: Colours (optional)
+        widget: object
+        required: false
+        collapsed: true
+        fields:
+          - { name: accent, label: 'Accent (headings, buttons)', widget: color, required: false }
+          - { name: dark, label: 'Dark (title, info bar)', widget: color, required: false }
+          - { name: cream, label: Light background, widget: color, required: false }
+      - name: image
+        label: Picture
+        widget: object
+        hint: Use your own photo. Until you have one, pick an illustration (it is marked "Illustration" on the page).
+        fields:
+          - name: type
+            label: Picture type
+            widget: select
+            options:
+              - { label: My photo, value: photo }
+              - { label: Illustration (until I have a photo), value: illustration }
+            default: illustration
+          - name: src
+            label: Photo
+            hint: Daylight, plain background. It is resized automatically.
+            widget: image
+            required: false
+            choose_url: false
+          - name: alt
+            label: Photo description (for blind readers and Google)
+            hint: 'e.g. "Pink crochet heart keychain on a white table"'
+            widget: string
+            required: false
+          - name: art
+            label: Illustration
+            widget: select
+            required: false
+            options:
+              - { label: Sunflower, value: sunflower }
+              - { label: Ball, value: ball }
+              - { label: Coaster, value: coaster }
+              - { label: Flower, value: flower }
+
+      # ---------- Info bar ----------
+      - name: level
+        label: Skill level
+        widget: select
+        options: [Beginner, Easy, Intermediate, Advanced]
+        default: Beginner
+      - { name: time, label: 'Time (e.g. "About 30 minutes")', widget: string, required: false }
+      - { name: hook, label: 'Hook (e.g. "3 mm")', widget: string }
+      - { name: yarn, label: 'Yarn (e.g. "Cotton DK, brown and yellow")', widget: string }
+      - { name: size, label: 'Finished size (e.g. "About 7 cm")', widget: string, required: false }
+      - name: terms
+        label: Terms
+        widget: select
+        options: [US, UK]
+        default: US
+
+      # ---------- Before you begin ----------
+      - name: materialsTable
+        label: Materials
+        label_singular: Material
+        widget: list
+        summary: '{{fields.item}}: {{fields.details}}'
+        collapsed: auto
+        fields:
+          - { name: item, label: 'Item (e.g. Yarn, Hook, Tools)', widget: string }
+          - { name: details, label: Details, widget: string }
+      - name: abbreviations
+        label: Abbreviations used
+        hint: Each one links to its stitch lesson.
+        widget: select
+        multiple: true
+        options:
+          - { label: 'MR (magic ring)', value: mr }
+          - { label: 'ch (chain)', value: ch }
+          - { label: 'sl st (slip stitch)', value: 'sl st' }
+          - { label: 'sc (single crochet)', value: sc }
+          - { label: 'hdc (half double crochet)', value: hdc }
+          - { label: 'dc (double crochet)', value: dc }
+          - { label: 'tr (treble crochet)', value: tr }
+          - { label: 'inc (increase)', value: inc }
+          - { label: 'dec (decrease)', value: dec }
+          - { label: 'BLO (back loop only)', value: blo }
+          - { label: 'FLO (front loop only)', value: flo }
+          - { label: 'puff (puff stitch)', value: puff }
+          - { label: 'pc (popcorn stitch)', value: pc }
+          - { label: 'bob (bobble stitch)', value: bob }
+          - { label: 'cl (cluster)', value: cl }
+          - { label: 'st / sts (stitch)', value: st }
+          - { label: 'FO (fasten off)', value: fo }
+      - name: notes
+        label: Good to know
+        label_singular: Note
+        hint: 'Short tips before starting. **bold** works.'
+        widget: list
+        required: false
+        field: { name: note, label: Note, widget: text }
+
+      # ---------- The pattern ----------
+      - name: sections
+        label: Pattern parts
+        label_singular: Part
+        hint: 'One part for a simple pattern. Use more parts for e.g. "Part 1: Centre" and "Part 2: Petals".'
+        widget: list
+        summary: '{{fields.title}}'
+        collapsed: auto
+        min: 1
+        fields:
+          - { name: title, label: 'Part title (e.g. "Part 1: Centre", can be empty)', widget: string, required: false }
+          - { name: colourName, label: 'Colour (e.g. "brown", optional)', widget: string, required: false }
+          - name: make
+            label: Make how many? (optional)
+            hint: e.g. 2 if you make two of this part.
+            widget: number
+            value_type: int
+            required: false
+            min: 1
+          - { name: note, label: Note under the part title (optional), widget: text, required: false }
+          - name: intro
+            label: Paragraphs before the rounds (optional)
+            widget: list
+            required: false
+            field: { name: text, label: Paragraph, widget: text }
+          - name: rounds
+            label: Rounds
+            label_singular: Round
+            widget: list
+            summary: '{{fields.r}}: {{fields.text}} ({{fields.count}})'
+            collapsed: auto
+            fields:
+              - { name: r, label: 'Round name (e.g. "R1", "Rnd 1", "R5–R8")', widget: string }
+              - { name: text, label: 'Instructions (e.g. "6 sc in a magic ring")', widget: text }
+              - { name: count, label: 'Stitches at the end (e.g. "12")', widget: string, required: false }
+              - name: hidden
+                label: Hide from the table (only used for the round chart)
+                widget: boolean
+                required: false
+                default: false
+              - name: chart
+                label: Round chart (optional)
+                hint: Draws this round in the crochet diagram and checks the stitch count.
+                widget: object
+                required: false
+                collapsed: auto
+                fields:
+                  - name: type
+                    label: Kind of round
+                    widget: select
+                    options:
+                      - { label: 'First round in a ring', value: ring }
+                      - { label: 'Increase round', value: inc }
+                      - { label: 'Even round (no increases)', value: even }
+                      - { label: 'Petals', value: petals }
+                  - name: sym
+                    label: Stitch
+                    widget: select
+                    required: false
+                    options: [sc, hdc, dc, tr]
+                    default: sc
+                  - { name: count, label: Stitches (or petals) in this round, widget: number, value_type: int }
+                  - name: every
+                    label: 'Increase in every … stitch (1 = every stitch, 2 = every 2nd)'
+                    widget: number
+                    value_type: int
+                    required: false
+                    min: 1
+                  - name: fan
+                    label: Petal stitches (petals only)
+                    widget: select
+                    multiple: true
+                    required: false
+                    options: [sc, hdc, dc, tr]
+                  - { name: picot, label: Petal has a pointed tip (petals only), widget: boolean, required: false, default: false }
+          - { name: stepsTitle, label: 'Numbered steps title (e.g. "One petal:")', widget: string, required: false }
+          - name: steps
+            label: Numbered steps (optional)
+            widget: list
+            required: false
+            field: { name: step, label: Step, widget: string }
+          - name: after
+            label: Paragraphs after the rounds (optional)
+            widget: list
+            required: false
+            field: { name: text, label: Paragraph, widget: text }
+          - { name: short, label: Short version box (optional), widget: text, required: false }
+
+      # ---------- After the pattern ----------
+      - name: finishing
+        label: Finishing steps
+        widget: list
+        required: false
+        field: { name: step, label: Step, widget: text }
+      - { name: variations, label: Variations (optional), widget: text, required: false }
+      - { name: chartNote, label: Note above the round chart (optional), widget: string, required: false }
+      - name: tested
+        label: Tested line (optional)
+        hint: 'e.g. "Tested by me ✓ I made this myself before writing the pattern." Only if you really made it.'
+        widget: string
+        required: false
+
+      # ---------- Tracker, questions, links ----------
+      - name: tracker
+        label: Steps for "Open in Tracker" (optional)
+        hint: Leave empty and every round becomes one step. Fill it when the tracker needs different steps (e.g. "Centre 1, Rnd 1").
+        widget: list
+        required: false
+        collapsed: true
+        summary: '{{fields.text}}'
+        fields:
+          - { name: text, label: Step, widget: text }
+          - { name: stitches, label: 'Stitch count (e.g. "12 sts")', widget: string, required: false }
+      - name: faq
+        label: Questions (FAQ)
+        label_singular: Question
+        widget: list
+        required: false
+        collapsed: true
+        summary: '{{fields.q}}'
+        fields:
+          - { name: q, label: Question, widget: string }
+          - { name: a, label: Answer, widget: text }
+      - name: related
+        label: You might also like
+        label_singular: Link
+        widget: list
+        required: false
+        collapsed: true
+        summary: '{{fields.title}}'
+        fields:
+          - { name: title, label: Title, widget: string }
+          - { name: url, label: 'Link (e.g. /free-patterns/mini-sunflower/)', widget: string }

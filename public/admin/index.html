@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Crochet Tracker admin</title>
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  </head>
+  <body>
+    <!-- Sveltia CMS, a Git-based admin panel. It reads ./config.yml.
+         The version is pinned; update it on purpose, not by accident. -->
+    <script src="https://unpkg.com/@sveltia/cms@0.248.1/dist/sveltia-cms.js"></script>
+    <script type="module">
+      import { checkCounts, normalizePattern } from './pattern-check.js';
+
+      // Before a pattern is saved, check the stitch counts of the round chart
+      // (R2 of an increase round must be double R1, and so on). If something looks
+      // wrong, ask first, so a typo doesn't go live by mistake.
+      window.CMS.registerEventListener({
+        name: 'preSave',
+        handler: ({ entry }) => {
+          const data = entry.get('data');
+          const p = normalizePattern(data?.toJS ? data.toJS() : data || {});
+          const warnings = checkCounts(p);
+          if (!warnings.length) return;
+          const ok = window.confirm(
+            `The stitch counts look wrong:\n\n• ${warnings.join('\n• ')}\n\nSave anyway? (Cancel = go back and fix it)`,
+          );
+          if (!ok) throw new Error('Not saved. Fix the stitch counts and save again.');
+        },
+      });
+    </script>
+  </body>
+</html>

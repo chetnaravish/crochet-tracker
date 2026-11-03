@@ -26,32 +26,26 @@
     "art": "sunflower"
   },
   "materialsTable": [
-    [
-      "Yarn",
-      "Cotton DK in brown (centre) and yellow (petals). A few grams of each, so leftovers are perfect."
-    ],
-    [
-      "Hook",
-      "3 mm crochet hook"
-    ],
-    [
-      "Stuffing",
-      "A small pinch of cotton or toy stuffing"
-    ],
-    [
-      "Tools",
-      "Yarn needle, scissors, stitch marker"
-    ],
-    [
-      "Optional",
-      "Keyring or brooch pin for the back"
-    ]
-  ],
-  "materials": [
-    "Cotton DK yarn in brown and yellow, a few grams of each",
-    "3 mm crochet hook",
-    "A little cotton or toy stuffing",
-    "Yarn needle, scissors, stitch marker"
+    {
+      "item": "Yarn",
+      "details": "Cotton DK in brown (centre) and yellow (petals). A few grams of each, so leftovers are perfect."
+    },
+    {
+      "item": "Hook",
+      "details": "3 mm crochet hook"
+    },
+    {
+      "item": "Stuffing",
+      "details": "A small pinch of cotton or toy stuffing"
+    },
+    {
+      "item": "Tools",
+      "details": "Yarn needle, scissors, stitch marker"
+    },
+    {
+      "item": "Optional",
+      "details": "Keyring or brooch pin for the back"
+    }
   ],
   "abbreviations": [
     "ch",

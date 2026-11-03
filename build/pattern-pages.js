@@ -10,6 +10,8 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { roundChart, legend, sunflowerArt, symbol, miniChart } from './drawings.js';
+import { checkCounts, normalizePattern } from '../public/admin/pattern-check.js';
+import { SITE_URL } from '../site.config.js';
 
 const CONTENT_DIR = path.resolve('content/patterns');
 const OUT_DIR = path.resolve('src/free-patterns');
@@ -44,36 +46,11 @@ export function loadPatterns(dir = CONTENT_DIR) {
   return fs
     .readdirSync(dir)
     .filter((f) => f.endsWith('.json'))
-    .map((f) => ({ file: f, ...JSON.parse(fs.readFileSync(path.join(dir, f), 'utf8')) }));
+    .map((f) => normalizePattern({ file: f, ...JSON.parse(fs.readFileSync(path.join(dir, f), 'utf8')) }));
 }
 
-// Round chart data in pattern order, with stitch-count checks.
-export function checkCounts(p) {
-  const warnings = [];
-  let prev = 0;
-  for (const s of p.sections || []) {
-    for (const r of s.rounds) {
-      const c = r.chart;
-      if (!c) continue;
-      const label = `${p.slug} ${s.title} ${r.r}`;
-      if (c.type === 'ring') prev = c.count;
-      else if (c.type === 'inc') {
-        const n = c.every || 1; // inc in every nth stitch
-        const want = prev + Math.floor(prev / n);
-        if (prev && c.count !== want) warnings.push(`${label}: inc in every ${n === 1 ? '' : `${n}th `}stitch of ${prev} should give ${want}, not ${c.count}.`);
-        prev = c.count;
-      } else if (c.type === 'even') {
-        if (prev && c.count !== prev) warnings.push(`${label}: one stitch in each of ${prev} should give ${prev}, not ${c.count}.`);
-      } else if (c.type === 'petals') {
-        if (prev && prev / 2 !== c.count) warnings.push(`${label}: ${prev} stitches make ${prev / 2} petals (petal + sl st), not ${c.count}.`);
-      }
-      if (r.count && /^\d+$/.test(r.count) && c.count && Number(r.count) !== c.count) {
-        warnings.push(`${label}: written count (${r.count}) and chart count (${c.count}) don't match.`);
-      }
-    }
-  }
-  return warnings;
-}
+// The stitch-count check lives in public/admin/ so the admin panel can use it too.
+export { checkCounts };
 
 // The steps that "Open in Tracker" saves. Uses p.tracker if given, otherwise every round.
 export function trackerSteps(p) {
@@ -185,6 +162,16 @@ function sectionHtml(s) {
           </section>`;
 }
 
+// "Save to Pinterest": a plain link to Pinterest's save page, no Pinterest script on
+// our site (nothing loads from Pinterest until the reader taps it). The pin picture
+// is the tall 2:3 image from `npm run pins`, or the share image if that's missing.
+export function pinterestUrl(p) {
+  const img = ['pins', 'og'].map((d) => `/${d}/${p.slug}.png`).find((f) => fs.existsSync(`public${f}`)) || '/og-image.png';
+  const text = `${p.title}: free crochet pattern with a printable PDF${p.level ? `, ${p.level.toLowerCase()} friendly` : ''}. ${p.description || ''}`.trim();
+  const q = new URLSearchParams({ url: `${SITE_URL}/free-patterns/${p.slug}/`, media: SITE_URL + img, description: text.slice(0, 480) });
+  return `https://www.pinterest.com/pin/create/button/?${q}`;
+}
+
 export function renderPattern(p) {
   const meta = {
     title: p.seoTitle || `${p.title} – Free Crochet Pattern | Crochet Tracker`,
@@ -202,6 +189,7 @@ export function renderPattern(p) {
     ...(p.draft ? { noindex: true } : {}),
   };
   const hasPdf = fs.existsSync(`public/pdf/${p.slug}.pdf`);
+  const pinUrl = pinterestUrl(p);
   const chartRounds = p.sections.flatMap((s) => s.rounds.filter((r) => r.chart).map((r) => ({ ...r, colour: s.colour })));
   const notes = (p.notes || []).join(' ');
   const steps = trackerSteps(p);
@@ -264,6 +252,9 @@ export function renderPattern(p) {
               </a>` : ''}
             </div>
             ${hasPdf ? `<p class="pp-pdf-note no-print">Free printable PDF of this crochet pattern${chartRounds.length ? ', with the round diagram' : ''}. Tap <strong>Free PDF</strong> to preview it, then download it if you like it. You can also read all our patterns together in the <a href="/free-patterns/#pdf" data-pdf-view="book">free crochet pattern book</a> (view only).</p>` : ''}
+            <p class="pp-pin no-print"><a class="pin-btn" href="${esc(pinUrl)}" target="_blank" rel="noopener" data-pin-save>
+              <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="#e60023"/><path fill="#fff" d="M12.3 5.5c-3.9 0-5.8 2.8-5.8 5.1 0 1.4.5 2.6 1.6 3.1.2.1.4 0 .4-.2l.2-.6c0-.2 0-.3-.1-.5-.3-.4-.5-.9-.5-1.6 0-2.1 1.6-3.9 4.1-3.9 2.2 0 3.5 1.4 3.5 3.2 0 2.4-1.1 4.4-2.6 4.4-.9 0-1.5-.7-1.3-1.6.2-1 .7-2.2.7-2.9 0-.7-.4-1.2-1.1-1.2-.9 0-1.6.9-1.6 2.2 0 .8.3 1.3.3 1.3l-1 4.4c-.3 1.3 0 2.9 0 3.1 0 .1.1.1.2 0 .1-.1 1-1.3 1.4-2.5l.5-2c.3.5 1 .9 1.8.9 2.4 0 4-2.2 4-5.1 0-2.2-1.9-4.3-4.7-4.3Z"/></svg>
+              Save to Pinterest</a></p>
             <p class="open-status" aria-live="polite"></p>
           </header>
 
@@ -358,25 +349,32 @@ export function cardArt(kind) {
       return `${shadow}<circle cx="120" cy="90" r="50" fill="#e47c9f"/>`;
   }
 }
-const card = (href, title, kind) =>
-  `<a class="pcard" href="${href}"><div class="pcard-img ${CARD_BG[kind] || 'bg-rose'}"><svg viewBox="0 0 240 180" aria-hidden="true">${cardArt(kind)}</svg><span class="pcard-tag">Illustration</span></div><div class="pcard-body"><h3>${esc(title)}</h3><span class="pcard-go" aria-hidden="true">→</span></div></a>`;
+// A real photo (added in the admin panel) replaces the illustration.
+const card = (href, title, kind, photo) =>
+  `<a class="pcard" href="${href}"><div class="pcard-img ${photo ? 'pcard-photo' : CARD_BG[kind] || 'bg-rose'}">${photo ? `<img src="${esc(photo)}" alt="" loading="lazy">` : `<svg viewBox="0 0 240 180" aria-hidden="true">${cardArt(kind)}</svg><span class="pcard-tag">Illustration</span>`}</div><div class="pcard-body"><h3>${esc(title)}</h3><span class="pcard-go" aria-hidden="true">→</span></div></a>`;
 
 // One card per published pattern, ordered by "order" in the JSON, then by title.
 export function patternCards(patterns) {
   return patterns
     .filter((p) => !p.draft)
     .sort((a, b) => (a.order ?? 99) - (b.order ?? 99) || a.title.localeCompare(b.title))
-    .map((p) => card(`/free-patterns/${p.slug}/`, p.title, p.image?.art || 'ball'))
+    .map((p) => card(`/free-patterns/${p.slug}/`, p.title, p.image?.art || 'ball', p.image?.type === 'photo' && p.image.src))
     .join('');
 }
 
 // Write every page. Returns the warnings so the caller can print them.
-export function generatePatternPages() {
+// drafts: false (production build) leaves drafts out completely, so a pattern
+// saved as a draft in the admin panel is not on the live site at all.
+export function generatePatternPages({ drafts = true } = {}) {
   const patterns = loadPatterns();
   const warnings = [];
   for (const p of patterns) {
     warnings.push(...checkCounts(p));
     const dir = path.join(OUT_DIR, p.slug);
+    if (p.draft && !drafts) {
+      fs.rmSync(dir, { recursive: true, force: true });
+      continue;
+    }
     fs.mkdirSync(dir, { recursive: true });
     const file = path.join(dir, 'index.html');
     const html = renderPattern(p);

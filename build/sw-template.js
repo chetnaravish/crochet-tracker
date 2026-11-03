@@ -37,6 +37,8 @@ self.addEventListener('fetch', (event) => {
   if (req.method !== 'GET') return;
   const url = new URL(req.url);
   if (url.origin !== self.location.origin) return;
+  // The admin panel talks to GitHub and must never be served from the cache.
+  if (url.pathname.startsWith('/admin')) return;
 
   if (req.mode === 'navigate') {
     event.respondWith(

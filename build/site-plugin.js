@@ -474,8 +474,9 @@ export default function sitePlugin() {
       fs.writeFileSync(path.join(out, 'search-index.json'), JSON.stringify(buildSearchIndex()));
 
       // sw.js – precache every built file so the whole site works offline
-      // PDFs and share images are big and only needed on demand, so they are not precached.
-      const skip = /(^|\/)(sw\.js|sitemap\.xml|robots\.txt|og-image\.png)$|\.map$|^(pdf|og)\//;
+      // PDFs, share images and Pinterest pins are big and only needed on demand, so they are
+      // not precached. The admin panel is never cached (it must always be the live version).
+      const skip = /(^|\/)(sw\.js|sitemap\.xml|robots\.txt|og-image\.png)$|\.map$|^(pdf|og|pins|admin)\//;
       const files = listFiles(out).filter((f) => !skip.test(f));
       const hash = crypto.createHash('sha256');
       for (const f of files) hash.update(f).update(fs.readFileSync(path.join(out, f)));

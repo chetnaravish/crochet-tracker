@@ -898,6 +898,11 @@ mark { background: var(--yarn-butter); color: inherit; border-radius: 3px; paddi
 .pp-actions { display: grid; gap: 10px; margin: 22px auto 0; max-width: 22rem; }
 @media (min-width: 640px) { .pp-actions { display: flex; flex-wrap: wrap; justify-content: center; max-width: none; } }
 .pp-actions .btn { justify-content: center; }
+/* Save to Pinterest: a small pill under the buttons, Pinterest's red only in the logo */
+.pp-pin { margin: 14px 0 0; text-align: center; }
+.pin-btn { display: inline-flex; align-items: center; gap: 8px; min-height: 40px; padding: 6px 16px 6px 10px; border-radius: var(--radius-pill); border: 1px solid var(--border); background: var(--surface); color: var(--text); font-size: 0.92rem; font-weight: 700; text-decoration: none; transition: transform 0.25s var(--ease), border-color 0.25s, box-shadow 0.25s; }
+.pin-btn:hover { color: var(--text); border-color: #e60023; transform: translateY(-2px); box-shadow: 0 10px 20px -12px rgb(230 0 35 / 0.5); }
+.pin-btn svg { flex: none; }
 .pp-pdf-note { max-width: 34rem; margin: 14px auto 0; text-align: center; font-size: 0.92rem; color: var(--text-muted); }
 .pp-btn-main { background: var(--pp-accent); border-color: var(--pp-accent); color: #fff; }
 .pp-btn-main:hover { filter: brightness(0.92); color: #fff; }
@@ -1565,6 +1570,8 @@ ol.howto li { padding: 16px 18px 16px 62px; }
 .pcard:hover { color: inherit; }
 .pcard-img { position: relative; display: grid; place-items: center; aspect-ratio: 4 / 3; overflow: hidden; }
 .pcard-img svg { width: 100%; height: 100%; transition: transform 0.6s var(--ease); }
+.pcard-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s var(--ease); }
+.pcard-photo { background: var(--surface-2, #f6efe9); }
 .pcard-tag { position: absolute; top: 10px; left: 10px; padding: 3px 10px; border-radius: var(--radius-pill); background: rgb(255 255 255 / 0.85); color: #6e5961; font-size: 0.72rem; font-weight: 800; letter-spacing: 0.03em; }
 .pcard-body { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 16px 18px; }
 .pcard-body h3 { margin: 0; font-size: 1.15rem; }
@@ -1572,6 +1579,7 @@ ol.howto li { padding: 16px 18px 16px 62px; }
 @media (hover: hover) {
   .pcard:hover { transform: translateY(-8px); border-color: color-mix(in srgb, var(--primary) 35%, var(--border)); box-shadow: 0 24px 40px -20px rgb(180 67 108 / 0.45); }
   .pcard:hover .pcard-img svg { transform: scale(1.07) rotate(-3deg); }
+  .pcard:hover .pcard-img img { transform: scale(1.05); }
   .pcard:hover .pcard-go { background: var(--primary); color: var(--on-primary); transform: translateX(3px); }
 }
 

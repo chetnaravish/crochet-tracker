@@ -60,3 +60,15 @@ test('stitch words in a pattern link to their lesson and carry popup data', () =
   const steps = JSON.parse(html.match(/data-tracker>([\s\S]*?)<\/script>/)[1]);
   assert.ok(steps.every((s) => !s.text.includes('<')));
 });
+
+test('admin panel data (material rows, empty chart) is normalised', async () => {
+  const { normalizePattern } = await import('../public/admin/pattern-check.js');
+  const p = normalizePattern({
+    materialsTable: [{ item: 'Yarn', details: 'Cotton' }],
+    sections: [{ rounds: [{ r: 'R1', text: '6 sc', count: 6, chart: { type: '' } }, { r: 'R2', text: 'inc', chart: { type: 'inc', count: '12' } }] }],
+  });
+  assert.deepEqual(p.materialsTable, [['Yarn', 'Cotton']]);
+  assert.equal(p.sections[0].rounds[0].chart, undefined);
+  assert.equal(p.sections[0].rounds[0].count, '6');
+  assert.equal(p.sections[0].rounds[1].chart.count, 12);
+});

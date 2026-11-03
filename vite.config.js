@@ -7,7 +7,8 @@ import { generatePatternPages } from './build/pattern-pages.js';
 const root = path.resolve('src');
 
 // Pattern pages are generated from content/patterns/*.json before Vite looks for pages.
-generatePatternPages();
+// Drafts show on the dev server (to preview them) but are left out of the real build.
+generatePatternPages({ drafts: !process.argv.includes('build') });
 
 // Every .html file under src/ (except partials) is its own page.
 function findPages(dir) {
