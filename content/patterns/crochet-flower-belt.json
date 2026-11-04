@@ -1,0 +1,105 @@
+{
+  "draft": true,
+  "subtitle": "Crochet Accessory Pattern",
+  "tagline": "Free crochet pattern | Leftover yarn | Printable",
+  "date": "2026-11-04",
+  "level": "Easy",
+  "hook": "3 mm",
+  "terms": "US",
+  "slug": "crochet-flower-belt",
+  "title": "Crochet Flower Belt",
+  "name": "Flower Belt",
+  "seoTitle": "Crochet Flower Belt Pattern, Tie Style (Free PDF)",
+  "description": "Free crochet flower belt pattern: a light dc chain band with five-petal flowers along it and at both tie ends. Easy and printable. Free PDF download.",
+  "lead": "A pretty tie belt: a light, lacy chain band with five-petal flowers at both ends. Make it as long as you like.",
+  "theme": {
+    "accent": "#3f8f5e",
+    "dark": "#1f3d2a",
+    "cream": "#eef8f1"
+  },
+  "yarn": "Cotton yarn in two or more colours",
+  "materialsTable": [
+    {
+      "item": "Yarn",
+      "details": "Cotton yarn in a band colour and flower colours"
+    },
+    {
+      "item": "Hook",
+      "details": "3 mm crochet hook"
+    },
+    {
+      "item": "Tools",
+      "details": "Yarn needle, scissors"
+    }
+  ],
+  "abbreviations": [
+    "ch",
+    "dc",
+    "sl st",
+    "st"
+  ],
+  "sections": [
+    {
+      "title": "Part 1: Flower",
+      "rounds": [
+        {
+          "r": "Ring",
+          "text": "Slip knot, ch 5, sl st in the 1st ch.",
+          "count": ""
+        },
+        {
+          "r": "Petals",
+          "text": "(ch 2, 2 dc in the ring, ch 2, sl st) x5.",
+          "count": "5 petals"
+        }
+      ]
+    },
+    {
+      "title": "Part 2: Belt",
+      "rounds": [
+        {
+          "r": "Tie 1",
+          "text": "ch 50, then 3 more ch. In the 3rd ch from the hook: 2 dc, ch 2, sl st in the same ch. Repeat to make 5 petals.",
+          "count": "5 petals"
+        },
+        {
+          "r": "Band",
+          "text": "ch 5, dc in the 3rd ch from the hook. Repeat (ch 5, dc in the 3rd ch from the hook) to make a long chain.",
+          "count": ""
+        },
+        {
+          "r": "Flowers",
+          "text": "Join the next colour: (ch 2, 2 dc, ch 2, sl st in the ring) x5 to make 5 petals.",
+          "count": "5 petals"
+        },
+        {
+          "r": "Tie 2",
+          "text": "After the last flower: ch 50, (2 dc, ch 2, sl st) in the 3rd ch near the starting loop. Repeat to make 5 petals.",
+          "count": "5 petals"
+        }
+      ]
+    }
+  ],
+  "finishing": [
+    "Weave in the ends.",
+    "Tie the belt with the two flower ends."
+  ],
+  "related": [
+    {
+      "title": "Chain (ch)",
+      "url": "/stitches/chain/"
+    },
+    {
+      "title": "Double Crochet (dc)",
+      "url": "/stitches/double-crochet/"
+    },
+    {
+      "title": "Slip Stitch",
+      "url": "/stitches/slip-stitch/"
+    }
+  ],
+  "image": {
+    "type": "illustration",
+    "art": "flower"
+  }
+}

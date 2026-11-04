@@ -1,0 +1,110 @@
+{
+  "draft": true,
+  "subtitle": "Halloween Crochet Pattern",
+  "tagline": "Free crochet pattern | Leftover yarn | Printable",
+  "date": "2026-11-04",
+  "level": "Beginner",
+  "hook": "3 mm",
+  "terms": "US",
+  "slug": "crochet-spider-web",
+  "title": "Crochet Spider Web",
+  "name": "Spider Web",
+  "seoTitle": "Easy Crochet Spider Web Pattern for Halloween (Free PDF)",
+  "description": "Free, easy crochet spider web pattern for Halloween: dc spokes with growing chain spaces and a picot edge, plus a long hanging string. Printable PDF.",
+  "lead": "A quick Halloween spider web. Each round adds longer chains between the spokes, and the last round gives every spoke a little picot. A long string lets you hang it.",
+  "theme": {
+    "accent": "#7d5fbf",
+    "dark": "#2e2347",
+    "cream": "#f3eefb"
+  },
+  "yarn": "White or black cotton yarn",
+  "materialsTable": [
+    {
+      "item": "Yarn",
+      "details": "White or black cotton yarn"
+    },
+    {
+      "item": "Hook",
+      "details": "3 mm crochet hook"
+    },
+    {
+      "item": "Tools",
+      "details": "Yarn needle, scissors"
+    }
+  ],
+  "abbreviations": [
+    "mr",
+    "sc",
+    "ch",
+    "dc",
+    "sl st",
+    "st"
+  ],
+  "notes": [
+    "The beginning chains count as the first dc and its chain space. Join each round with a sl st in the 3rd ch."
+  ],
+  "sections": [
+    {
+      "title": "Web",
+      "rounds": [
+        {
+          "r": "R1",
+          "text": "6 sc in a magic ring.",
+          "count": "6"
+        },
+        {
+          "r": "R2",
+          "text": "ch 6 (counts as dc + ch 3), (dc in next st, ch 3) x5, sl st in the 3rd ch.",
+          "count": "6 spokes"
+        },
+        {
+          "r": "R3",
+          "text": "ch 8 (counts as dc + ch 5), (dc in next dc, ch 5) x5, sl st in the 3rd ch.",
+          "count": "6 spokes"
+        },
+        {
+          "r": "R4",
+          "text": "ch 10 (counts as dc + ch 7), (dc in next dc, ch 7) x5, sl st in the 3rd ch.",
+          "count": "6 spokes"
+        },
+        {
+          "r": "R5",
+          "text": "ch 3, (ch 3, skip 1 ch, sl st) for a picot, ch 7, then (dc in next dc, picot, ch 7) x5. sl st to join and fasten off.",
+          "count": "6 picots"
+        }
+      ]
+    },
+    {
+      "title": "String",
+      "rounds": [
+        {
+          "r": "String",
+          "text": "ch 80. Starting in the 2nd ch from the hook: inc in each of the next 2 ch, then sl st in each of the last 77 ch.",
+          "count": ""
+        }
+      ]
+    }
+  ],
+  "finishing": [
+    "Tie the string to the top of the web.",
+    "Weave in the ends."
+  ],
+  "related": [
+    {
+      "title": "Magic Ring",
+      "url": "/stitches/magic-ring/"
+    },
+    {
+      "title": "Double Crochet (dc)",
+      "url": "/stitches/double-crochet/"
+    },
+    {
+      "title": "Chain (ch)",
+      "url": "/stitches/chain/"
+    }
+  ],
+  "image": {
+    "type": "illustration",
+    "art": "coaster"
+  }
+}

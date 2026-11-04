@@ -1,0 +1,230 @@
+{
+  "draft": true,
+  "subtitle": "Amigurumi Pattern",
+  "tagline": "Free crochet pattern | Leftover yarn | Printable",
+  "date": "2026-11-04",
+  "level": "Easy",
+  "hook": "3 mm",
+  "terms": "US",
+  "slug": "crochet-duck-with-daisy",
+  "title": "Crochet Duck with Daisy",
+  "name": "Duck with Daisy",
+  "seoTitle": "Crochet Duck Amigurumi with a Daisy (Free PDF)",
+  "description": "Free crochet duck amigurumi pattern: a round sc body, little hands and a daisy flower to hold. Printable PDF with stitch counts for every round.",
+  "lead": "A round little duck holding a daisy. The body is one piece of sc rounds, the hands are tiny tubes and the daisy is two quick rounds.",
+  "theme": {
+    "accent": "#e8890c",
+    "dark": "#4a2511",
+    "cream": "#fff5e1"
+  },
+  "yarn": "Cotton yarn in yellow, plus white and a flower colour",
+  "materialsTable": [
+    {
+      "item": "Yarn",
+      "details": "Cotton yarn in yellow (body), a beak colour, white and a colour for the daisy centre"
+    },
+    {
+      "item": "Hook",
+      "details": "3 mm crochet hook"
+    },
+    {
+      "item": "Stuffing",
+      "details": "Toy stuffing"
+    },
+    {
+      "item": "Eyes",
+      "details": "Safety eyes or black yarn"
+    },
+    {
+      "item": "Tools",
+      "details": "Yarn needle, scissors"
+    }
+  ],
+  "abbreviations": [
+    "mr",
+    "sc",
+    "inc",
+    "dec",
+    "ch",
+    "tr",
+    "st"
+  ],
+  "notes": [
+    "The body is worked in a spiral. Use a stitch marker."
+  ],
+  "sections": [
+    {
+      "title": "Part 1: Body",
+      "rounds": [
+        {
+          "r": "R1",
+          "text": "6 sc in a magic ring.",
+          "count": "6",
+          "chart": {
+            "type": "ring",
+            "sym": "sc",
+            "count": 6
+          }
+        },
+        {
+          "r": "R2",
+          "text": "inc x6",
+          "count": "12",
+          "chart": {
+            "type": "inc",
+            "sym": "sc",
+            "count": 12
+          }
+        },
+        {
+          "r": "R3",
+          "text": "(sc, inc) x6",
+          "count": "18",
+          "chart": {
+            "type": "inc",
+            "sym": "sc",
+            "count": 18,
+            "every": 2
+          }
+        },
+        {
+          "r": "R4",
+          "text": "(2 sc, inc) x6",
+          "count": "24",
+          "chart": {
+            "type": "inc",
+            "sym": "sc",
+            "count": 24,
+            "every": 3
+          }
+        },
+        {
+          "r": "R5",
+          "text": "(3 sc, inc) x6",
+          "count": "30",
+          "chart": {
+            "type": "inc",
+            "sym": "sc",
+            "count": 30,
+            "every": 4
+          }
+        },
+        {
+          "r": "R6–R9",
+          "text": "sc around (4 rounds)",
+          "count": "30",
+          "chart": {
+            "type": "even",
+            "sym": "sc",
+            "count": 30
+          }
+        },
+        {
+          "r": "R10",
+          "text": "(2 sc, inc, 2 sc) x6",
+          "count": "36",
+          "chart": {
+            "type": "inc",
+            "sym": "sc",
+            "count": 36,
+            "every": 5
+          }
+        },
+        {
+          "r": "R11",
+          "text": "(5 sc, inc) x6",
+          "count": "42",
+          "chart": {
+            "type": "inc",
+            "sym": "sc",
+            "count": 42,
+            "every": 6
+          }
+        },
+        {
+          "r": "R12–R17",
+          "text": "sc around (6 rounds)",
+          "count": "42",
+          "chart": {
+            "type": "even",
+            "sym": "sc",
+            "count": 42
+          }
+        },
+        {
+          "r": "R18",
+          "text": "(5 sc, dec) x6",
+          "count": "36"
+        },
+        {
+          "r": "R19",
+          "text": "(2 sc, dec) x9. Start stuffing.",
+          "count": "27"
+        },
+        {
+          "r": "R20",
+          "text": "(sc, dec) x9",
+          "count": "18"
+        },
+        {
+          "r": "R21",
+          "text": "dec x9. Close the hole and hide the yarn.",
+          "count": "9"
+        }
+      ]
+    },
+    {
+      "title": "Part 2: Hands",
+      "make": 2,
+      "rounds": [
+        {
+          "r": "R1",
+          "text": "7 sc in a magic ring.",
+          "count": "7"
+        },
+        {
+          "r": "R2–R4",
+          "text": "sc around (3 rounds). Fasten off.",
+          "count": "7"
+        }
+      ]
+    },
+    {
+      "title": "Part 3: Daisy",
+      "rounds": [
+        {
+          "r": "R1",
+          "text": "With the centre colour: 12 sc in a magic ring.",
+          "count": "12"
+        },
+        {
+          "r": "R2",
+          "text": "Change to white. (sc in next st, ch 3, 3 tr in next st) x6. Fasten off.",
+          "count": "6 petals"
+        }
+      ]
+    }
+  ],
+  "finishing": [
+    "Sew on the beak and the eyes.",
+    "Sew the hands on the sides and the daisy between them."
+  ],
+  "related": [
+    {
+      "title": "Magic Ring",
+      "url": "/stitches/magic-ring/"
+    },
+    {
+      "title": "Increase (inc)",
+      "url": "/stitches/increase/"
+    },
+    {
+      "title": "Decrease (dec)",
+      "url": "/stitches/decrease/"
+    }
+  ],
+  "image": {
+    "type": "illustration",
+    "art": "ball"
+  }
+}

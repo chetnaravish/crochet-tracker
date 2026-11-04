@@ -1,0 +1,89 @@
+{
+  "draft": true,
+  "subtitle": "Free Crochet Pattern",
+  "tagline": "Free crochet pattern | Leftover yarn | Printable",
+  "date": "2026-11-04",
+  "level": "Easy",
+  "hook": "3 mm",
+  "terms": "US",
+  "slug": "crochet-butterfly-charm",
+  "title": "Crochet Butterfly Charm",
+  "name": "Butterfly Charm",
+  "seoTitle": "Crochet Butterfly Charm Pattern (Free PDF)",
+  "description": "Free crochet butterfly charm pattern: a dc circle, a round of shells and a picot scallop edge. Quick, pretty and printable. Free PDF, step by step.",
+  "lead": "A lacy round charm in three rounds: a dc circle, a round of eight shells and a picot scallop on every shell.",
+  "theme": {
+    "accent": "#3a72b8",
+    "dark": "#1c2c47",
+    "cream": "#eef4fb"
+  },
+  "yarn": "Blue cotton yarn",
+  "materialsTable": [
+    {
+      "item": "Yarn",
+      "details": "Blue cotton yarn"
+    },
+    {
+      "item": "Hook",
+      "details": "3 mm crochet hook"
+    },
+    {
+      "item": "Tools",
+      "details": "Yarn needle, scissors"
+    }
+  ],
+  "abbreviations": [
+    "mr",
+    "ch",
+    "dc",
+    "sc",
+    "sl st",
+    "st"
+  ],
+  "notes": [
+    "Picot: ch 3, then sl st into the first of those chains."
+  ],
+  "sections": [
+    {
+      "title": "",
+      "rounds": [
+        {
+          "r": "R1",
+          "text": "Magic ring, ch 3, 16 dc in the ring, sl st.",
+          "count": "16"
+        },
+        {
+          "r": "R2",
+          "text": "ch 3, (2 dc, ch 2, 3 dc) in the same st, then (3 dc, ch 2, 3 dc) in every 2nd st x7, sl st.",
+          "count": "8 shells"
+        },
+        {
+          "r": "R3",
+          "text": "sc, (5 dc, ch 3 picot, 5 dc) in the ch-2 space, sc in the next st between shells. Repeat around. Fasten off.",
+          "count": "8 scallops"
+        }
+      ]
+    }
+  ],
+  "finishing": [
+    "Weave in the ends."
+  ],
+  "related": [
+    {
+      "title": "Double Crochet (dc)",
+      "url": "/stitches/double-crochet/"
+    },
+    {
+      "title": "Magic Ring",
+      "url": "/stitches/magic-ring/"
+    },
+    {
+      "title": "Chain (ch)",
+      "url": "/stitches/chain/"
+    }
+  ],
+  "image": {
+    "type": "illustration",
+    "art": "flower"
+  }
+}

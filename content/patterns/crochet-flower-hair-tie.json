@@ -1,0 +1,117 @@
+{
+  "draft": true,
+  "subtitle": "Hair Accessory Pattern",
+  "tagline": "Free crochet pattern | Leftover yarn | Printable",
+  "date": "2026-11-04",
+  "level": "Easy",
+  "hook": "3 mm",
+  "terms": "US",
+  "slug": "crochet-flower-hair-tie",
+  "title": "Crochet Rolled Flower Hair Tie",
+  "name": "Flower Hair Tie",
+  "seoTitle": "Crochet Rolled Flower Hair Tie Pattern (Free PDF)",
+  "description": "Free crochet rolled flower hair tie pattern: two spiral flowers with a bead centre, a leaf and a chain tie. Easy, pretty and printable. Free PDF download.",
+  "lead": "Two full, rolled flowers on a simple chain tie. Each flower is one strip of petals that you twist into a spiral and sew, with a bead in the centre.",
+  "theme": {
+    "accent": "#d4577f",
+    "dark": "#4a1f30",
+    "cream": "#fdf0f4"
+  },
+  "yarn": "Cotton yarn in pink and green",
+  "materialsTable": [
+    {
+      "item": "Yarn",
+      "details": "Cotton yarn in a flower colour and green"
+    },
+    {
+      "item": "Hook",
+      "details": "3 mm crochet hook"
+    },
+    {
+      "item": "Extra",
+      "details": "2 beads, glue"
+    },
+    {
+      "item": "Tools",
+      "details": "Yarn needle, scissors"
+    }
+  ],
+  "abbreviations": [
+    "ch",
+    "hdc",
+    "dc",
+    "sc",
+    "sl st",
+    "st"
+  ],
+  "notes": [
+    "Picot: ch 1, sc into the same st."
+  ],
+  "sections": [
+    {
+      "title": "Part 1: Flower",
+      "make": 2,
+      "rounds": [
+        {
+          "r": "Row 1",
+          "text": "ch 12. Skip 1 ch, 2 hdc in each ch (x11).",
+          "count": "22"
+        },
+        {
+          "r": "Petals",
+          "text": "(ch 2, 3 dc in the same st, ch 2, sl st in the next st) x21, ch 2, sl st in the last st, ch 1 and cut the yarn.",
+          "count": "21 petals"
+        }
+      ]
+    },
+    {
+      "title": "Part 2: Leaf",
+      "colour": "green",
+      "rounds": [
+        {
+          "r": "Side 1",
+          "text": "ch 16. Skip 1 ch: sc, hdc, 3 dc, hdc, sc, sl st, sc, hdc, 3 dc, hdc, sc, ch 1 picot, sc in the same st.",
+          "count": ""
+        },
+        {
+          "r": "Side 2",
+          "text": "hdc, 3 dc, hdc, sc, sl st, sc, hdc, 3 dc, hdc, sc, sl st in the first sc, ch 1 and cut the yarn.",
+          "count": ""
+        }
+      ]
+    },
+    {
+      "title": "Part 3: Tie",
+      "rounds": [
+        {
+          "r": "String",
+          "text": "ch 48.",
+          "count": ""
+        }
+      ]
+    }
+  ],
+  "finishing": [
+    "Twist each petal strip into a spiral and sew it in place.",
+    "Attach a bead in the centre of each flower.",
+    "Glue the flowers and the leaf onto the tie."
+  ],
+  "related": [
+    {
+      "title": "Half Double Crochet (hdc)",
+      "url": "/stitches/half-double-crochet/"
+    },
+    {
+      "title": "Double Crochet (dc)",
+      "url": "/stitches/double-crochet/"
+    },
+    {
+      "title": "Chain (ch)",
+      "url": "/stitches/chain/"
+    }
+  ],
+  "image": {
+    "type": "illustration",
+    "art": "flower"
+  }
+}

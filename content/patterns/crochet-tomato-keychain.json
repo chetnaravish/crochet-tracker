@@ -1,0 +1,230 @@
+{
+  "draft": true,
+  "subtitle": "Amigurumi Keychain Pattern",
+  "tagline": "Free crochet pattern | Leftover yarn | Printable",
+  "date": "2026-11-04",
+  "level": "Beginner",
+  "hook": "3 mm",
+  "terms": "US",
+  "slug": "crochet-tomato-keychain",
+  "title": "Crochet Tomato Keychain",
+  "name": "Tomato Keychain",
+  "seoTitle": "Cute Crochet Tomato Keychain Pattern (Free PDF)",
+  "description": "Free crochet tomato keychain pattern: a round amigurumi tomato with leaves, a stem, little arms and legs and a smiling face. Printable PDF with stitch counts.",
+  "lead": "A round, smiling tomato with a green leaf top, a stem and dangly arms and legs. The body is simple sc rounds, so it is a good first amigurumi.",
+  "theme": {
+    "accent": "#d0453a",
+    "dark": "#4a1a15",
+    "cream": "#fdf0ee"
+  },
+  "yarn": "Cotton yarn in red, green and a colour for the arms and legs",
+  "materialsTable": [
+    {
+      "item": "Yarn",
+      "details": "Cotton yarn in red (body), green (leaves and stem) and one colour for arms and legs"
+    },
+    {
+      "item": "Hook",
+      "details": "3 mm crochet hook"
+    },
+    {
+      "item": "Stuffing",
+      "details": "Toy stuffing"
+    },
+    {
+      "item": "Face",
+      "details": "Black yarn or safety eyes for the eyes and mouth"
+    },
+    {
+      "item": "Extra",
+      "details": "Keyring"
+    },
+    {
+      "item": "Tools",
+      "details": "Yarn needle, scissors"
+    }
+  ],
+  "abbreviations": [
+    "mr",
+    "sc",
+    "inc",
+    "dec",
+    "ch",
+    "hdc",
+    "dc",
+    "sl st",
+    "st"
+  ],
+  "notes": [
+    "The body is worked in a spiral. Put a stitch marker in the first stitch of each round."
+  ],
+  "sections": [
+    {
+      "title": "Part 1: Body",
+      "colour": "red",
+      "rounds": [
+        {
+          "r": "R1",
+          "text": "6 sc in a magic ring.",
+          "count": "6",
+          "chart": {
+            "type": "ring",
+            "sym": "sc",
+            "count": 6
+          }
+        },
+        {
+          "r": "R2",
+          "text": "inc x6",
+          "count": "12",
+          "chart": {
+            "type": "inc",
+            "sym": "sc",
+            "count": 12
+          }
+        },
+        {
+          "r": "R3",
+          "text": "(sc, inc) x6",
+          "count": "18",
+          "chart": {
+            "type": "inc",
+            "sym": "sc",
+            "count": 18,
+            "every": 2
+          }
+        },
+        {
+          "r": "R4",
+          "text": "(sc, inc, sc) x6",
+          "count": "24",
+          "chart": {
+            "type": "inc",
+            "sym": "sc",
+            "count": 24,
+            "every": 3
+          }
+        },
+        {
+          "r": "R5",
+          "text": "(3 sc, inc) x6",
+          "count": "30",
+          "chart": {
+            "type": "inc",
+            "sym": "sc",
+            "count": 30,
+            "every": 4
+          }
+        },
+        {
+          "r": "R6",
+          "text": "(2 sc, inc, 2 sc) x6",
+          "count": "36",
+          "chart": {
+            "type": "inc",
+            "sym": "sc",
+            "count": 36,
+            "every": 5
+          }
+        },
+        {
+          "r": "R7–R10",
+          "text": "sc around (4 rounds)",
+          "count": "36",
+          "chart": {
+            "type": "even",
+            "sym": "sc",
+            "count": 36
+          }
+        },
+        {
+          "r": "R11",
+          "text": "(2 sc, dec, 2 sc) x6",
+          "count": "30"
+        },
+        {
+          "r": "R12",
+          "text": "(3 sc, dec) x6",
+          "count": "24"
+        },
+        {
+          "r": "R13",
+          "text": "(sc, dec, sc) x6",
+          "count": "18"
+        },
+        {
+          "r": "R14",
+          "text": "(sc, dec) x6",
+          "count": "12"
+        },
+        {
+          "r": "R15",
+          "text": "dec x6. Stuff the tomato, then sew the hole closed.",
+          "count": "6"
+        }
+      ]
+    },
+    {
+      "title": "Part 2: Leaves",
+      "colour": "green",
+      "rounds": [
+        {
+          "r": "R1",
+          "text": "10 sc in a magic ring.",
+          "count": "10"
+        },
+        {
+          "r": "R2",
+          "text": "(sl st, ch 6; starting in the 2nd ch from the hook: sc, hdc, 2 dc; skip 1 st, sl st) x5",
+          "count": "5 leaves"
+        },
+        {
+          "r": "Stem",
+          "text": "ch 10 and fasten off.",
+          "count": ""
+        }
+      ]
+    },
+    {
+      "title": "Part 3: Arms and legs",
+      "make": 4,
+      "note": "Make 4 (2 arms, 2 legs).",
+      "rounds": [
+        {
+          "r": "R1",
+          "text": "5 sc in a magic ring.",
+          "count": "5"
+        },
+        {
+          "r": "R2",
+          "text": "sl st, ch 20. Fasten off, leaving a tail.",
+          "count": ""
+        }
+      ]
+    }
+  ],
+  "finishing": [
+    "Sew the leaves on top of the tomato and the stem in the centre of the leaves.",
+    "Embroider the eyes and a smile with black yarn.",
+    "Sew the arms on the sides and the legs at the bottom.",
+    "Attach the keyring to the stem."
+  ],
+  "related": [
+    {
+      "title": "Magic Ring",
+      "url": "/stitches/magic-ring/"
+    },
+    {
+      "title": "Increase (inc)",
+      "url": "/stitches/increase/"
+    },
+    {
+      "title": "Decrease (dec)",
+      "url": "/stitches/decrease/"
+    }
+  ],
+  "image": {
+    "type": "illustration",
+    "art": "ball"
+  }
+}

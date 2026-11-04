@@ -1,0 +1,142 @@
+{
+  "draft": true,
+  "subtitle": "Keychain Crochet Pattern",
+  "tagline": "Free crochet pattern | Leftover yarn | Printable",
+  "date": "2026-11-04",
+  "level": "Easy",
+  "hook": "3 mm",
+  "terms": "US",
+  "slug": "crochet-cookie-keychain",
+  "title": "Crochet Smiling Cookie Keychain",
+  "name": "Smiling Cookie",
+  "seoTitle": "Crochet Smiling Cookie Keychain Pattern (Free PDF)",
+  "description": "Free crochet smiling cookie keychain pattern: two round cookies with a cream layer, popcorn hands and feet and a happy face. Printable PDF download.",
+  "lead": "A sandwich cookie with a big smile. Two flat circles hold a cream layer, and the arms and legs end in little popcorn-stitch hands and feet.",
+  "theme": {
+    "accent": "#a0663a",
+    "dark": "#3e2414",
+    "cream": "#fbf3ea"
+  },
+  "yarn": "Cotton yarn in brown, white, pink and black",
+  "materialsTable": [
+    {
+      "item": "Yarn",
+      "details": "Cotton yarn in brown (cookie), white (cream and eyes), pink (hands and feet), black"
+    },
+    {
+      "item": "Hook",
+      "details": "3 mm crochet hook"
+    },
+    {
+      "item": "Extra",
+      "details": "Keyring"
+    },
+    {
+      "item": "Tools",
+      "details": "Yarn needle, scissors"
+    }
+  ],
+  "abbreviations": [
+    "mr",
+    "ch",
+    "dc",
+    "hdc",
+    "sl st",
+    "sc",
+    "pc",
+    "st"
+  ],
+  "notes": [
+    "Popcorn (4 dc): 4 dc in the same place, take the hook out, insert it in the first dc and pull the loop through."
+  ],
+  "sections": [
+    {
+      "title": "Part 1: Cookie",
+      "make": 2,
+      "rounds": [
+        {
+          "r": "R1",
+          "text": "Magic ring, ch 2, 12 dc in the ring, sl st.",
+          "count": "12",
+          "chart": {
+            "type": "ring",
+            "sym": "dc",
+            "count": 12
+          }
+        },
+        {
+          "r": "R2",
+          "text": "ch 1, 2 hdc in each st.",
+          "count": "24",
+          "chart": {
+            "type": "inc",
+            "sym": "hdc",
+            "count": 24
+          }
+        }
+      ]
+    },
+    {
+      "title": "Part 2: Cream layer",
+      "colour": "white",
+      "rounds": [
+        {
+          "r": "Cream",
+          "text": "After round 2: ch 1 and sl st in the next st. Repeat (ch 1, sl st in next st) to the end.",
+          "count": ""
+        }
+      ]
+    },
+    {
+      "title": "Part 3: Arms and legs",
+      "make": 4,
+      "rounds": [
+        {
+          "r": "Limb",
+          "text": "ch 7 and cut the yarn.",
+          "count": ""
+        },
+        {
+          "r": "Hand",
+          "text": "Insert pink yarn into the 1st and 2nd ch and work a 4-dc popcorn for a cute hand or foot.",
+          "count": ""
+        }
+      ]
+    },
+    {
+      "title": "Part 4: Eyes",
+      "colour": "white",
+      "make": 2,
+      "rounds": [
+        {
+          "r": "Eye",
+          "text": "5 sc in a magic ring, sl st. Add a small black dot with black yarn.",
+          "count": "5"
+        }
+      ]
+    }
+  ],
+  "finishing": [
+    "Embroider a smile.",
+    "Attach everything together.",
+    "Add the keyring at the top."
+  ],
+  "related": [
+    {
+      "title": "Popcorn Stitch",
+      "url": "/stitches/popcorn-stitch/"
+    },
+    {
+      "title": "Half Double Crochet (hdc)",
+      "url": "/stitches/half-double-crochet/"
+    },
+    {
+      "title": "Magic Ring",
+      "url": "/stitches/magic-ring/"
+    }
+  ],
+  "image": {
+    "type": "illustration",
+    "art": "coaster"
+  }
+}

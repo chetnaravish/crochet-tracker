@@ -1,0 +1,102 @@
+{
+  "draft": true,
+  "subtitle": "Morpankh Crochet Pattern",
+  "tagline": "Free crochet pattern | Leftover yarn | Printable",
+  "date": "2026-11-04",
+  "level": "Intermediate",
+  "hook": "3 mm",
+  "terms": "US",
+  "slug": "crochet-peacock-feather",
+  "title": "Crochet Peacock Feather (Morpankh)",
+  "name": "Peacock Feather",
+  "seoTitle": "Crochet Peacock Feather (Morpankh) Pattern (Free PDF)",
+  "description": "Free crochet peacock feather (morpankh) pattern: a dark blue eye, light blue, yellow and green rounds and a picot edge. Printable PDF, round by round.",
+  "lead": "A colourful morpankh worked from the eye outwards. Each round grows more at the tip, which gives the feather its pointed shape, and a dark green picot round finishes it.",
+  "theme": {
+    "accent": "#3a72b8",
+    "dark": "#1c2c47",
+    "cream": "#eef4fb"
+  },
+  "yarn": "Cotton yarn in dark blue, light blue, yellow, light green and dark green",
+  "materialsTable": [
+    {
+      "item": "Yarn",
+      "details": "Cotton yarn in dark blue, light blue, yellow, light green and dark green"
+    },
+    {
+      "item": "Hook",
+      "details": "3 mm crochet hook"
+    },
+    {
+      "item": "Tools",
+      "details": "Yarn needle, scissors"
+    }
+  ],
+  "abbreviations": [
+    "mr",
+    "ch",
+    "dc",
+    "sc",
+    "hdc",
+    "tr",
+    "inc",
+    "sl st",
+    "st"
+  ],
+  "notes": [
+    "The 8th stitch of round 2 is the tip of the feather. Every later round puts its extra stitches at this tip."
+  ],
+  "sections": [
+    {
+      "title": "",
+      "rounds": [
+        {
+          "r": "R1",
+          "text": "Dark blue: magic ring, ch 2, 15 dc in the ring, sl st.",
+          "count": "15"
+        },
+        {
+          "r": "R2",
+          "text": "Light blue: (sc, inc) x3, sc, 3 sc in the 8th st, (sc, inc) x3, sc, sl st.",
+          "count": "23"
+        },
+        {
+          "r": "R3",
+          "text": "Yellow: (sc, inc) x2, (hdc, inc) x2, (dc, inc), tr, 3 tr in the same st (tip), tr, (inc, dc), (inc, hdc) x2, (inc, sc) x2, sl st.",
+          "count": "35"
+        },
+        {
+          "r": "R4",
+          "text": "Light green: sc in the next 17 sts, 3 sc in the 18th st, sc in the next 17 sts, sl st.",
+          "count": "37"
+        },
+        {
+          "r": "R5",
+          "text": "Dark green: 3 hdc, ch 3 picot, (2 dc, ch 3 picot) until you have 8 picots, 1 dc, (2 dc, ch 4 picot, 2 dc) in the tip, 1 dc, picot, (2 dc, ch 3 picot) until you have 8 more picots, 3 hdc. Fasten off.",
+          "count": "17 picots"
+        }
+      ]
+    }
+  ],
+  "finishing": [
+    "Weave in the ends on the back."
+  ],
+  "related": [
+    {
+      "title": "Treble Crochet (tr)",
+      "url": "/stitches/treble-crochet/"
+    },
+    {
+      "title": "Half Double Crochet (hdc)",
+      "url": "/stitches/half-double-crochet/"
+    },
+    {
+      "title": "Increase (inc)",
+      "url": "/stitches/increase/"
+    }
+  ],
+  "image": {
+    "type": "illustration",
+    "art": "flower"
+  }
+}

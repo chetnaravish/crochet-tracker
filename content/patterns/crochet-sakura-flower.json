@@ -1,0 +1,91 @@
+{
+  "draft": true,
+  "subtitle": "Free Crochet Pattern",
+  "tagline": "Free crochet pattern | Leftover yarn | Printable",
+  "date": "2026-11-04",
+  "level": "Beginner",
+  "hook": "3 mm",
+  "terms": "US",
+  "slug": "crochet-sakura-flower",
+  "title": "Crochet Sakura Flower",
+  "name": "Sakura Flower",
+  "seoTitle": "Easy Crochet Sakura Flower Pattern (Free PDF)",
+  "description": "Free, quick crochet sakura (cherry blossom) flower pattern: a chain ring and five dc petals, with a touch of blush in the centre. Printable PDF.",
+  "lead": "A tiny five-petal cherry blossom made on a chain ring. It takes a few minutes, so make a handful for a hair clip, a card or a garland.",
+  "theme": {
+    "accent": "#d4577f",
+    "dark": "#4a1f30",
+    "cream": "#fdf0f4"
+  },
+  "yarn": "Light pink cotton yarn",
+  "materialsTable": [
+    {
+      "item": "Yarn",
+      "details": "Light pink cotton yarn, a few grams"
+    },
+    {
+      "item": "Hook",
+      "details": "3 mm crochet hook"
+    },
+    {
+      "item": "Extra",
+      "details": "A little pink blush or pink pencil for the centre"
+    },
+    {
+      "item": "Tools",
+      "details": "Yarn needle, scissors"
+    }
+  ],
+  "abbreviations": [
+    "ch",
+    "dc",
+    "sl st"
+  ],
+  "notes": [
+    "The petals are worked into the chain ring, not into stitches."
+  ],
+  "sections": [
+    {
+      "title": "",
+      "rounds": [
+        {
+          "r": "Ring",
+          "text": "Make a slip knot. ch 5, sl st into the first ch to make a ring.",
+          "count": ""
+        },
+        {
+          "r": "Petal",
+          "text": "ch 6, dc into the ring, ch 1 and sl st through the dc.",
+          "count": "1 petal"
+        },
+        {
+          "r": "Petals 2–5",
+          "text": "Repeat the petal 4 more times. sl st to join and fasten off.",
+          "count": "5 petals"
+        }
+      ]
+    }
+  ],
+  "finishing": [
+    "Weave in the ends.",
+    "Add a little blush to the centre."
+  ],
+  "related": [
+    {
+      "title": "Chain (ch)",
+      "url": "/stitches/chain/"
+    },
+    {
+      "title": "Double Crochet (dc)",
+      "url": "/stitches/double-crochet/"
+    },
+    {
+      "title": "Slip Stitch",
+      "url": "/stitches/slip-stitch/"
+    }
+  ],
+  "image": {
+    "type": "illustration",
+    "art": "flower"
+  }
+}

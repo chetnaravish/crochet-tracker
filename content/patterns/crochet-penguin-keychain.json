@@ -1,0 +1,272 @@
+{
+  "draft": true,
+  "subtitle": "Amigurumi Keychain Pattern",
+  "tagline": "Free crochet pattern | Leftover yarn | Printable",
+  "date": "2026-11-04",
+  "level": "Easy",
+  "hook": "3 mm",
+  "terms": "US",
+  "slug": "crochet-penguin-keychain",
+  "title": "Crochet Penguin Keychain",
+  "name": "Penguin Keychain",
+  "seoTitle": "Crochet Penguin Keychain Amigurumi Pattern (Free PDF)",
+  "description": "Free crochet penguin keychain pattern: colourwork belly worked into the body, little wings, beak and feet. Printable PDF with counts for every round.",
+  "lead": "A chubby penguin with a white belly that is worked right into the body rounds, so there is no belly patch to sew. Wings, beak and feet are small and quick.",
+  "theme": {
+    "accent": "#d4577f",
+    "dark": "#4a1f30",
+    "cream": "#fdf0f4"
+  },
+  "yarn": "Cotton yarn in a main colour (pink in my sample), white and yellow",
+  "materialsTable": [
+    {
+      "item": "Yarn",
+      "details": "Cotton yarn in a main colour (pink in my sample), white (belly) and yellow (beak and feet)"
+    },
+    {
+      "item": "Hook",
+      "details": "3 mm crochet hook"
+    },
+    {
+      "item": "Stuffing",
+      "details": "Toy stuffing"
+    },
+    {
+      "item": "Eyes",
+      "details": "Safety eyes or black yarn"
+    },
+    {
+      "item": "Extra",
+      "details": "Keyring"
+    },
+    {
+      "item": "Tools",
+      "details": "Yarn needle, scissors"
+    }
+  ],
+  "abbreviations": [
+    "mr",
+    "sc",
+    "inc",
+    "dec",
+    "ch",
+    "sl st",
+    "st"
+  ],
+  "notes": [
+    "From round 7 the belly is worked in white. Carry the colour you are not using inside the body.",
+    "Body rounds end with a sl st."
+  ],
+  "sections": [
+    {
+      "title": "Part 1: Body",
+      "rounds": [
+        {
+          "r": "R1",
+          "text": "6 sc in a magic ring.",
+          "count": "6",
+          "chart": {
+            "type": "ring",
+            "sym": "sc",
+            "count": 6
+          }
+        },
+        {
+          "r": "R2",
+          "text": "inc x6",
+          "count": "12",
+          "chart": {
+            "type": "inc",
+            "sym": "sc",
+            "count": 12
+          }
+        },
+        {
+          "r": "R3",
+          "text": "(sc, inc) x6",
+          "count": "18",
+          "chart": {
+            "type": "inc",
+            "sym": "sc",
+            "count": 18,
+            "every": 2
+          }
+        },
+        {
+          "r": "R4",
+          "text": "(2 sc, inc) x6",
+          "count": "24",
+          "chart": {
+            "type": "inc",
+            "sym": "sc",
+            "count": 24,
+            "every": 3
+          }
+        },
+        {
+          "r": "R5",
+          "text": "(3 sc, inc) x6",
+          "count": "30",
+          "chart": {
+            "type": "inc",
+            "sym": "sc",
+            "count": 30,
+            "every": 4
+          }
+        },
+        {
+          "r": "R6",
+          "text": "(14 sc, inc) x2",
+          "count": "32"
+        },
+        {
+          "r": "R7",
+          "text": "main 11 sc, white 3 sc, main 4 sc, white 3 sc, main 11 sc, sl st",
+          "count": "32"
+        },
+        {
+          "r": "R8",
+          "text": "main 10 sc, white 5 sc, main 2 sc, white 5 sc, main 10 sc, sl st",
+          "count": "32"
+        },
+        {
+          "r": "R9–R11",
+          "text": "main 10 sc, white 12 sc, main 10 sc, sl st (3 rounds)",
+          "count": "32"
+        },
+        {
+          "r": "R12",
+          "text": "main (dec, 3 sc) x2, white (dec, 3 sc, dec, 3 sc, dec), main (dec, 3 sc) x2, sl st",
+          "count": "25"
+        },
+        {
+          "r": "R13",
+          "text": "main (inc, 3 sc) x2, white (inc, 3 sc, inc, 3 sc, inc), main (inc, 3 sc) x2, sl st",
+          "count": "32"
+        },
+        {
+          "r": "R14",
+          "text": "main (inc, 4 sc) x2, white (inc, 3 sc, inc, 2 sc, inc, 3 sc, inc), main (inc, 4 sc) x2, sl st",
+          "count": "40"
+        },
+        {
+          "r": "R15–R20",
+          "text": "main 12 sc, white 16 sc, main 12 sc, sl st (6 rounds)",
+          "count": "40"
+        },
+        {
+          "r": "R21",
+          "text": "main 12 sc, white (dec, 12 sc, dec), main 12 sc, sl st",
+          "count": "38"
+        },
+        {
+          "r": "R22",
+          "text": "main 12 sc, white 14 sc, main 12 sc, sl st",
+          "count": "38"
+        },
+        {
+          "r": "R23",
+          "text": "main (dec, 4 sc) x2, white (dec, 10 sc, dec), main (4 sc, dec) x2, sl st",
+          "count": "32"
+        },
+        {
+          "r": "R24",
+          "text": "(2 sc, dec) x8. Stuff the body.",
+          "count": "24"
+        },
+        {
+          "r": "R25",
+          "text": "(sc, dec) x8",
+          "count": "16"
+        },
+        {
+          "r": "R26",
+          "text": "dec x8. Close the body and finish with a needle.",
+          "count": "8"
+        }
+      ]
+    },
+    {
+      "title": "Part 2: Wings",
+      "make": 2,
+      "rounds": [
+        {
+          "r": "R1",
+          "text": "With the main colour: 6 sc in a magic ring.",
+          "count": "6"
+        },
+        {
+          "r": "R2",
+          "text": "(sc, inc) x3",
+          "count": "9"
+        },
+        {
+          "r": "R3–R5",
+          "text": "ch 1, 9 sc, sl st (3 rounds)",
+          "count": "9"
+        },
+        {
+          "r": "R6",
+          "text": "ch 1, (sc, dec) x3, sl st",
+          "count": "6"
+        },
+        {
+          "r": "R7",
+          "text": "ch 1, fold flat and join both sides with a sc in each st, sl st. Fasten off.",
+          "count": "3"
+        }
+      ]
+    },
+    {
+      "title": "Part 3: Beak",
+      "colour": "yellow",
+      "rounds": [
+        {
+          "r": "R1",
+          "text": "4 sc in a magic ring. Cut the yarn.",
+          "count": "4"
+        }
+      ]
+    },
+    {
+      "title": "Part 4: Feet",
+      "colour": "yellow",
+      "make": 2,
+      "rounds": [
+        {
+          "r": "R1",
+          "text": "4 sc in a magic ring, sl st.",
+          "count": "4"
+        },
+        {
+          "r": "R2",
+          "text": "(sc, inc) x2, sl st. Cut the yarn.",
+          "count": "6"
+        }
+      ]
+    }
+  ],
+  "finishing": [
+    "Add the eyes on the white face part, a few rounds apart.",
+    "Sew the beak between the eyes, the wings on the sides and the feet at the bottom.",
+    "Attach the keyring to the top of the head."
+  ],
+  "related": [
+    {
+      "title": "Magic Ring",
+      "url": "/stitches/magic-ring/"
+    },
+    {
+      "title": "Increase (inc)",
+      "url": "/stitches/increase/"
+    },
+    {
+      "title": "Decrease (dec)",
+      "url": "/stitches/decrease/"
+    }
+  ],
+  "image": {
+    "type": "illustration",
+    "art": "ball"
+  }
+}

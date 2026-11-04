@@ -1,0 +1,165 @@
+{
+  "draft": true,
+  "subtitle": "Play Food Crochet Pattern",
+  "tagline": "Free crochet pattern | Leftover yarn | Printable",
+  "date": "2026-11-04",
+  "level": "Beginner",
+  "hook": "3 mm",
+  "terms": "US",
+  "slug": "crochet-swiss-roll-cake",
+  "title": "Crochet Swiss Roll Cake Slice",
+  "name": "Swiss Roll Slice",
+  "seoTitle": "Crochet Swiss Roll Cake Slice Pattern (Free PDF)",
+  "description": "Free crochet swiss roll cake slice pattern: two dc strips rolled into a spiral, topped with whipped cream, a cherry and a leaf. Printable PDF for play food.",
+  "lead": "A sweet slice of swiss roll for play food or a keychain. Two long strips of dc are rolled together into a spiral, then topped with a cream swirl, a cherry and a little leaf.",
+  "theme": {
+    "accent": "#a0663a",
+    "dark": "#3e2414",
+    "cream": "#fbf3ea"
+  },
+  "yarn": "Cotton yarn in a cake colour, white, red and green",
+  "materialsTable": [
+    {
+      "item": "Yarn",
+      "details": "Cotton yarn: cake colour (brown or pink), white, red and green"
+    },
+    {
+      "item": "Hook",
+      "details": "3 mm crochet hook"
+    },
+    {
+      "item": "Stuffing",
+      "details": "A pinch of stuffing for the cherry"
+    },
+    {
+      "item": "Tools",
+      "details": "Yarn needle, scissors"
+    }
+  ],
+  "abbreviations": [
+    "ch",
+    "dc",
+    "sc",
+    "inc",
+    "dec",
+    "hdc",
+    "sl st",
+    "mr",
+    "blo",
+    "cl",
+    "st"
+  ],
+  "notes": [
+    "A 3-dc cluster: work 3 dc in the same st, stopping each one when 2 loops are left, then yarn over and pull through all 4 loops."
+  ],
+  "sections": [
+    {
+      "title": "Part 1: Cake layer",
+      "rounds": [
+        {
+          "r": "Row 1",
+          "text": "With the cake colour: ch 50. Working in the back loops only, skip 2 ch, dc in each ch, leaving the last back loop.",
+          "count": ""
+        },
+        {
+          "r": "End",
+          "text": "ch 3 and sl st into the last back loop. Cut the yarn.",
+          "count": ""
+        }
+      ]
+    },
+    {
+      "title": "Part 2: Cream layer",
+      "rounds": [
+        {
+          "r": "Row 1",
+          "text": "With white: ch 48. Skip 2 ch, dc in each ch, leaving the last 2 loops.",
+          "count": ""
+        },
+        {
+          "r": "End",
+          "text": "ch 2, sl st in the last loop. Cut the yarn.",
+          "count": ""
+        }
+      ]
+    },
+    {
+      "title": "Part 3: Whipped cream",
+      "rounds": [
+        {
+          "r": "R1",
+          "text": "With white: magic ring, ch 1, 10 sc in the ring, sl st.",
+          "count": "10"
+        },
+        {
+          "r": "R2",
+          "text": "ch 1, (sc, 3-dc cluster in next st) x5. Fasten off.",
+          "count": "5 swirls"
+        }
+      ]
+    },
+    {
+      "title": "Part 4: Cherry",
+      "rounds": [
+        {
+          "r": "R1",
+          "text": "With red: magic ring, ch 1, 6 sc (no sl st, work in a spiral).",
+          "count": "6"
+        },
+        {
+          "r": "R2",
+          "text": "inc x6",
+          "count": "12"
+        },
+        {
+          "r": "R3",
+          "text": "sc around",
+          "count": "12"
+        },
+        {
+          "r": "R4",
+          "text": "sc around",
+          "count": "12"
+        },
+        {
+          "r": "R5",
+          "text": "(sc, dec) x4. Stuff, ch 1 and cut the yarn.",
+          "count": "8"
+        }
+      ]
+    },
+    {
+      "title": "Part 5: Leaf",
+      "rounds": [
+        {
+          "r": "Row 1",
+          "text": "With green: ch 6. Skip 1 ch, sl st, hdc, hdc, (sl st, ch 1, sl st) in the next ch, hdc, dc, hdc, sl st, sl st, ch 1. Fasten off.",
+          "count": ""
+        }
+      ]
+    }
+  ],
+  "finishing": [
+    "Lay the white strip on top of the cake strip and roll them up tightly together into a spiral.",
+    "Sew the end of the roll in place so it does not unroll.",
+    "Sew the whipped cream on top, the cherry on the cream and the leaf next to the cherry."
+  ],
+  "related": [
+    {
+      "title": "Front & Back Loop",
+      "url": "/stitches/front-and-back-loop/"
+    },
+    {
+      "title": "Cluster Stitch",
+      "url": "/stitches/cluster-stitch/"
+    },
+    {
+      "title": "Double Crochet (dc)",
+      "url": "/stitches/double-crochet/"
+    }
+  ],
+  "image": {
+    "type": "illustration",
+    "art": "coaster"
+  }
+}

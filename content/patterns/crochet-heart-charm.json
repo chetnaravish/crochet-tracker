@@ -1,0 +1,113 @@
+{
+  "draft": true,
+  "subtitle": "Free Crochet Pattern",
+  "tagline": "Free crochet pattern | Leftover yarn | Printable",
+  "date": "2026-11-04",
+  "level": "Beginner",
+  "hook": "3 mm",
+  "terms": "US",
+  "slug": "crochet-heart-charm",
+  "title": "Crochet Heart Charm",
+  "name": "Heart Charm",
+  "seoTitle": "Crochet Heart Charm Pattern for Beginners (Free PDF)",
+  "description": "Free crochet heart charm pattern for beginners: a small heart from a magic ring, sewn on a round white base with a looped border. Printable PDF download.",
+  "lead": "A small heart sewn onto a round white base, with a looped border in the same colour as the heart. Quick and sweet as a bag charm.",
+  "theme": {
+    "accent": "#d0453a",
+    "dark": "#4a1a15",
+    "cream": "#fdf0ee"
+  },
+  "yarn": "Cotton yarn in red or pink and white",
+  "materialsTable": [
+    {
+      "item": "Yarn",
+      "details": "Cotton yarn in red or pink (heart and border) and white (base)"
+    },
+    {
+      "item": "Hook",
+      "details": "3 mm crochet hook"
+    },
+    {
+      "item": "Tools",
+      "details": "Yarn needle, scissors"
+    }
+  ],
+  "abbreviations": [
+    "mr",
+    "ch",
+    "tr",
+    "dc",
+    "sl st",
+    "st"
+  ],
+  "sections": [
+    {
+      "title": "Part 1: Heart",
+      "rounds": [
+        {
+          "r": "Heart",
+          "text": "Magic ring. ch 3, 3 tr, 4 dc, ch 2, 4 dc, 3 tr, ch 3, sl st. Pull the ring closed.",
+          "count": ""
+        }
+      ]
+    },
+    {
+      "title": "Part 2: White base",
+      "rounds": [
+        {
+          "r": "R1",
+          "text": "Magic ring, ch 2, 12 dc in the ring, sl st.",
+          "count": "12",
+          "chart": {
+            "type": "ring",
+            "sym": "dc",
+            "count": 12
+          }
+        },
+        {
+          "r": "R2",
+          "text": "ch 2, 2 dc in each st, sl st.",
+          "count": "24",
+          "chart": {
+            "type": "inc",
+            "sym": "dc",
+            "count": 24
+          }
+        }
+      ]
+    },
+    {
+      "title": "Part 3: Border",
+      "note": "Same colour as the heart.",
+      "rounds": [
+        {
+          "r": "R3",
+          "text": "(ch 3, skip 1 st, sl st in next st) around. Fasten off.",
+          "count": "12 loops"
+        }
+      ]
+    }
+  ],
+  "finishing": [
+    "Sew the heart in the middle of the base.",
+    "Weave in the ends."
+  ],
+  "related": [
+    {
+      "title": "Magic Ring",
+      "url": "/stitches/magic-ring/"
+    },
+    {
+      "title": "Treble Crochet (tr)",
+      "url": "/stitches/treble-crochet/"
+    },
+    {
+      "title": "Double Crochet (dc)",
+      "url": "/stitches/double-crochet/"
+    }
+  ],
+  "image": {
+    "type": "illustration",
+    "art": "flower"
+  }
+}

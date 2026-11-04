@@ -1,0 +1,110 @@
+{
+  "draft": true,
+  "subtitle": "Free Crochet Pattern",
+  "tagline": "Free crochet pattern | Leftover yarn | Printable",
+  "date": "2026-11-04",
+  "level": "Easy",
+  "hook": "3 mm",
+  "terms": "US",
+  "slug": "crochet-heart-keychain",
+  "title": "Crochet Heart Keychain",
+  "name": "Heart Keychain",
+  "seoTitle": "Easy Crochet Heart Keychain Pattern (Free PDF)",
+  "description": "Free, easy crochet heart keychain pattern: two flat hearts joined with a white picot border. Great for gifts and leftover yarn. Printable PDF download.",
+  "lead": "Two flat hearts, worked in two rounds each and joined with a white border, so the keychain looks neat on both sides.",
+  "theme": {
+    "accent": "#d4577f",
+    "dark": "#4a1f30",
+    "cream": "#fdf0f4"
+  },
+  "yarn": "Cotton yarn in pink, dark pink and white",
+  "materialsTable": [
+    {
+      "item": "Yarn",
+      "details": "Cotton yarn in pink (hearts), dark pink and white (border)"
+    },
+    {
+      "item": "Hook",
+      "details": "3 mm crochet hook"
+    },
+    {
+      "item": "Extra",
+      "details": "Keyring"
+    },
+    {
+      "item": "Tools",
+      "details": "Yarn needle, scissors"
+    }
+  ],
+  "abbreviations": [
+    "mr",
+    "ch",
+    "tr",
+    "dc",
+    "sc",
+    "sl st",
+    "st"
+  ],
+  "sections": [
+    {
+      "title": "Part 1: Hearts",
+      "make": 2,
+      "rounds": [
+        {
+          "r": "R1",
+          "text": "Magic ring. ch 3, 3 tr, 4 dc, 1 tr, 4 dc, 3 tr, ch 3, sl st. Pull the ring closed.",
+          "count": "15"
+        },
+        {
+          "r": "R2",
+          "text": "2 sc in the ch-3 space, (3 dc in next st) x3, dc in next 4 sts, (dc, tr, dc) in next st, dc in next 4 sts, (3 dc in next st) x3, 2 sc in the ch-3 space, sl st.",
+          "count": ""
+        }
+      ]
+    },
+    {
+      "title": "Part 2: Decoration",
+      "colour": "dark pink",
+      "rounds": [
+        {
+          "r": "Front",
+          "text": "On the front heart: (ch 2, 2 dc, ch 2, sl st) x2.",
+          "count": ""
+        }
+      ]
+    },
+    {
+      "title": "Part 3: Join",
+      "colour": "white",
+      "rounds": [
+        {
+          "r": "Border",
+          "text": "Hold both hearts together. Join white: ch 3, sl st, (ch 2, sl st in next st) x13, sl st, 2 sc, 2 sc, (ch 2, sl st in next st) x13, sl st. Fasten off.",
+          "count": ""
+        }
+      ]
+    }
+  ],
+  "finishing": [
+    "Weave in the ends.",
+    "Attach the keyring at the top."
+  ],
+  "related": [
+    {
+      "title": "Treble Crochet (tr)",
+      "url": "/stitches/treble-crochet/"
+    },
+    {
+      "title": "Double Crochet (dc)",
+      "url": "/stitches/double-crochet/"
+    },
+    {
+      "title": "Magic Ring",
+      "url": "/stitches/magic-ring/"
+    }
+  ],
+  "image": {
+    "type": "illustration",
+    "art": "flower"
+  }
+}

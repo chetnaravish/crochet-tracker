@@ -1,0 +1,134 @@
+{
+  "draft": true,
+  "subtitle": "Hair Accessory Pattern",
+  "tagline": "Free crochet pattern | Leftover yarn | Printable",
+  "date": "2026-11-04",
+  "level": "Easy",
+  "hook": "3 mm",
+  "terms": "US",
+  "slug": "crochet-layered-flower-clip",
+  "title": "Crochet Layered Flower Hair Clip",
+  "name": "Layered Flower Clip",
+  "seoTitle": "Crochet Layered Flower Hair Clip Pattern (Free PDF)",
+  "description": "Free crochet layered flower hair clip pattern: a front layer of tr petals in front loops and a bigger back layer in back loops. Printable PDF, step by step.",
+  "lead": "A two-layer flower for a hair clip. The small front petals use the front loops and the bigger back petals use the back loops of the same round, so the layers sit neatly on top of each other.",
+  "theme": {
+    "accent": "#7d5fbf",
+    "dark": "#2e2347",
+    "cream": "#f3eefb"
+  },
+  "yarn": "Cotton yarn in one or two colours",
+  "materialsTable": [
+    {
+      "item": "Yarn",
+      "details": "Cotton yarn, one or two colours"
+    },
+    {
+      "item": "Hook",
+      "details": "3 mm crochet hook"
+    },
+    {
+      "item": "Extra",
+      "details": "Hair clip and glue or thread"
+    },
+    {
+      "item": "Tools",
+      "details": "Yarn needle, scissors"
+    }
+  ],
+  "abbreviations": [
+    "mr",
+    "sc",
+    "inc",
+    "ch",
+    "tr",
+    "sl st",
+    "flo",
+    "blo",
+    "st"
+  ],
+  "notes": [
+    "dtr (double treble): yarn over 3 times, then pull through 2 loops 4 times."
+  ],
+  "sections": [
+    {
+      "title": "Part 1: Centre",
+      "rounds": [
+        {
+          "r": "R1",
+          "text": "5 sc in a magic ring, sl st, ch 1.",
+          "count": "5",
+          "chart": {
+            "type": "ring",
+            "sym": "sc",
+            "count": 5
+          }
+        },
+        {
+          "r": "R2",
+          "text": "inc x5",
+          "count": "10",
+          "chart": {
+            "type": "inc",
+            "sym": "sc",
+            "count": 10
+          }
+        }
+      ]
+    },
+    {
+      "title": "Part 2: Front petals",
+      "note": "Work in the front loops of round 2.",
+      "rounds": [
+        {
+          "r": "R3",
+          "text": "(ch 4, 2 tr in this st, 2 tr in next st, ch 4, sl st in the same st) x5. sl st.",
+          "count": "5 petals"
+        },
+        {
+          "r": "R4",
+          "text": "On each petal: (ch 3, sl st) x3 in the next st, ch 5, sl st in the centre. Repeat on all 5 petals.",
+          "count": ""
+        }
+      ]
+    },
+    {
+      "title": "Part 3: Back petals",
+      "note": "sl st in the first back loop of round 2 and work in back loops.",
+      "rounds": [
+        {
+          "r": "R5",
+          "text": "ch 1, (sc, inc) x5",
+          "count": "15"
+        },
+        {
+          "r": "R6",
+          "text": "(ch 4, 2 tr in this st, dtr in next st, 2 tr in next st, ch 4, sl st in the same st) x5. Fasten off.",
+          "count": "5 petals"
+        }
+      ]
+    }
+  ],
+  "finishing": [
+    "Weave in the ends.",
+    "Glue or sew the flower onto a hair clip."
+  ],
+  "related": [
+    {
+      "title": "Front & Back Loop",
+      "url": "/stitches/front-and-back-loop/"
+    },
+    {
+      "title": "Treble Crochet (tr)",
+      "url": "/stitches/treble-crochet/"
+    },
+    {
+      "title": "Magic Ring",
+      "url": "/stitches/magic-ring/"
+    }
+  ],
+  "image": {
+    "type": "illustration",
+    "art": "flower"
+  }
+}

@@ -1,0 +1,188 @@
+{
+  "draft": true,
+  "subtitle": "Amigurumi Pattern",
+  "tagline": "Free crochet pattern | Leftover yarn | Printable",
+  "date": "2026-11-04",
+  "level": "Easy",
+  "hook": "3 mm",
+  "terms": "US",
+  "slug": "crochet-mini-bear",
+  "title": "Crochet Mini Bear",
+  "name": "Mini Bear",
+  "seoTitle": "Crochet Mini Bear Amigurumi Pattern (Free PDF)",
+  "description": "Free crochet mini bear amigurumi pattern: a one-piece head and body with bobble arms and feet, little ears and a pink bow. Printable PDF with counts.",
+  "lead": "A tiny bear worked in one piece from the head down. Bobble stitches make the arms and feet, the ears are worked straight onto the head, and a pink bow finishes it.",
+  "theme": {
+    "accent": "#a0663a",
+    "dark": "#3e2414",
+    "cream": "#fbf3ea"
+  },
+  "yarn": "Cotton yarn in brown, plus pink for the bow",
+  "materialsTable": [
+    {
+      "item": "Yarn",
+      "details": "Cotton yarn in brown (bear) and pink (bow)"
+    },
+    {
+      "item": "Hook",
+      "details": "3 mm crochet hook"
+    },
+    {
+      "item": "Stuffing",
+      "details": "Toy stuffing"
+    },
+    {
+      "item": "Eyes",
+      "details": "Black yarn or small safety eyes"
+    },
+    {
+      "item": "Tools",
+      "details": "Yarn needle, scissors"
+    }
+  ],
+  "abbreviations": [
+    "mr",
+    "sc",
+    "inc",
+    "dec",
+    "ch",
+    "hdc",
+    "dc",
+    "sl st",
+    "bob",
+    "blo",
+    "st"
+  ],
+  "notes": [
+    "Bobble (bob): 5 dc in the same st, stopping each one when 2 loops are left, then yarn over and pull through all 6 loops.",
+    "Round 8 uses the back loops only."
+  ],
+  "sections": [
+    {
+      "title": "Part 1: Head and body",
+      "rounds": [
+        {
+          "r": "R1",
+          "text": "5 sc in a magic ring, sl st, ch 1.",
+          "count": "5",
+          "chart": {
+            "type": "ring",
+            "sym": "sc",
+            "count": 5
+          }
+        },
+        {
+          "r": "R2",
+          "text": "inc x5",
+          "count": "10",
+          "chart": {
+            "type": "inc",
+            "sym": "sc",
+            "count": 10
+          }
+        },
+        {
+          "r": "R3",
+          "text": "(sc, inc) x5",
+          "count": "15",
+          "chart": {
+            "type": "inc",
+            "sym": "sc",
+            "count": 15,
+            "every": 2
+          }
+        },
+        {
+          "r": "R4",
+          "text": "(2 sc, inc) x5",
+          "count": "20",
+          "chart": {
+            "type": "inc",
+            "sym": "sc",
+            "count": 20,
+            "every": 3
+          }
+        },
+        {
+          "r": "R5–R6",
+          "text": "sc around (2 rounds)",
+          "count": "20",
+          "chart": {
+            "type": "even",
+            "sym": "sc",
+            "count": 20
+          }
+        },
+        {
+          "r": "R7",
+          "text": "dec x10. Stuff the head.",
+          "count": "10"
+        },
+        {
+          "r": "R8",
+          "text": "In back loops: sc, inc, (bob, inc, sc, inc) x2",
+          "count": "15"
+        },
+        {
+          "r": "R9",
+          "text": "sc around",
+          "count": "15"
+        },
+        {
+          "r": "R10",
+          "text": "4 sc, bob, 3 sc, bob, 6 sc",
+          "count": "15"
+        },
+        {
+          "r": "R11",
+          "text": "(sc, dec) x5. Stuff and close. Cut the yarn.",
+          "count": "10"
+        }
+      ]
+    },
+    {
+      "title": "Part 2: Ears",
+      "make": 2,
+      "rounds": [
+        {
+          "r": "Ear",
+          "text": "Insert the hook between rounds 3 and 4 of the head. ch 1, (sc, hdc) in the same place. Cut the yarn.",
+          "count": ""
+        }
+      ]
+    },
+    {
+      "title": "Part 3: Bow",
+      "colour": "pink",
+      "rounds": [
+        {
+          "r": "Bow",
+          "text": "Magic ring. ch 3, 3 dc, ch 3, sl st, ch 3, 3 dc, ch 3, sl st, all in the ring. Pull the ring closed.",
+          "count": "2 loops"
+        }
+      ]
+    }
+  ],
+  "finishing": [
+    "Embroider the eyes and nose.",
+    "Sew the bow between the ears."
+  ],
+  "related": [
+    {
+      "title": "Bobble Stitch",
+      "url": "/stitches/bobble-stitch/"
+    },
+    {
+      "title": "Front & Back Loop",
+      "url": "/stitches/front-and-back-loop/"
+    },
+    {
+      "title": "Magic Ring",
+      "url": "/stitches/magic-ring/"
+    }
+  ],
+  "image": {
+    "type": "illustration",
+    "art": "ball"
+  }
+}

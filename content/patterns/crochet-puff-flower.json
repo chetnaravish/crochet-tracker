@@ -1,0 +1,95 @@
+{
+  "draft": true,
+  "subtitle": "Free Crochet Pattern",
+  "tagline": "Free crochet pattern | Leftover yarn | Printable",
+  "date": "2026-11-04",
+  "level": "Easy",
+  "hook": "3 mm",
+  "terms": "US",
+  "slug": "crochet-puff-flower",
+  "title": "Crochet Puff Stitch Flower",
+  "name": "Puff Flower",
+  "seoTitle": "Crochet Puff Stitch Flower Pattern (Free PDF)",
+  "description": "Free crochet puff stitch flower pattern: a dc ring, six puff stitches and a round of sc and dc petals. Quick, flat and printable. Free PDF download.",
+  "lead": "A flat, soft flower made with six puff stitches. It works up in four rounds and makes a cute appliqué or keychain.",
+  "theme": {
+    "accent": "#d4577f",
+    "dark": "#4a1f30",
+    "cream": "#fdf0f4"
+  },
+  "yarn": "Cotton yarn in one or two colours",
+  "materialsTable": [
+    {
+      "item": "Yarn",
+      "details": "Cotton yarn in one or two colours"
+    },
+    {
+      "item": "Hook",
+      "details": "3 mm crochet hook"
+    },
+    {
+      "item": "Tools",
+      "details": "Yarn needle, scissors"
+    }
+  ],
+  "abbreviations": [
+    "mr",
+    "sc",
+    "ch",
+    "dc",
+    "puff",
+    "sl st",
+    "st"
+  ],
+  "notes": [
+    "Puff (6 loops): (yarn over, insert hook, pull up a loop) until you have 6 loops on the hook, yarn over and pull through all of them."
+  ],
+  "sections": [
+    {
+      "title": "",
+      "rounds": [
+        {
+          "r": "R1",
+          "text": "5 sc in a magic ring.",
+          "count": "5"
+        },
+        {
+          "r": "R2",
+          "text": "ch 4 (counts as dc + ch 1), (dc, ch 1) x5, sl st to the 3rd ch.",
+          "count": "6 spaces"
+        },
+        {
+          "r": "R3",
+          "text": "ch 3, (puff in the ch-1 space, ch 1) x6, sl st.",
+          "count": "6 puffs"
+        },
+        {
+          "r": "R4",
+          "text": "(sc, 2 dc, sc) in each ch-1 space x6. Fasten off.",
+          "count": "6 petals"
+        }
+      ]
+    }
+  ],
+  "finishing": [
+    "Weave in the ends."
+  ],
+  "related": [
+    {
+      "title": "Puff Stitch",
+      "url": "/stitches/puff-stitch/"
+    },
+    {
+      "title": "Magic Ring",
+      "url": "/stitches/magic-ring/"
+    },
+    {
+      "title": "Double Crochet (dc)",
+      "url": "/stitches/double-crochet/"
+    }
+  ],
+  "image": {
+    "type": "illustration",
+    "art": "flower"
+  }
+}

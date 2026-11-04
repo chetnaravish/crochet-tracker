@@ -1,0 +1,157 @@
+{
+  "draft": true,
+  "subtitle": "Free Crochet Pattern",
+  "tagline": "Free crochet pattern | Leftover yarn | Printable",
+  "date": "2026-11-04",
+  "level": "Beginner",
+  "hook": "3 mm",
+  "terms": "US",
+  "slug": "crochet-lotus-flower",
+  "title": "Crochet Lotus Flower",
+  "name": "Lotus Flower",
+  "seoTitle": "Crochet Lotus Flower Pattern, Layered (Free PDF)",
+  "description": "Free crochet lotus flower pattern: green leaves, two layers of pink petals worked in front loops and a yellow seed centre. Printable PDF, step by step.",
+  "lead": "A layered lotus that sits flat: a green base with six leaves, then two rings of pink petals worked into the front loops, and a little yellow centre.",
+  "theme": {
+    "accent": "#d4577f",
+    "dark": "#4a1f30",
+    "cream": "#fdf0f4"
+  },
+  "yarn": "Cotton yarn in green, pink, light pink and yellow",
+  "materialsTable": [
+    {
+      "item": "Yarn",
+      "details": "Cotton yarn in green, pink, light pink and yellow"
+    },
+    {
+      "item": "Hook",
+      "details": "3 mm crochet hook"
+    },
+    {
+      "item": "Tools",
+      "details": "Yarn needle, scissors"
+    }
+  ],
+  "abbreviations": [
+    "mr",
+    "sc",
+    "inc",
+    "ch",
+    "dc",
+    "tr",
+    "sl st",
+    "blo",
+    "flo",
+    "st"
+  ],
+  "notes": [
+    "Rounds 2 and 3 of the base use the back loops only. That leaves the front loops free for the petals.",
+    "Picot: ch 1, then sl st into the top of the stitch you just made."
+  ],
+  "sections": [
+    {
+      "title": "Part 1: Base and leaves",
+      "colour": "green",
+      "rounds": [
+        {
+          "r": "R1",
+          "text": "6 sc in a magic ring, sl st, ch 1.",
+          "count": "6",
+          "chart": {
+            "type": "ring",
+            "sym": "sc",
+            "count": 6
+          }
+        },
+        {
+          "r": "R2",
+          "text": "inc in the back loop of each st (BLO), sl st, ch 1.",
+          "count": "12",
+          "chart": {
+            "type": "inc",
+            "sym": "sc",
+            "count": 12
+          }
+        },
+        {
+          "r": "R3",
+          "text": "(sc, inc) x6 in back loops, sl st.",
+          "count": "18",
+          "chart": {
+            "type": "inc",
+            "sym": "sc",
+            "count": 18,
+            "every": 2
+          }
+        },
+        {
+          "r": "R4",
+          "text": "(ch 2, [dc, tr, ch 1 picot] in next st, [tr, dc] in next st, ch 2, sl st in next st) x6. Fasten off.",
+          "count": "6 leaves"
+        }
+      ]
+    },
+    {
+      "title": "Part 2: Outer petals",
+      "colour": "pink",
+      "note": "Work into the free front loops of round 2.",
+      "rounds": [
+        {
+          "r": "Petals",
+          "text": "Join pink. (ch 2, [dc, tr, ch 1 picot, dc] in next st, ch 2, sl st in next st) x6. Fasten off.",
+          "count": "6 petals"
+        }
+      ]
+    },
+    {
+      "title": "Part 3: Inner petals",
+      "colour": "light pink",
+      "note": "Work into the free front loops of round 1.",
+      "rounds": [
+        {
+          "r": "Petals",
+          "text": "Join light pink. (ch 2, dc, ch 1 picot, dc in the same st, ch 2, sl st in next st) x6. sl st, ch 1 and cut the yarn.",
+          "count": "6 petals"
+        }
+      ]
+    },
+    {
+      "title": "Part 4: Seed centre",
+      "colour": "yellow",
+      "rounds": [
+        {
+          "r": "R1",
+          "text": "6 sc in a magic ring, sl st, ch 1.",
+          "count": "6"
+        },
+        {
+          "r": "R2",
+          "text": "6 sc, sl st, ch 2 and cut the yarn.",
+          "count": "6"
+        }
+      ]
+    }
+  ],
+  "finishing": [
+    "Sew the yellow centre in the middle of the flower.",
+    "Weave in all the ends on the back."
+  ],
+  "related": [
+    {
+      "title": "Front & Back Loop",
+      "url": "/stitches/front-and-back-loop/"
+    },
+    {
+      "title": "Treble Crochet (tr)",
+      "url": "/stitches/treble-crochet/"
+    },
+    {
+      "title": "Magic Ring",
+      "url": "/stitches/magic-ring/"
+    }
+  ],
+  "image": {
+    "type": "illustration",
+    "art": "flower"
+  }
+}

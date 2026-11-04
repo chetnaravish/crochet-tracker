@@ -1,0 +1,130 @@
+{
+  "draft": true,
+  "subtitle": "Crochet Payal Pattern",
+  "tagline": "Free crochet pattern | Leftover yarn | Printable",
+  "date": "2026-11-04",
+  "level": "Easy",
+  "hook": "3 mm",
+  "terms": "US",
+  "slug": "crochet-rose-anklet",
+  "title": "Crochet Rose Anklet (Payal)",
+  "name": "Rose Anklet",
+  "seoTitle": "Crochet Rose Anklet (Payal) Pattern (Free PDF)",
+  "description": "Free crochet rose anklet (payal) pattern: a chain band with little bumps, rolled roses and a bell. Easy, quick and printable. Free PDF download.",
+  "lead": "A crochet payal: a light chain band with small bumps, two big rolled roses at the ends, a small one in the middle and a bell.",
+  "theme": {
+    "accent": "#d4577f",
+    "dark": "#4a1f30",
+    "cream": "#fdf0f4"
+  },
+  "yarn": "Thin cotton yarn in a band colour and a rose colour",
+  "materialsTable": [
+    {
+      "item": "Yarn",
+      "details": "Thin cotton yarn in a band colour and a rose colour"
+    },
+    {
+      "item": "Hook",
+      "details": "3 mm crochet hook"
+    },
+    {
+      "item": "Extra",
+      "details": "A small bell, needle and thread"
+    },
+    {
+      "item": "Tools",
+      "details": "Yarn needle, scissors"
+    }
+  ],
+  "abbreviations": [
+    "ch",
+    "sc",
+    "hdc",
+    "dc",
+    "tr",
+    "inc",
+    "sl st",
+    "mr",
+    "st"
+  ],
+  "sections": [
+    {
+      "title": "Part 1: Band",
+      "rounds": [
+        {
+          "r": "Start",
+          "text": "Slip knot, ch 12.",
+          "count": ""
+        },
+        {
+          "r": "Bump",
+          "text": "sc, hdc, sc in the next ch and sl st.",
+          "count": ""
+        },
+        {
+          "r": "Repeat",
+          "text": "ch 12 and repeat the bump. Keep repeating until the band fits around your ankle.",
+          "count": ""
+        }
+      ]
+    },
+    {
+      "title": "Part 2: Small flower",
+      "rounds": [
+        {
+          "r": "Petals",
+          "text": "Magic ring, ch 6. In the 2nd ch from the hook: sc, hdc, dc in the next 2 ch, hdc, sl st into the ring. Make 3 petals in the ring.",
+          "count": "3 petals"
+        }
+      ]
+    },
+    {
+      "title": "Part 3: Small rolled rose",
+      "rounds": [
+        {
+          "r": "Row",
+          "text": "Slip knot, ch 6. In the 2nd ch: sc, inc (2 sc in the same st), then 3 sc in each of the last 3 ch, sl st.",
+          "count": ""
+        },
+        {
+          "r": "Roll",
+          "text": "Insert the hook at the bottom, wrap 1 loop around the hook and pull the yarn through. Roll it up and fasten off.",
+          "count": ""
+        }
+      ]
+    },
+    {
+      "title": "Part 4: Big rolled rose",
+      "make": 2,
+      "rounds": [
+        {
+          "r": "Row",
+          "text": "Slip knot, ch 9. In the 2nd ch: sc, hdc, dc, dc inc, tr, tr inc, then 3 tr in each of the last 2 ch, sl st. Roll it up and fasten off.",
+          "count": ""
+        }
+      ]
+    }
+  ],
+  "finishing": [
+    "Sew the bell to the band with a needle.",
+    "Attach the 2 big roses at both ends and the small one in the middle."
+  ],
+  "related": [
+    {
+      "title": "Chain (ch)",
+      "url": "/stitches/chain/"
+    },
+    {
+      "title": "Half Double Crochet (hdc)",
+      "url": "/stitches/half-double-crochet/"
+    },
+    {
+      "title": "Treble Crochet (tr)",
+      "url": "/stitches/treble-crochet/"
+    }
+  ],
+  "image": {
+    "type": "illustration",
+    "art": "flower"
+  }
+}

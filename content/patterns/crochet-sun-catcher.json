@@ -1,0 +1,126 @@
+{
+  "draft": true,
+  "subtitle": "Free Crochet Pattern",
+  "tagline": "Free crochet pattern | Leftover yarn | Printable",
+  "date": "2026-11-04",
+  "level": "Beginner",
+  "hook": "3 mm",
+  "terms": "US",
+  "slug": "crochet-sun-catcher",
+  "title": "Crochet Sun Catcher",
+  "name": "Sun Catcher",
+  "seoTitle": "Crochet Sun Catcher Pattern on a Bangle (Free PDF)",
+  "description": "Free crochet sun catcher pattern worked around an old bangle: three colours, a picot edge and a scalloped border. Printable PDF and round-by-round steps.",
+  "lead": "An old bangle becomes a sunny wall hanging. You crochet around the bangle, add a little white picot edge, then a yellow round and a white scalloped border. Hang it in a window with a bead at the bottom.",
+  "theme": {
+    "accent": "#e8890c",
+    "dark": "#4a2511",
+    "cream": "#fff5e1"
+  },
+  "yarn": "Cotton yarn in a main colour, white and yellow",
+  "materialsTable": [
+    {
+      "item": "Yarn",
+      "details": "Cotton yarn in a main colour, white and yellow"
+    },
+    {
+      "item": "Base",
+      "details": "One bangle or metal ring (any size)"
+    },
+    {
+      "item": "Hook",
+      "details": "3 mm crochet hook"
+    },
+    {
+      "item": "Extra",
+      "details": "One bead for the hanging loop"
+    },
+    {
+      "item": "Tools",
+      "details": "Yarn needle, scissors"
+    }
+  ],
+  "abbreviations": [
+    "ch",
+    "sc",
+    "dc",
+    "sl st",
+    "flo",
+    "blo",
+    "st",
+    "fo"
+  ],
+  "notes": [
+    "The stitch counts are for 48 sc around the bangle. For a bigger bangle use any multiple of 3.",
+    "Round 2 uses the front loops of round 1 and round 3 uses the back loops, so both colours sit on the same base round."
+  ],
+  "sections": [
+    {
+      "title": "The sun catcher",
+      "rounds": [
+        {
+          "r": "R1",
+          "text": "With the main colour: work 48 sc around the bangle. sl st into the front loop of the first st.",
+          "count": "48"
+        },
+        {
+          "r": "R2",
+          "text": "ch 2, sc in the front loop of each st around (FLO). sl st into the first st and fasten off.",
+          "count": "48"
+        },
+        {
+          "r": "R3",
+          "text": "Join white in any st. (ch 3, skip 1 st, sl st in the next st) around. sl st, ch 1 and fasten off.",
+          "count": "24 loops"
+        },
+        {
+          "r": "R4",
+          "text": "Join yellow in a back loop of round 1. ch 1, dc in the back loop of each st around (BLO).",
+          "count": "48"
+        },
+        {
+          "r": "R5",
+          "text": "(ch 4, skip 2 sts, sc in the next st) around.",
+          "count": "16 ch-4 spaces"
+        },
+        {
+          "r": "R6",
+          "text": "Join white in a ch-4 space. (6 sc in the ch-4 space, sl st into the next sc) around. Fasten off.",
+          "count": "16 scallops"
+        }
+      ]
+    },
+    {
+      "title": "Hanging loop",
+      "rounds": [
+        {
+          "r": "Loop",
+          "text": "ch 44. Attach both ends to the top of the sun catcher to make a loop. Add a bead at the bottom.",
+          "count": ""
+        }
+      ]
+    }
+  ],
+  "finishing": [
+    "Weave in all the ends on the back.",
+    "Hang it in a sunny window."
+  ],
+  "related": [
+    {
+      "title": "Front & Back Loop",
+      "url": "/stitches/front-and-back-loop/"
+    },
+    {
+      "title": "Double Crochet (dc)",
+      "url": "/stitches/double-crochet/"
+    },
+    {
+      "title": "Slip Stitch",
+      "url": "/stitches/slip-stitch/"
+    }
+  ],
+  "image": {
+    "type": "illustration",
+    "art": "sunflower"
+  }
+}
