@@ -4,6 +4,101 @@
     "pages": 4,
     "pdf": "/pdf/mini-sunflower.pdf"
   },
+  "crochet-butterfly-charm": {
+    "title": "Crochet Butterfly Charm",
+    "pages": 2,
+    "pdf": "/pdf/crochet-butterfly-charm.pdf"
+  },
+  "crochet-cookie-keychain": {
+    "title": "Crochet Smiling Cookie Keychain",
+    "pages": 3,
+    "pdf": "/pdf/crochet-cookie-keychain.pdf"
+  },
+  "crochet-duck-with-daisy": {
+    "title": "Crochet Duck with Daisy",
+    "pages": 4,
+    "pdf": "/pdf/crochet-duck-with-daisy.pdf"
+  },
+  "crochet-flower-belt": {
+    "title": "Crochet Flower Belt",
+    "pages": 2,
+    "pdf": "/pdf/crochet-flower-belt.pdf"
+  },
+  "crochet-flower-hair-tie": {
+    "title": "Crochet Rolled Flower Hair Tie",
+    "pages": 2,
+    "pdf": "/pdf/crochet-flower-hair-tie.pdf"
+  },
+  "crochet-heart-charm": {
+    "title": "Crochet Heart Charm",
+    "pages": 3,
+    "pdf": "/pdf/crochet-heart-charm.pdf"
+  },
+  "crochet-heart-keychain": {
+    "title": "Crochet Heart Keychain",
+    "pages": 2,
+    "pdf": "/pdf/crochet-heart-keychain.pdf"
+  },
+  "crochet-layered-flower-clip": {
+    "title": "Crochet Layered Flower Hair Clip",
+    "pages": 3,
+    "pdf": "/pdf/crochet-layered-flower-clip.pdf"
+  },
+  "crochet-lotus-flower": {
+    "title": "Crochet Lotus Flower",
+    "pages": 3,
+    "pdf": "/pdf/crochet-lotus-flower.pdf"
+  },
+  "crochet-mini-bear": {
+    "title": "Crochet Mini Bear",
+    "pages": 3,
+    "pdf": "/pdf/crochet-mini-bear.pdf"
+  },
+  "crochet-peacock-feather": {
+    "title": "Crochet Peacock Feather (Morpankh)",
+    "pages": 2,
+    "pdf": "/pdf/crochet-peacock-feather.pdf"
+  },
+  "crochet-penguin-keychain": {
+    "title": "Crochet Penguin Keychain",
+    "pages": 4,
+    "pdf": "/pdf/crochet-penguin-keychain.pdf"
+  },
+  "crochet-puff-flower": {
+    "title": "Crochet Puff Stitch Flower",
+    "pages": 2,
+    "pdf": "/pdf/crochet-puff-flower.pdf"
+  },
+  "crochet-rose-anklet": {
+    "title": "Crochet Rose Anklet (Payal)",
+    "pages": 3,
+    "pdf": "/pdf/crochet-rose-anklet.pdf"
+  },
+  "crochet-sakura-flower": {
+    "title": "Crochet Sakura Flower",
+    "pages": 2,
+    "pdf": "/pdf/crochet-sakura-flower.pdf"
+  },
+  "crochet-spider-web": {
+    "title": "Crochet Spider Web",
+    "pages": 2,
+    "pdf": "/pdf/crochet-spider-web.pdf"
+  },
+  "crochet-sun-catcher": {
+    "title": "Crochet Sun Catcher",
+    "pages": 3,
+    "pdf": "/pdf/crochet-sun-catcher.pdf"
+  },
+  "crochet-swiss-roll-cake": {
+    "title": "Crochet Swiss Roll Cake Slice",
+    "pages": 3,
+    "pdf": "/pdf/crochet-swiss-roll-cake.pdf"
+  },
+  "crochet-tomato-keychain": {
+    "title": "Crochet Tomato Keychain",
+    "pages": 4,
+    "pdf": "/pdf/crochet-tomato-keychain.pdf"
+  },
   "little-amigurumi-ball": {
     "title": "Little Amigurumi Ball",
     "pages": 3,
@@ -21,10 +116,29 @@
   },
   "book": {
     "title": "Free Crochet Pattern Book",
-    "pages": 14,
+    "pages": 67,
     "pdf": null,
     "items": [
       "mini-sunflower",
+      "crochet-butterfly-charm",
+      "crochet-cookie-keychain",
+      "crochet-duck-with-daisy",
+      "crochet-flower-belt",
+      "crochet-flower-hair-tie",
+      "crochet-heart-charm",
+      "crochet-heart-keychain",
+      "crochet-layered-flower-clip",
+      "crochet-lotus-flower",
+      "crochet-mini-bear",
+      "crochet-peacock-feather",
+      "crochet-penguin-keychain",
+      "crochet-puff-flower",
+      "crochet-rose-anklet",
+      "crochet-sakura-flower",
+      "crochet-spider-web",
+      "crochet-sun-catcher",
+      "crochet-swiss-roll-cake",
+      "crochet-tomato-keychain",
       "little-amigurumi-ball",
       "mini-flower-keychain",
       "simple-round-coaster"
