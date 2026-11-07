@@ -1,9 +1,10 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <!--@meta {"title":"US vs UK Crochet Terms: Conversion Chart & Guide","description":"US and UK crochet terms use the same names for different stitches. See the full conversion chart and learn how to tell which terms a pattern uses.","path":"/guides/us-vs-uk-crochet-terms/","nav":"guides","crumbs":[["Guides","/guides/"],["US vs UK Crochet Terms"]],"schema":"article","date":"2026-10-30","priority":"0.8"}-->
+    <!--@meta {"title":"US vs UK Crochet Terms: Conversion Chart & Guide","description":"US and UK crochet terms use the same names for different stitches. See them side by side, the full conversion chart, and a free US to UK pattern converter.","path":"/guides/us-vs-uk-crochet-terms/","nav":"guides","crumbs":[["Guides","/guides/"],["US vs UK Crochet Terms"]],"schema":"article","date":"2026-10-30","priority":"0.8"}-->
     <link rel="stylesheet" href="/styles/site.css">
     <script type="module" src="/js/site.js"></script>
+    <script type="module" src="/js/term-convert.js"></script>
   </head>
   <body>
     <a class="skip-link" href="#main">Skip to content</a>
@@ -12,24 +13,111 @@
       <article class="container article">
         <div class="prose">
           <h1>US vs UK Crochet Terms</h1>
-          <p class="lead">Crochet has two naming systems, and they disagree. A “double crochet” in a UK pattern is a different, shorter stitch than a “double crochet” in a US pattern. Here's how the two systems line up, and how to tell which one you're reading.</p>
+          <p class="lead">US and UK patterns use <strong>the same stitches</strong> but give them <strong>different names</strong>. The tricky part: some names exist in both systems and mean different stitches. This page shows them side by side so you can see the difference at a glance.</p>
+        </div>
 
-          <h2 id="why">Why are there two systems?</h2>
-          <p>Both systems name stitches by counting something, but they count different things. The <strong>US system</strong> names a stitch by how many times you yarn over and pull through two loops: one for single crochet, two for double crochet. The <strong>UK system</strong> names it by how many loops are on the hook after you pull up the first loop: two loops gives a double crochet, three gives a treble.</p>
-          <p>Both make sense on their own terms. The trouble is that they shift every stitch name by one step. Patterns from the US, Canada and many online designers usually use US terms. Patterns from the UK, Ireland, Australia, New Zealand and South Africa often use UK terms.</p>
+        <aside class="uk-rule" aria-label="The one rule to remember">
+          <p class="uk-rule-k">The one rule to remember</p>
+          <div class="uk-rule-eq" aria-hidden="true">
+            <span class="swap-pill swap-us"><small>US</small>sc</span>
+            <span class="uk-rule-same">same<br>stitch</span>
+            <span class="swap-pill swap-uk"><small>UK</small>dc</span>
+          </div>
+          <p class="uk-rule-text">The UK name is always <strong>one step taller</strong> than the US name. US single crochet is UK double crochet, US double crochet is UK treble, and so on. Your hands do exactly the same thing; only the word on the pattern changes.</p>
+        </aside>
 
-          <h2 id="chart">US to UK conversion chart</h2>
+        <div class="prose">
+          <h2 id="compare">Side by side: one stitch, two names</h2>
+          <p>Each row is <strong>one stitch</strong>. Left is what a US pattern calls it, right is what a UK pattern calls it. The picture in the middle shows how tall the stitch is.</p>
+        </div>
+        <ol class="ladder" aria-label="Stitches from shortest to tallest, with US and UK names">
+          <li>
+            <div class="ladder-name ladder-us"><small>US pattern says</small><b>sl st</b><span>slip stitch</span></div>
+            <div class="ladder-pic" aria-hidden="true"><svg viewBox="0 0 60 80"><path class="base" d="M6 74h48"/><rect class="post" x="22" y="68" width="16" height="6" rx="3"/></svg><span>flat</span></div>
+            <div class="ladder-name ladder-uk"><small>UK pattern says</small><b>ss</b><span>slip stitch</span></div>
+          </li>
+          <li>
+            <div class="ladder-name ladder-us"><small>US pattern says</small><b>sc</b><span>single crochet</span></div>
+            <div class="ladder-pic" aria-hidden="true"><svg viewBox="0 0 60 80"><path class="base" d="M6 74h48"/><rect class="post" x="22" y="56" width="16" height="18" rx="4"/><path class="top" d="M22 56l8 6 8-6"/></svg><span>short</span></div>
+            <div class="ladder-name ladder-uk"><small>UK pattern says</small><b>dc</b><span>double crochet</span></div>
+          </li>
+          <li>
+            <div class="ladder-name ladder-us"><small>US pattern says</small><b>hdc</b><span>half double crochet</span></div>
+            <div class="ladder-pic" aria-hidden="true"><svg viewBox="0 0 60 80"><path class="base" d="M6 74h48"/><rect class="post" x="22" y="46" width="16" height="28" rx="4"/><path class="top" d="M22 46l8 6 8-6"/></svg><span>medium</span></div>
+            <div class="ladder-name ladder-uk"><small>UK pattern says</small><b>htr</b><span>half treble</span></div>
+          </li>
+          <li>
+            <div class="ladder-name ladder-us"><small>US pattern says</small><b>dc</b><span>double crochet</span></div>
+            <div class="ladder-pic" aria-hidden="true"><svg viewBox="0 0 60 80"><path class="base" d="M6 74h48"/><rect class="post" x="22" y="32" width="16" height="42" rx="4"/><path class="bar" d="M22 53h16"/><path class="top" d="M22 32l8 6 8-6"/></svg><span>tall</span></div>
+            <div class="ladder-name ladder-uk"><small>UK pattern says</small><b>tr</b><span>treble</span></div>
+          </li>
+          <li>
+            <div class="ladder-name ladder-us"><small>US pattern says</small><b>tr</b><span>treble (triple) crochet</span></div>
+            <div class="ladder-pic" aria-hidden="true"><svg viewBox="0 0 60 80"><path class="base" d="M6 74h48"/><rect class="post" x="22" y="12" width="16" height="62" rx="4"/><path class="bar" d="M22 33h16M22 53h16"/><path class="top" d="M22 12l8 6 8-6"/></svg><span>extra tall</span></div>
+            <div class="ladder-name ladder-uk"><small>UK pattern says</small><b>dtr</b><span>double treble</span></div>
+          </li>
+        </ol>
+        <p class="ladder-note">Notice: <b>dc</b> and <b>tr</b> appear on <em>both</em> sides, but in different rows. That is where most mistakes happen.</p>
+
+        <div class="prose">
+          <h2 id="trap">The trap: “dc” means two different stitches</h2>
+          <p>Read this pattern line: <code>R2: 2 dc in each st around (24)</code>. What you make depends on where the pattern comes from:</p>
+        </div>
+        <div class="trap-grid">
+          <div class="trap-card trap-us">
+            <p class="trap-k"><span class="swap-pill swap-us"><small>US</small>dc</span> In a US pattern</p>
+            <svg viewBox="0 0 220 90" aria-hidden="true"><path class="base" d="M8 84h204"/><g class="posts"><rect x="14" y="30" width="16" height="54" rx="4"/><rect x="40" y="30" width="16" height="54" rx="4"/><rect x="66" y="30" width="16" height="54" rx="4"/><rect x="92" y="30" width="16" height="54" rx="4"/><rect x="118" y="30" width="16" height="54" rx="4"/><rect x="144" y="30" width="16" height="54" rx="4"/><rect x="170" y="30" width="16" height="54" rx="4"/><rect x="196" y="30" width="16" height="54" rx="4"/></g></svg>
+            <p><strong>Tall stitch.</strong> Yarn over first, then pull through 2 loops twice. Makes open, airy fabric.</p>
+          </div>
+          <div class="trap-card trap-uk">
+            <p class="trap-k"><span class="swap-pill swap-uk"><small>UK</small>dc</span> In a UK pattern</p>
+            <svg viewBox="0 0 220 90" aria-hidden="true"><path class="base" d="M8 84h204"/><g class="posts"><rect x="14" y="62" width="16" height="22" rx="4"/><rect x="40" y="62" width="16" height="22" rx="4"/><rect x="66" y="62" width="16" height="22" rx="4"/><rect x="92" y="62" width="16" height="22" rx="4"/><rect x="118" y="62" width="16" height="22" rx="4"/><rect x="144" y="62" width="16" height="22" rx="4"/><rect x="170" y="62" width="16" height="22" rx="4"/><rect x="196" y="62" width="16" height="22" rx="4"/></g></svg>
+            <p><strong>Short stitch</strong> (the one US patterns call sc). No yarn over first, pull through 2 loops once. Makes tight fabric.</p>
+          </div>
+        </div>
+        <div class="prose">
+          <div class="callout"><p><strong>So:</strong> if you make US dc for a UK pattern, your piece comes out about twice as tall and full of holes. Amigurumi stuffing would show through. Always check which terms a pattern uses <em>before</em> you start.</p></div>
+
+          <h2 id="tell">How to tell which terms a pattern uses</h2>
+        </div>
+        <ul class="tell-grid">
+          <li><b>1</b><strong>Read the top of the pattern</strong><span>Good patterns say “US terms” or “UK terms” near the materials list.</span></li>
+          <li><b>2</b><strong>Look for “sc”</strong><span>Single crochet only exists in US terms. See <code>sc</code>? It is a US pattern.</span></li>
+          <li><b>3</b><strong>Look for “htr” or “ss”</strong><span>These two are only used in UK patterns.</span></li>
+          <li><b>4</b><strong>Amigurumi full of “dc”?</strong><span>Amigurumi uses the shortest stitch, so a toy made mostly in “dc” is almost surely UK.</span></li>
+        </ul>
+
+        <div class="prose">
+          <h2 id="converter">Convert a pattern line</h2>
+          <p>Paste a line from your pattern, choose the direction, and the stitch names are changed for you. Changed words are highlighted.</p>
+        </div>
+        <div class="tc" data-term-convert>
+          <div class="tc-dir" role="group" aria-label="Convert direction">
+            <button type="button" class="tc-btn is-on" data-dir="uk-us" aria-pressed="true">UK → US</button>
+            <button type="button" class="tc-btn" data-dir="us-uk" aria-pressed="false">US → UK</button>
+          </div>
+          <label class="tc-label" for="tc-in">Pattern line (<span data-tc-from>UK</span> terms)</label>
+          <textarea id="tc-in" class="tc-in" rows="4" spellcheck="false">R2: 2 dc in each st around, ss to join (24)
+R3: (dc, 2 tr in next st) x6, miss 1 st</textarea>
+          <p class="tc-label">Same line in <span data-tc-to>US</span> terms</p>
+          <output class="tc-out" for="tc-in" aria-live="polite"></output>
+          <p class="tc-note">Only the names change. Numbers, stitch counts and brackets stay the same.</p>
+        </div>
+        <noscript><p>The converter needs JavaScript. Use the chart below instead.</p></noscript>
+
+        <div class="prose">
+          <h2 id="chart">Full US to UK conversion chart</h2>
         </div>
         <div class="table-wrap">
-          <table>
+          <table class="uk-table">
             <caption class="visually-hidden">US and UK crochet stitch names compared</caption>
             <thead><tr><th scope="col">US term</th><th scope="col">UK term</th><th scope="col">Notes</th></tr></thead>
             <tbody>
               <tr><td>chain (ch)</td><td>chain (ch)</td><td>Same in both.</td></tr>
               <tr><td>slip stitch (sl st)</td><td>slip stitch (ss)</td><td>Same stitch, slightly different abbreviation.</td></tr>
-              <tr><td>single crochet (sc)</td><td>double crochet (dc)</td><td>The most common mix-up.</td></tr>
+              <tr class="uk-hot"><td>single crochet (sc)</td><td>double crochet (dc)</td><td>The most common mix-up.</td></tr>
               <tr><td>half double crochet (hdc)</td><td>half treble (htr)</td><td></td></tr>
-              <tr><td>double crochet (dc)</td><td>treble (tr)</td><td></td></tr>
+              <tr class="uk-hot"><td>double crochet (dc)</td><td>treble (tr)</td><td>“dc” means a different stitch in each system.</td></tr>
               <tr><td>treble / triple (tr)</td><td>double treble (dtr)</td><td></td></tr>
               <tr><td>double treble (dtr)</td><td>triple treble (trtr)</td><td></td></tr>
               <tr><td>sc2tog</td><td>dc2tog</td><td>Single crochet decrease.</td></tr>
@@ -44,19 +132,14 @@
         <div class="prose">
           <p>For every other abbreviation, see the full <a href="/crochet-abbreviations/">crochet abbreviations chart</a>.</p>
 
-          <h2 id="tell">How to tell which terms a pattern uses</h2>
-          <ol>
-            <li><strong>Look for a note at the top.</strong> Good patterns say “written in US terms” or “UK terminology”.</li>
-            <li><strong>Search for “sc”.</strong> Single crochet doesn't exist in UK terms. If you see sc, it's a US pattern.</li>
-            <li><strong>Search for “htr” or “ss”.</strong> These are UK-only abbreviations.</li>
-            <li><strong>Check the shortest stitch.</strong> If an amigurumi pattern is mostly “dc”, it's almost certainly UK, because amigurumi uses the shortest common stitch.</li>
-            <li><strong>Check the designer's location</strong> or the shop where the pattern is sold.</li>
-          </ol>
-          <div class="callout"><p><strong>Quick test:</strong> make a small swatch of the first few rows. If the fabric looks far too loose and lacy for what the photo shows, you're probably using US stitches on a UK pattern.</p></div>
-
-          <h2 id="convert">Converting a pattern</h2>
-          <p>To convert UK to US, move every stitch one step <em>shorter</em> in name: UK dc becomes US sc, UK tr becomes US dc, and so on. To convert US to UK, move one step <em>taller</em> in name. The actual stitches you make don't change at all; only the names do.</p>
-          <p>The easiest method is to write the converted version once and keep it. In <a href="/app/">Crochet Tracker</a> you can paste the pattern, edit the rounds into the terms you prefer, and save it, so you never have to convert in your head while you crochet.</p>
+          <h2 id="why">Why are there two systems?</h2>
+          <p>Both systems count something, but not the same thing:</p>
+          <ul>
+            <li><strong>US names</strong> count how many times you “yarn over and pull through two loops”. Once = <em>single</em> crochet, twice = <em>double</em> crochet.</li>
+            <li><strong>UK names</strong> count the loops on your hook after the first pull-up. Two loops = <em>double</em> crochet, three loops = <em>treble</em>.</li>
+          </ul>
+          <p>Both make sense on their own, but the count is off by one, so every name shifts by one step. Patterns from the US, Canada and most online designers use US terms. Patterns from the UK, Ireland, Australia, New Zealand and South Africa often use UK terms.</p>
+          <p>Tip: convert a pattern once and keep it. In <a href="/app/">Crochet Tracker</a> you can paste the pattern, change the rounds into the terms you know, and save it, so you never convert in your head while you crochet.</p>
 
           <h2 id="faq">US vs UK FAQ</h2>
           <div class="faq">
@@ -69,6 +152,10 @@
               <p>Most Australian and New Zealand patterns use UK terms, but always check the pattern notes, since many designers now write in US terms for an international audience.</p>
             </details>
             <details class="faq-item">
+              <summary>Which terms do the free patterns on this site use?</summary>
+              <p>All <a href="/free-patterns/">free patterns</a> here use US terms, and say so at the top. The stitch words in each pattern link to a short explanation with the UK name.</p>
+            </details>
+            <details class="faq-item">
               <summary>Are the hook sizes different too?</summary>
               <p>Hook sizes are usually given in millimetres everywhere, which is the safest number to use. Older US patterns may give letter sizes (like G or H), and older UK patterns may use number sizes, so check a conversion table if there's no millimetre size.</p>
             </details>
@@ -79,6 +166,7 @@
             <li><a href="/stitches/single-crochet/">Single crochet (UK dc)</a></li>
             <li><a href="/stitches/half-double-crochet/">Half double crochet (UK htr)</a></li>
             <li><a href="/stitches/double-crochet/">Double crochet (UK tr)</a></li>
+            <li><a href="/stitches/treble-crochet/">Treble crochet (UK dtr)</a></li>
             <li><a href="/stitches/slip-stitch/">Slip stitch (UK ss)</a></li>
           </ul>
         </div>

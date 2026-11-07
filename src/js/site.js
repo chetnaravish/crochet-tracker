@@ -25,6 +25,19 @@ if (menuBtn && siteNav) {
   siteNav.addEventListener('click', (e) => {
     if (e.target.closest('a')) setOpen(false);
   });
+  // Touch feedback: the link lights up as soon as a finger is on it (before the tap
+  // ends), and turns off again if the finger slides away to scroll.
+  let pressed = null;
+  const release = () => {
+    pressed?.classList.remove('is-pressed');
+    pressed = null;
+  };
+  siteNav.addEventListener('pointerdown', (e) => {
+    release();
+    pressed = e.target.closest('a');
+    pressed?.classList.add('is-pressed');
+  });
+  ['pointerup', 'pointercancel', 'pointerleave'].forEach((t) => siteNav.addEventListener(t, release));
 }
 
 // Back button: return to the exact previous page (including an app screen) when the

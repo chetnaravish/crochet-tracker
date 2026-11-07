@@ -335,7 +335,7 @@ function buildSearchIndex() {
   const entries = [];
   const files = listFiles(srcRoot).filter((f) => f.endsWith('.html') && !f.startsWith('partials/'));
   for (const f of files) {
-    const html = fs.readFileSync(path.join(srcRoot, f), 'utf8');
+    const html = fs.readFileSync(path.join(srcRoot, f), 'utf8').replaceAll('{{PATTERN_COUNT}}', () => String(loadPatterns().filter((p) => !p.draft).length));
     const m = html.match(/<!--@meta\s+([\s\S]*?)-->/);
     if (!m) continue;
     const meta = JSON.parse(m[1]);
@@ -432,7 +432,8 @@ export default function sitePlugin() {
         return html
           .replaceAll('{{SITE_URL}}', SITE_URL)
           .replaceAll('{{SITE_NAME}}', SITE_NAME)
-          .replaceAll('{{YEAR}}', String(new Date().getFullYear()));
+          .replaceAll('{{YEAR}}', String(new Date().getFullYear()))
+          .replaceAll('{{PATTERN_COUNT}}', () => String(loadPatterns().filter((p) => !p.draft).length));
       },
     },
 

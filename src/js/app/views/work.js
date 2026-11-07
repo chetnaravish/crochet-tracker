@@ -61,6 +61,15 @@ export async function renderWork(view, id) {
         <strong>🎉 You finished this pattern!</strong>
         <button type="button" class="btn btn-outline" data-act="again">${icons.reset} Make it again</button>
       </div>
+      <div class="focus-nav" id="focus-nav" ${focusMode ? '' : 'hidden'}>
+        <button type="button" class="focus-arrow" data-act="fprev" aria-label="Previous round">${icons.back}</button>
+        <div class="focus-where">
+          <span class="focus-round" id="focus-round" aria-live="polite"></span>
+          <span class="focus-tag" id="focus-tag"></span>
+        </div>
+        <button type="button" class="focus-arrow" data-act="fnext" aria-label="Next round">${icons.forward}</button>
+        <button type="button" class="btn btn-outline focus-current" data-act="fcur" id="focus-current" hidden>Back to current round</button>
+      </div>
       <ol class="work-rounds${focusMode ? ' focus' : ''}" id="work-rounds" role="list">
         ${p.rounds
           .map(
@@ -114,6 +123,41 @@ export async function renderWork(view, id) {
     counter.querySelector('[data-act="minus"]').disabled = !p.stitchCount;
   }
 
+  // Focus Mode shows one card. The arrows let you look at the round before or after;
+  // "Back to current round" returns to the round you are working on.
+  let viewIdx = null; // null = the current round
+  const focusNav = view.querySelector('#focus-nav');
+  const currentIdx = () => Math.min(p.done, items.length - 1);
+  const shownIdx = () => viewIdx ?? currentIdx();
+
+  function drawFocusNav(dir = 0) {
+    focusNav.hidden = !focusMode;
+    const i = shownIdx();
+    items.forEach((li, k) => {
+      li.classList.toggle('is-viewing', k === i);
+      li.classList.remove('slide-next', 'slide-prev');
+    });
+    if (focusMode && dir && !reducedMotion()) {
+      void items[i].offsetWidth; // restart the slide animation
+      items[i].classList.add(dir > 0 ? 'slide-next' : 'slide-prev');
+    }
+    view.querySelector('#focus-round').textContent = `Round ${i + 1} of ${items.length}`;
+    const tag = view.querySelector('#focus-tag');
+    const state = i < p.done ? 'done' : i === p.done ? 'current' : 'next';
+    tag.textContent = state === 'done' ? '✓ Done' : state === 'current' ? 'Current' : 'Coming up';
+    tag.dataset.state = state;
+    focusNav.querySelector('[data-act="fprev"]').disabled = i <= 0;
+    focusNav.querySelector('[data-act="fnext"]').disabled = i >= items.length - 1;
+    view.querySelector('#focus-current').hidden = progressOf(p).complete || i === currentIdx();
+  }
+
+  function look(step) {
+    const i = Math.max(0, Math.min(items.length - 1, shownIdx() + step));
+    if (i === shownIdx()) return;
+    viewIdx = i === currentIdx() ? null : i;
+    drawFocusNav(step);
+  }
+
   function update() {
     const { done, total, complete, pct } = progressOf(p);
     const isLast = !complete && total > 1 && done === total - 1;
@@ -155,12 +199,56 @@ export async function renderWork(view, id) {
         : `${icons.check}<span>Done · Round ${done + 1}</span>`;
     doneBtn.classList.toggle('is-complete', complete);
     undoBtn.disabled = done === 0;
+    viewIdx = null;
+    drawFocusNav();
   }
 
-  function scrollToCurrent() {
-    const target = items[Math.min(p.done, items.length - 1)];
-    target?.scrollIntoView({ behavior: reducedMotion() ? 'auto' : 'smooth', block: 'start' });
+  // Gentle, slow scroll (the browser's own "smooth" is quick and jumpy).
+  let glideRaf = 0;
+  function glide(to, instant = false) {
+    to = Math.max(0, Math.min(to, document.documentElement.scrollHeight - innerHeight));
+    const from = scrollY;
+    const d = to - from;
+    cancelAnimationFrame(glideRaf);
+    if (Math.abs(d) < 2) return;
+    if (instant || reducedMotion()) return window.scrollTo(0, to);
+    const dur = Math.min(1100, 550 + Math.abs(d) * 0.5);
+    const t0 = performance.now();
+    const step = (t) => {
+      const k = Math.min(1, (t - t0) / dur);
+      const e = k < 0.5 ? 4 * k * k * k : 1 - Math.pow(-2 * k + 2, 3) / 2;
+      window.scrollTo(0, from + d * e);
+      if (k < 1) glideRaf = requestAnimationFrame(step);
+    };
+    glideRaf = requestAnimationFrame(step);
   }
+
+  // Keep the current round in view without hiding what you just did:
+  // - if the current round is already fully on screen, nothing moves;
+  // - otherwise the page glides so the last 2 done rounds stay at the top,
+  //   with the current round and the next ones under them.
+  function scrollToCurrent({ instant = false, force = false } = {}) {
+    if (focusMode) return glide(0, instant);
+    const i = currentIdx();
+    const cur = items[i];
+    if (!cur) return;
+    const top = view.querySelector('.work-status').getBoundingClientRect().bottom + 10;
+    const bottom = view.querySelector('.work-actions').getBoundingClientRect().top - 12;
+    const r = cur.getBoundingClientRect();
+    if (!force && r.top >= top && r.bottom <= bottom) return;
+    const anchor = items[Math.max(0, i - 2)];
+    let to = scrollY + anchor.getBoundingClientRect().top - top;
+    // A very tall current round must still show fully: then give up the done rounds first.
+    const curBottom = r.bottom - (to - scrollY);
+    if (curBottom > bottom) to += Math.min(curBottom - bottom, r.top - (to - scrollY) - top);
+    glide(to, instant);
+  }
+  // Wait for the round cards to finish growing/shrinking before measuring.
+  let followT = 0;
+  const followCurrent = (opts) => {
+    clearTimeout(followT);
+    followT = setTimeout(() => scrollToCurrent(opts), 340);
+  };
 
   async function markDone() {
     if (progressOf(p).complete) return celebrate();
@@ -174,7 +262,7 @@ export async function renderWork(view, id) {
     setTimeout(() => li.classList.remove('just-done'), 900);
     update();
     if (progressOf(p).complete) celebrate();
-    else scrollToCurrent();
+    else followCurrent();
   }
 
   function undo() {
@@ -184,7 +272,7 @@ export async function renderWork(view, id) {
     p.updatedAt = Date.now();
     persist();
     update();
-    scrollToCurrent();
+    followCurrent();
     toast(`Round ${p.done + 1} is back to not done`);
   }
 
@@ -261,12 +349,20 @@ export async function renderWork(view, id) {
     else if (act === 'again') restart();
     else if (act === 'plus') count(1);
     else if (act === 'minus') count(-1);
-    else if (act === 'focus') {
+    else if (act === 'fprev') look(-1);
+    else if (act === 'fnext') look(1);
+    else if (act === 'fcur') {
+      const dir = Math.sign(currentIdx() - shownIdx());
+      viewIdx = null;
+      drawFocusNav(dir);
+    } else if (act === 'focus') {
       focusMode = !focusMode;
       setSetting('focusMode', focusMode);
       list.classList.toggle('focus', focusMode);
       e.target.closest('[data-act]').setAttribute('aria-pressed', String(focusMode));
-      scrollToCurrent();
+      viewIdx = null;
+      drawFocusNav();
+      scrollToCurrent({ force: true });
     }
   });
 
@@ -279,17 +375,40 @@ export async function renderWork(view, id) {
     else if (k === 'u') undo();
     else if (k === '+' || k === '=') count(1);
     else if (k === '-') count(-1);
+    else if (focusMode && e.key === 'ArrowLeft') look(-1);
+    else if (focusMode && e.key === 'ArrowRight') look(1);
   };
+
+  // Focus Mode: swipe left/right on the card to look at the next/previous round.
+  let sx = null;
+  let sy = 0;
+  list.addEventListener(
+    'touchstart',
+    (e) => {
+      sx = focusMode && e.touches.length === 1 ? e.touches[0].clientX : null;
+      sy = e.touches[0].clientY;
+    },
+    { passive: true },
+  );
+  list.addEventListener('touchend', (e) => {
+    if (sx === null) return;
+    const dx = e.changedTouches[0].clientX - sx;
+    const dy = e.changedTouches[0].clientY - sy;
+    sx = null;
+    if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy) * 1.5) look(dx < 0 ? 1 : -1);
+  });
   document.addEventListener('keydown', onKey);
 
   const wakeNote = view.querySelector('#wake-note');
   if (wakeLockSupported()) keepScreenOn((on) => (wakeNote.hidden = !on));
 
   update();
-  if (p.done > 0) requestAnimationFrame(() => items[Math.min(p.done, items.length - 1)].scrollIntoView({ block: 'start' }));
+  if (p.done > 0) requestAnimationFrame(() => scrollToCurrent({ instant: true, force: true }));
 
   return () => {
     releaseScreen();
+    cancelAnimationFrame(glideRaf);
+    clearTimeout(followT);
     document.removeEventListener('keydown', onKey);
   };
 }

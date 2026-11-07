@@ -142,6 +142,123 @@
       "little-amigurumi-ball",
       "mini-flower-keychain",
       "simple-round-coaster"
+    ],
+    "toc": [
+      {
+        "key": "mini-sunflower",
+        "title": "Mini Crochet Sunflower",
+        "page": 3
+      },
+      {
+        "key": "crochet-butterfly-charm",
+        "title": "Crochet Butterfly Charm",
+        "page": 7
+      },
+      {
+        "key": "crochet-cookie-keychain",
+        "title": "Crochet Smiling Cookie Keychain",
+        "page": 9
+      },
+      {
+        "key": "crochet-duck-with-daisy",
+        "title": "Crochet Duck with Daisy",
+        "page": 12
+      },
+      {
+        "key": "crochet-flower-belt",
+        "title": "Crochet Flower Belt",
+        "page": 16
+      },
+      {
+        "key": "crochet-flower-hair-tie",
+        "title": "Crochet Rolled Flower Hair Tie",
+        "page": 18
+      },
+      {
+        "key": "crochet-heart-charm",
+        "title": "Crochet Heart Charm",
+        "page": 20
+      },
+      {
+        "key": "crochet-heart-keychain",
+        "title": "Crochet Heart Keychain",
+        "page": 23
+      },
+      {
+        "key": "crochet-layered-flower-clip",
+        "title": "Crochet Layered Flower Hair Clip",
+        "page": 25
+      },
+      {
+        "key": "crochet-lotus-flower",
+        "title": "Crochet Lotus Flower",
+        "page": 28
+      },
+      {
+        "key": "crochet-mini-bear",
+        "title": "Crochet Mini Bear",
+        "page": 31
+      },
+      {
+        "key": "crochet-peacock-feather",
+        "title": "Crochet Peacock Feather (Morpankh)",
+        "page": 34
+      },
+      {
+        "key": "crochet-penguin-keychain",
+        "title": "Crochet Penguin Keychain",
+        "page": 36
+      },
+      {
+        "key": "crochet-puff-flower",
+        "title": "Crochet Puff Stitch Flower",
+        "page": 40
+      },
+      {
+        "key": "crochet-rose-anklet",
+        "title": "Crochet Rose Anklet (Payal)",
+        "page": 42
+      },
+      {
+        "key": "crochet-sakura-flower",
+        "title": "Crochet Sakura Flower",
+        "page": 45
+      },
+      {
+        "key": "crochet-spider-web",
+        "title": "Crochet Spider Web",
+        "page": 47
+      },
+      {
+        "key": "crochet-sun-catcher",
+        "title": "Crochet Sun Catcher",
+        "page": 49
+      },
+      {
+        "key": "crochet-swiss-roll-cake",
+        "title": "Crochet Swiss Roll Cake Slice",
+        "page": 52
+      },
+      {
+        "key": "crochet-tomato-keychain",
+        "title": "Crochet Tomato Keychain",
+        "page": 55
+      },
+      {
+        "key": "little-amigurumi-ball",
+        "title": "Little Amigurumi Ball",
+        "page": 59
+      },
+      {
+        "key": "mini-flower-keychain",
+        "title": "Mini Flower Keychain",
+        "page": 62
+      },
+      {
+        "key": "simple-round-coaster",
+        "title": "Simple Round Coaster",
+        "page": 65
+      }
     ]
   }
 }
