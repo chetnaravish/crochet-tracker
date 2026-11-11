@@ -165,6 +165,9 @@ function sectionHtml(s) {
 // "Save to Pinterest": a plain link to Pinterest's save page, no Pinterest script on
 // our site (nothing loads from Pinterest until the reader taps it). The pin picture
 // is the tall 2:3 image from `npm run pins`, or the share image if that's missing.
+// Hidden for now (11 Nov 2026): turn back on after real photos/videos are added.
+const SHOW_PIN_BUTTON = false;
+
 export function pinterestUrl(p) {
   const img = ['pins', 'og'].map((d) => `/${d}/${p.slug}.png`).find((f) => fs.existsSync(`public${f}`)) || '/og-image.png';
   const text = `${p.title}: free crochet pattern with a printable PDF${p.level ? `, ${p.level.toLowerCase()} friendly` : ''}. ${p.description || ''}`.trim();
@@ -252,9 +255,9 @@ export function renderPattern(p) {
               </a>` : ''}
             </div>
             ${hasPdf ? `<p class="pp-pdf-note no-print">Free printable PDF of this crochet pattern${chartRounds.length ? ', with the round diagram' : ''}. Tap <strong>Free PDF</strong> to preview it, then download it if you like it. You can also read all our patterns together in the <a href="/free-patterns/#pdf" data-pdf-view="book">free crochet pattern book</a> (view only).</p>` : ''}
-            <p class="pp-pin no-print"><a class="pin-btn" href="${esc(pinUrl)}" target="_blank" rel="noopener" data-pin-save>
+            ${SHOW_PIN_BUTTON ? `<p class="pp-pin no-print"><a class="pin-btn" href="${esc(pinUrl)}" target="_blank" rel="noopener" data-pin-save>
               <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="12" cy="12" r="11" fill="#e60023"/><path fill="#fff" d="M12.3 5.5c-3.9 0-5.8 2.8-5.8 5.1 0 1.4.5 2.6 1.6 3.1.2.1.4 0 .4-.2l.2-.6c0-.2 0-.3-.1-.5-.3-.4-.5-.9-.5-1.6 0-2.1 1.6-3.9 4.1-3.9 2.2 0 3.5 1.4 3.5 3.2 0 2.4-1.1 4.4-2.6 4.4-.9 0-1.5-.7-1.3-1.6.2-1 .7-2.2.7-2.9 0-.7-.4-1.2-1.1-1.2-.9 0-1.6.9-1.6 2.2 0 .8.3 1.3.3 1.3l-1 4.4c-.3 1.3 0 2.9 0 3.1 0 .1.1.1.2 0 .1-.1 1-1.3 1.4-2.5l.5-2c.3.5 1 .9 1.8.9 2.4 0 4-2.2 4-5.1 0-2.2-1.9-4.3-4.7-4.3Z"/></svg>
-              Save to Pinterest</a></p>
+              Save to Pinterest</a></p>` : ''}
             <p class="open-status" aria-live="polite"></p>
           </header>
 
